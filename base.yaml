@@ -1,0 +1,7 @@
+output_dir: "PA_ASM"
+code_address: 0x808D9000
+defines:
+  - POISONS_ADVENTURE
+  - V2
+modules:
+  - processed/POISONS_ADVENTURE.yaml

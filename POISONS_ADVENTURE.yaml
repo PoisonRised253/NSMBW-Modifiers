@@ -1,0 +1,46 @@
+source_files: [../src/main.cpp, ../src/Utils.cpp, ../src/Modifiers.cpp]
+
+hooks:
+
+  - name: OnGameLoop
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80143bc8
+    target_func: onGameLoop
+
+  - name: PreGameLoop
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x800e39c0
+    target_func: preGameLoop
+
+  - name: OnStageCreated
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x800bbbb4
+    target_func: onStageCreated
+  
+  - name: OnStageCreatedFix
+    type: patch
+    addr_pal: 0x800bbbb8
+    data: '4e800020'
+
+  - name: PreGameFix
+    type: patch
+    addr_pal: 0x801451d4
+    data: '4e800020'
+
+  - name: DontDeleteDebug
+    type: patch
+    addr_pal: 0x800f1960
+    data: '4e800020'
+
+  - name: FuckTimers!
+    type: patch
+    addr_pal: 0x800e3ab8
+    data: '3c0001f4'
+
+  - name: NoPause
+    type: patch
+    addr_pal: 0x8004e050
+    data: '4e800020'
