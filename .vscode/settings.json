@@ -1,5 +1,0 @@
-{
-    "C_Cpp.errorSquiggles": "enabledIfIncludesResolve",
-    "terminal.integrated.scrollback": 100000,
-    "C_Cpp.default.cppStandard": "c++03"
-}
