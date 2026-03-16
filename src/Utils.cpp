@@ -11,7 +11,7 @@ inline bool GetPlayers() {
     ret Players[0] != NULL;
 }
 
-inline void getLevelInfo(u32* lOut, u32* wOut, u8* aOut, u32* exitOut, u32* gameOut, u32* stageFlagPOut) {
+inline void getLevelInfo(u32* lOut, u32* wOut, u8* aOut, u32* exitOut, u32* gameOut) {
     dScStage_c* s = dScStage_c::instance();
     if(!s) ret;
     if(lOut != NULL) *lOut = s->enteredLevel + 1;
@@ -19,7 +19,6 @@ inline void getLevelInfo(u32* lOut, u32* wOut, u8* aOut, u32* exitOut, u32* game
     if(aOut != NULL) *aOut = s->area;
     if(exitOut != NULL) *exitOut = s->m_exitMode;
     if(gameOut != NULL) *gameOut = s->m_gameMode;
-    if(stageFlagPOut != NULL) *stageFlagPOut = s->m_stageFlag_p;
     ret;
 }
 
@@ -39,13 +38,12 @@ ext void ToggleMods() {
     #ifdef DEBUG
     u32 game = 0;
     u32 exit = 0;
-    u32 stageFlags = 0;
 
-    getLevelInfo(&LevelID, &WorldID, &AreaID, &exit, &game, &stageFlags);
+    getLevelInfo(&LevelID, &WorldID, &AreaID, &exit, &game);
     #endif
 
     #ifndef DEBUG
-    getLevelInfo(&LevelID, &WorldID, &AreaID, NULL, NULL, NULL);
+    getLevelInfo(&LevelID, &WorldID, &AreaID, NULL, NULL);
     #endif
 
     if(LevelID == NULL && WorldID == NULL) ret;
@@ -66,7 +64,7 @@ ext void ToggleMods() {
     Modifiers[6] = (LevelID == 5 && WorldID == 1);
 
 #ifdef DEBUG
-        OSReport("L: %d, W: %d, A: %d, E: %d, G: %d, SF: %d\n", LevelID, WorldID, AreaID, exit, game, stageFlags);
+        OSReport("L: %d, W: %d, A: %d, E: %d, G: %d\n", LevelID, WorldID, AreaID, exit, game);
 #endif
     ret;
 }

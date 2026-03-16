@@ -18,7 +18,7 @@ ext void Shrink()
     ret;
 }
 
-// Do better next time, 4Player Support PLEASEEEEEEEEEEEEEEEEEEEEEEEE
+// TODO: Add Multiplayer Support
 ext void SmallerAndNoYoshi()
 {
 #ifdef DEBUG
@@ -38,16 +38,18 @@ ext void SmallerAndNoYoshi()
     ret;
 }
 
-// L: 41, W: 1, A: 255
+//Triggers at L: 41, W: 1, A: 255, because funny!
 //This will remove all instances of dAc_Py_c, which means the game refuses to commit video game.
-ext void NahFuckThat()
+ext void NahFuckThat(bool delP1)
 {
-    OSReport("NahFuckThat() ran. Which means a softlock, this is intentional. %d\n", "");
+    if(delP1) {
+        OSReport("NahFuckThat() ran. Which means a softlock, this is intentional, and Pretty Funny.\n");
     #ifdef NO_MP
-    OSReport("When this message appears, it means that you tried Playing with Multiple People.\n This is not yet supported. %d", "");
+        OSReport("When this message appears, it likely means that you tried Playing with Multiple People.\n This is not yet supported.");
     #endif
-    if (Players[0])
-        Players[0]->Delete(1);
+    if (Players[0]) Players[0]->Delete(1);
+    }
+
     if (Players[1])
         Players[1]->Delete(1);
     if (Players[2])
@@ -58,6 +60,8 @@ ext void NahFuckThat()
     ret;
 }
 
+//This function causes all Player's Y Velocity to be Limited, which means you cant jump as high, and fall slower.
+//This makes 22-1 pretty difficult.
 ext void TowerFunc() {
     float maxY;
     for(int i = 0; i < 4; i++)
@@ -74,6 +78,8 @@ ext void TowerFunc() {
     ret;
 }
 
+//This function removes Velocity. 
+//It replaces moving with positional change, which means Physics on the X axis are basically lost for the Player(s).
 ext void WaterLevel() {
     for(int i = 0; i < 4; i++) {
         if(!Players[i]) continue;
@@ -89,6 +95,7 @@ ext void WaterLevel() {
 
 //Mode false: preGameLoop();
 //Mode true: postGameLoop();
+//This function makes WorldMap like movement happen in levels.
 ext void Worldmapify(bool mode) {
     if(!Players[0]) ret;
     const Vec noVec = {0,0,0};

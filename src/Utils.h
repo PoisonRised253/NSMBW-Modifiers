@@ -9,7 +9,7 @@ extern bool Modifiers[MOD_SIZE];
 extern dAc_Py_c *Players[4];
 
 inline bool GetPlayers();
-inline void getLevelInfo(u32 *lOut, u32 *wOut, u8 *aOut, u32 *exitOut, u32 *gameOut, u32 *stageFlagPOut);
+inline void getLevelInfo(u32* lOut, u32* wOut, u8* aOut, u32* exitOut, u32* gameOut);
 inline void SetLives();
 ext void ToggleMods();
 inline float clampf(float val, float min, float max);

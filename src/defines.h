@@ -41,11 +41,10 @@
 #define ICE 0x06
 
 //Stage Exit Types
-#define NORMAL_EXIT 0
+#define NORMAL_EXIT 2
 
 //GameMode
-#define NORMAL_GAME 2
-#define TOWER_GAME 0
+#define NORMAL_GAME 0
 
 //Stage Flag
 #define SF_NORMAL 0

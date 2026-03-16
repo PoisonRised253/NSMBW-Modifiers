@@ -13,7 +13,7 @@ ext void onGameLoop()
         ret;
 
     if (Modifiers[0])
-        NahFuckThat();
+        NahFuckThat(true);
     if (Modifiers[1])
         Grow();
     if (Modifiers[2])
@@ -37,10 +37,10 @@ ext void onGameLoop()
     #ifdef NO_MP
         if ((Players[1] || Players[2] || Players[3])) {
         u32 lID = 0;
-        getLevelInfo(&lID, NULL, NULL, NULL, NULL, NULL);
+        getLevelInfo(&lID, NULL, NULL, NULL, NULL);
 
         if(lID != 256)
-            NahFuckThat();
+            NahFuckThat(false);
     }
     #endif
 

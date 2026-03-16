@@ -1858,15 +1858,11 @@ SECTIONS {
 
 	m_instance__10dScStage_c = 0x8042A25C;
 	getGameDisplay__10dScStage_cFv = 0x80101A70;
-	/*Note to self, if ordered right, you dont need to define the address of each member.*/
-	/*You simply need to define the class with the proper order of content, first to last, then it will automatically access the proper address*/
-	/*As seen above these comments, this works enough to access a lot of 10dScScene_c*/
 
 	ms_instance__10daWmPlayer_c = 0x8042a480;
 	setTimer__14dGameDisplay_cFi = 0x80159c28;
 	m_currentTime__14dGameDisplay = 0x80101E50;
 	m_exitMode__10dScStage_c = 0x8042931c;
-	m_stageFlag_p__10dScStage_c = 0x8042a4b0;
 	m_gameMode__10dScStage_c = 0x8042a4e4;
 
 	.text : {
