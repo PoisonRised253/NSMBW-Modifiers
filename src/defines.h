@@ -40,4 +40,14 @@
 #define PENGUIN 0x05
 #define ICE 0x06
 
+//Stage Exit Types
+#define NORMAL_EXIT 0
+
+//GameMode
+#define NORMAL_GAME 2
+#define TOWER_GAME 0
+
+//Stage Flag
+#define SF_NORMAL 0
+
 #endif

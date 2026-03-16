@@ -27,10 +27,17 @@ ext void onGameLoop()
     if (Modifiers[6])
         Worldmapify(true);
 
+    #ifdef DEBUG
+    const int buttons = WPAD_A | WPAD_B;
+    if((GetActiveRemocon()->heldButtons & buttons) == buttons) {
+        ToggleMods();
+    }
+    #endif
+
     #ifdef NO_MP
         if ((Players[1] || Players[2] || Players[3])) {
         u32 lID = 0;
-        getLevelInfo(&lID, NULL, NULL);
+        getLevelInfo(&lID, NULL, NULL, NULL, NULL, NULL);
 
         if(lID != 256)
             NahFuckThat();

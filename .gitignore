@@ -1,4 +1,5 @@
-/tools
+/tools/cw
 /.vscode
 /processed
 /PA_ASM
+*.ps1

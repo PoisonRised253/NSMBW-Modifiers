@@ -5,9 +5,6 @@ class dGameDisplay_c {
     public:
     void setTimer(int);
     int m_currentTime;
-    nw4r::lyt::TextBox *TextBoxInstance(){
-        return (nw4r::lyt::TextBox*)(unsigned char *)this + 0x4E0;
-    }
 };
 
 class dScStage_c

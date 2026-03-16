@@ -1865,7 +1865,9 @@ SECTIONS {
 	ms_instance__10daWmPlayer_c = 0x8042a480;
 	setTimer__14dGameDisplay_cFi = 0x80159c28;
 	m_currentTime__14dGameDisplay = 0x80101E50;
-	
+	m_exitMode__10dScStage_c = 0x8042931c;
+	m_stageFlag_p__10dScStage_c = 0x8042a4b0;
+	m_gameMode__10dScStage_c = 0x8042a4e4;
 
 	.text : {
 		FILL (0)

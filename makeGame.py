@@ -5,6 +5,7 @@ import subprocess
 import sys
 
 import yaml
+import datetime
 
 
 project_path = sys.argv[1]
@@ -64,4 +65,5 @@ copy_files('twn', 'TW_4')
 # copy_files('chn', 'CN_5')
 
 print('Built all!')
+print(datetime.datetime.now().strftime("%H:%M:%S"))
 
