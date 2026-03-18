@@ -192,11 +192,11 @@ class mHeapAllocator_c : public mAllocator_c {
 };
 
 namespace m3d {
-
+	void* getCurrentCamera();
 	// random, just dumped it here because I dunno where else
 	void DisableIndirectTexturing();
 	void InitTexObjWithResTex(GXTexObj *obj, /* ResTex */ void *resTex, u32 wrapS, u32 wrapT, u32 minFilt, u32 magFilt); 
-
+	
 
 	class scnLeaf_c {
 		public:

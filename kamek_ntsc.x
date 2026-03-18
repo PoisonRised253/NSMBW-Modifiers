@@ -43,6 +43,79 @@ SECTIONS {
 	initializeState_HipAttack__7dAcPy_cFv = 2148689936;
 	finalizeState_SpinJump__7dAcPy_cFv = 2148691600;
 
+	setCamera__10dScStage_cFiP9dCamera_c = 2148538688;
+	getCamera__10dScStage_cFi = 2148538704;
+	getGameDisplay__10dScStage_cFv = 2148538720;
+	setLoopType__10dScStage_cFv = 2148538768;
+	getLoopPosX__10dScStage_cFf = 2148539040;
+	setChangePosFunc__10dScStage_cFi = 2148539328;
+	changePosNormal__10dScStage_cFP7mVec3_c = 2148539360;
+	changePosLoop1__10dScStage_cFP7mVec3_c = 2148539376;
+	addUnitTexArcList__10dScStage_cFPc = 2148539488;
+	deleteUnitTexArcList__10dScStage_cFv = 2148539616;
+	addObjectArcList__10dScStage_cFPCc = 2148539712;
+	deleteObjectArcList__10dScStage_cFv = 2148539840;
+	addObjectArcListEx__10dScStage_cFPCc = 2148539936;
+	deleteObjectArcListEx__10dScStage_cFv = 2148540064;
+	addBossEffResList__10dScStage_cFi = 2148540160;
+	deleteBossEffResList__10dScStage_cFv = 2148540240;
+	deleteReplayPlay__10dScStage_cFv = 2148540656;
+	play__10dScStage_cFv = 2148540736;
+	isNowReplay__10dScStage_cFv = 2148540848;
+	ReplayEnd__10dScStage_cFv = 2148540960;
+	calcTitleSwitchCount__10dScStage_cFv = 2148541824;
+	calcTitleCount__10dScStage_cFv = 2148541856;
+	setTitleReplayRandomTable__10dScStage_cFv = 2148541888;
+	getExitMode__10dScStage_cFv = 2148814160;
+
+	mCdArcName__10dScStage_c = 2151103868;
+	m_unit_res_list__10dScStage_c = 2151103880;
+	m_object_res_list__10dScStage_c = 2151103944;
+	m_objectEx_res_list__10dScStage_c = 2151104744;
+	m_boss_eff_list__10dScStage_c = 2151104904;
+	mCollectionCoin__10dScStage_c = 2151104944;
+	m_titleRandomTable__10dScStage_c = 2151104956;
+	m_replayPlay_p__10dScStage_c = 2151104976;
+
+	m_otehonTimer__10dScStage_c = 2151845896;
+	m_exitMode__10dScStage_c = 2151845900;
+	m_startFadeType__10dScStage_c = 2151845904;
+
+	m_camera__10dScStage_c = 2151850436;
+	mDummyActor__10dScStage_c = 2151850444;
+	m_stageFlag_p__10dScStage_c = 2151850448;
+	m_BgParameter_p__10dScStage_c = 2151850452;
+	m_swichflag_p__10dScStage_c = 2151850456;
+	m_actorGroup_p__10dScStage_c = 2151850460;
+	m_actorCreate_p__10dScStage_c = 2151850464;
+	m_objblock_p__10dScStage_c = 2151850468;
+	m_balloon_p__10dScStage_c = 2151850472;
+	m_center_save_p__10dScStage_c = 2151850476;
+	m_OtehonClear_p__10dScStage_c = 2151850480;
+	m_titleSwitchCount__10dScStage_c = 2151850484;
+	m_titleCount__10dScStage_c = 2151850488;
+	m_goalType__10dScStage_c = 2151850492;
+	m_exeFrame__10dScStage_c = 2151850496;
+	m_gameMode__10dScStage_c = 2151850500;
+	m_loopType__10dScStage_c = 2151850504;
+	m_unit_res_num__10dScStage_c = 2151850508;
+	m_object_res_num__10dScStage_c = 2151850512;
+	m_objectEx_res_num__10dScStage_c = 2151850516;
+	m_boss_eff_num__10dScStage_c = 2151850520;
+	m_isCourseIn__10dScStage_c = 2151850524;
+	m_isCourseOut__10dScStage_c = 2151850525;
+	m_isOtehonReturn__10dScStage_c = 2151850526;
+	m_isStaffCredit__10dScStage_c = 2151850527;
+	m_miniGame__10dScStage_c = 2151850528;
+	m_replayMode__10dScStage_c = 2151850532;
+	m_unitcol_pat__10dScStage_c = 2151850533;
+	m_isReplayGoal__10dScStage_c = 2151850534;
+	m_KoopaJrEscape__10dScStage_c = 2151850535;
+	changePos__10dScStage_c = 2151850536;
+	m_pReplayDataHeap__10dScStage_c = 2151850540;
+
+	getCurrentCamera__3m3dFv = 2148944688;
+
 	ContinueFromFuckLineLiftActivation = 2156108548;
 
 	GabonRock_DropOutState = 2157546768;

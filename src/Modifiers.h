@@ -1,6 +1,7 @@
 #ifndef __H_MODIFIERS
 #define __H_MODIFIERS
 #include "Utils.h"
+#include "g3dhax.h"
 
 ext void Grow(); //Test Func, to be replaced, Grows Y on player->scale
 ext void Shrink(); //Test Func, to be replaced, Shrinks Y on player->scale
