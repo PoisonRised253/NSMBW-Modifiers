@@ -21,6 +21,7 @@ public:
 
     static dGameDisplay_c* getGameDisplay();
 
+    //This Might not truely be gamemode.
     static u32 m_gameMode;
     static u32 m_exitMode;
 

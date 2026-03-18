@@ -21,10 +21,6 @@ ext void Shrink()
 // TODO: Add Multiplayer Support
 ext void SmallerAndNoYoshi()
 {
-#ifdef DEBUG
-    OSReport("ExtraSmall() ran %d\n", NULL);
-#endif
-
     Players[0]->scale.x = 0.25f;
     Players[0]->scale.y = 0.25f;
     Players[0]->scale.z = 0.25f;
@@ -35,6 +31,7 @@ ext void SmallerAndNoYoshi()
             YoshiPtr[i] = NULL;
     }
     MarPow = 0x03;
+    OSReport("MP: %d, LP: %d, YTP: %d, BTP: %d\n", MarPow, LuiPow, YTPow, BTPow);
     ret;
 }
 
@@ -139,6 +136,22 @@ ext void Worldmapify(bool mode) {
         Players[i]->pos_delta2 = noVec;
     }
     
+    ret;
+}
+
+//This is a reference to the song Spin Eternally in Beat Saber
+ext void SpinEternally() {
+    dAcPy_c* P;
+    Remocon* s = GetActiveRemocon();
+    if(s)
+        s->isShaking = 1;
+    P = (dAcPy_c*)Players[0];
+    if(P) {
+        //P->initializeState_HipAttack(); This causes a funny, pressing up or down with this included causes mario to semi-permanently loose his collision
+        P->initializeState_SpinJump();
+        P->executeState_SpinJump();
+    }
+
     ret;
 }
 

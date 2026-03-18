@@ -20,11 +20,14 @@
 //Water-Modifier
 #define SPEED_WATER_MOD 128.f
 
-//Scaling
+//Scaling (Legacy)
 #define SCALE_MOD 0.00125f
 
 //WM-Mode
-#define MAP_SPEED 12;
+#define MAP_SPEED 12
+
+//SpinEternally
+#define TIMER_SPIN 8
 
 //MAXIMUMs and MINIMUMs
 #define FLOAT_MAX 65504.f
@@ -41,12 +44,13 @@
 #define ICE 0x06
 
 //Stage Exit Types
-#define NORMAL_EXIT 2
+#define NORMAL_EXIT 2 // Turns to 0
+#define SECONDARY_ROOM_EXIT 3 //Maybe, could also be secondary room? Maybe
+#define STAGE_FAIL_EXIT 1
+#define STAGE_SUCCESS_EXIT 0
 
 //GameMode
 #define NORMAL_GAME 0
-
-//Stage Flag
-#define SF_NORMAL 0
+#define TITLESCREEN_GAME 2 //Also Maybe
 
 #endif

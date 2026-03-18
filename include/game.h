@@ -2378,6 +2378,20 @@ public:
 	// Can't be assed to build full headers right now
 	void *getYoshi(); // 80139A90
 	static dAcPy_c *findByID(int id);
+	void executeState_Kani();
+	void executeState_Turn();
+	void executeState_SpinHipAttack();
+	void executeState_Propel();
+	void executeState_LiftUp();
+	void executeState_KaniJump();
+	void executeState_SpinJump();
+	void initializeState_SpinJump();
+	void initializeState_SpinHipAttack();
+	void initializeState_Kani();
+	void initializeState_LiftUp();
+	void initializeState_KaniJump();
+	void initializeState_HipAttack();
+	void finalizeState_SpinJump();
 };
 
 class daWMPlayer_c {

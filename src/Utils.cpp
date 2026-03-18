@@ -2,6 +2,7 @@
 
 bool Modifiers[MOD_SIZE] = {false};
 dAc_Py_c *Players[4] = {NULL, NULL, NULL, NULL};
+int GlobalFrameTimer = 0;
 
 inline bool GetPlayers() {
     Players[0] = GetSpecificPlayerActor(0);

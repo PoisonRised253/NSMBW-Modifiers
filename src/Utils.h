@@ -7,6 +7,7 @@
 
 extern bool Modifiers[MOD_SIZE];
 extern dAc_Py_c *Players[4];
+extern int GlobalFrameTimer;
 
 inline bool GetPlayers();
 inline void getLevelInfo(u32* lOut, u32* wOut, u8* aOut, u32* exitOut, u32* gameOut);

@@ -28,6 +28,21 @@ SECTIONS {
 	BTPow =  0x81549fcc;
 	YoshiPtr = 0x80355120;
 
+	executeState_Kani__7dAcPy_cFv = 0x80135e70;
+	executeState_Turn__7dAcPy_cFv = 0x8012d390;
+	executeState_SpinHipAttack__7dAcPy_cFv = 0x80126bc0;
+	executeState_Propel__7dAcPy_cFv = 0x8013cdd0;
+	executeState_LiftUp__7dAcPy_cFv = 0x8012f600;
+	executeState_KaniJump__7dAcPy_cFv = 0x8012a2b0;
+	executeState_SpinJump__7dAcPy_cFv = 0x80129640;
+	initializeState_SpinJump__7dAcPy_cFv = 0x80129470;
+	initializeState_SpinHipAttack__7dAcPy_cFv = 0x80126ab0;
+	initializeState_Kani__7dAcPy_cFv = 0x80135010;
+	initializeState_LiftUp__7dAcPy_cFv = 0x8012f480;
+	initializeState_KaniJump__7dAcPy_cFv = 0x8012a140;
+	initializeState_HipAttack__7dAcPy_cFv = 0x80126950;
+	finalizeState_SpinJump__7dAcPy_cFv = 0x80126fd0;
+
 	ContinueFromFuckLineLiftActivation = 0x80839B04;
 
 	GabonRock_DropOutState = 0x80998CF0;

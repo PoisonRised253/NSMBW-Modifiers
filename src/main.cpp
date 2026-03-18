@@ -5,19 +5,30 @@ ext void preGameLoop()
     if(Modifiers[6]) {
         Worldmapify(false);
     }
+    //if(Modifiers[1])
+        //TEMPFUNCNAME();
 }
+
+/*
+    Testing Asset
+    
+    if(Modifiers[1])
+        Grow();
+    if(Modifiers[2])
+        Shrink();
+*/
 
 ext void onGameLoop()
 {
     if (!GetPlayers())
         ret;
+    
+    GlobalFrameTimer++;
 
     if (Modifiers[0])
         NahFuckThat(true);
-    if (Modifiers[1])
-        Grow();
-    if (Modifiers[2])
-        Shrink();
+    if(Modifiers[2] && TIMER_SPIN >= GlobalFrameTimer)
+        SpinEternally();
     if (Modifiers[3])
         SmallerAndNoYoshi();
     if (Modifiers[4])
@@ -26,8 +37,9 @@ ext void onGameLoop()
         WaterLevel();
     if (Modifiers[6])
         Worldmapify(true);
+    
 
-    #ifdef DEBUG
+    #ifdef DEBUG 
     const int buttons = WPAD_A | WPAD_B;
     if((GetActiveRemocon()->heldButtons & buttons) == buttons) {
         ToggleMods();
@@ -35,6 +47,7 @@ ext void onGameLoop()
     #endif
 
     #ifdef NO_MP
+    #ifndef DEBUG
         if ((Players[1] || Players[2] || Players[3])) {
         u32 lID = 0;
         getLevelInfo(&lID, NULL, NULL, NULL, NULL);
@@ -43,11 +56,13 @@ ext void onGameLoop()
             NahFuckThat(false);
     }
     #endif
+    #endif
 
     //This OSReport will crash everything!
     //OSReport("getGravityAttempt: %d\n", *(unsigned char*) (Players[0] + 0x1068));
 
     SetLives();
+    if(GlobalFrameTimer > 59) GlobalFrameTimer = 0;
     ret;
 }
 

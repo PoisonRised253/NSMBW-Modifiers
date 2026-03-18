@@ -9,5 +9,6 @@ ext void NahFuckThat(bool); //Stops dAc_Py_c from existing
 ext void TowerFunc(); //Lower Jumping
 ext void WaterLevel(); //Increases SpeedPerFrame and MaxSpeed, per frame
 ext void Worldmapify(bool); //Makes the Level kinda like WM
+ext void SpinEternally();
 
 #endif
