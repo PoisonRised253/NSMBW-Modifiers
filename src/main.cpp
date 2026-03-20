@@ -5,8 +5,6 @@ ext void preGameLoop()
     if(Modifiers[6]) {
         Worldmapify(false);
     }
-    //if(Modifiers[1])
-        //TEMPFUNCNAME();
 }
 
 /*
@@ -22,12 +20,14 @@ ext void onGameLoop()
 {
     if (!GetPlayers())
         ret;
-    
     GlobalFrameTimer++;
+    
 
     if (Modifiers[0])
         NahFuckThat(true);
-    if(Modifiers[2] && TIMER_SPIN >= GlobalFrameTimer)
+    if (Modifiers[1] && CallSpacer(TIMER_CLEAR))
+        Lonely();
+    if(Modifiers[2] && CallSpacer(TIMER_SPIN) && !GetNextOfType(EN_GOALPOLE))
         SpinEternally();
     if (Modifiers[3])
         SmallerAndNoYoshi();

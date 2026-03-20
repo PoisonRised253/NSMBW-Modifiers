@@ -134,6 +134,7 @@ ext void Worldmapify(bool mode) {
         Players[i]->pos.y = Round(y);
         Players[i]->pos_delta = noVec;
         Players[i]->pos_delta2 = noVec;
+        Players[i]->last_pos = Players[i]->pos;
     }
     
     ret;
@@ -142,15 +143,32 @@ ext void Worldmapify(bool mode) {
 //This is a reference to the song Spin Eternally in Beat Saber
 ext void SpinEternally() {
     dAcPy_c* P;
-    Remocon* s = GetActiveRemocon();
-    if(s)
-        s->isShaking = 1;
     P = (dAcPy_c*)Players[0];
-    if(P) {
+    if(!P) ret;
         //P->initializeState_HipAttack(); This causes a funny, pressing up or down with this included causes mario to semi-permanently loose his collision
-        P->initializeState_SpinJump();
-        P->executeState_SpinJump();
-    }
+    P->initializeState_SpinJump();
+    P->executeState_SpinJump();
+
+    ret;
+}
+
+ext void Lonely() {
+    StageE4::instance->killAllEnemiesAtLevelEnd(0);
+    dBase_c* objects[FIND_ENTS] = {NULL};
+    objects[0] = GetNextOfType(AC_FLOOR_GYRATION);
+    objects[1] = GetNextOfType(AC_FLOOR_HOLE_DOKAN);
+    objects[2] = GetNextOfType(AC_FLOOR_DOKAN_EIGHT);
+    objects[3] = GetNextOfType(EN_CLOUDLT);
+    objects[4] = GetNextOfType(EN_REDRING);
+    objects[5] = GetNextOfType(EN_COIN);
+    objects[6] = GetNextOfType(EN_COIN_FLOOR);
+    objects[7] = GetNextOfType(EN_COIN_JUMP);
+    objects[8] = GetNextOfType(AC_BLOCK_COIN);
+    objects[9] = GetNextOfType(CHUKAN_POINT);
+
+    for(int i = 0; i < FIND_ENTS; i++)
+    if(objects[i]) objects[i]->Delete();
+    
 
     ret;
 }

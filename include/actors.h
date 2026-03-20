@@ -822,7 +822,7 @@ Actor *CreateActor(Actors type, u32 settings, VEC3 *pos, void *rot, char layer);
 Actor *GetActorParent(Actor *ac);
 char *GetActorName(Actors type);
 
-Actor *FindActorByID(int id);
+Actor *FindActorByID(uint id);
 Actor *FindActorByType(Actors type, Actor *startFrom);
 
 // Custom functions

@@ -82,22 +82,20 @@ inline int Round(float x)
     return (int)(x >= 0.0f ? x + 0.5f : x - 0.5f);
 }
 
-ext void changeActivePhysicsRect(dStageActor_c* actor, float xc, float yc, float xe, float ye) {
-    ActivePhysics::Info info;
-    info.xDistToCenter = xc;
-    info.yDistToCenter = yc;
-    info.xDistToEdge   = xe;
-    info.yDistToEdge   = ye;
+//More CallsPerSecond = Less Calls. Basically inverted... Think 30 = 2 Calls/s
+inline bool CallSpacer(int callsPerSecond)
+{
+    #ifdef DEBUG_CS
+    bool retb = callsPerSecond && (GlobalFrameTimer % callsPerSecond == 0);
+    if(retb) OSReport("Call Spacer Allowed Call on frame: %d\n", GlobalFrameTimer);
+    ret retb;
+    #endif
 
-    info.category1  = actor->aPhysics.info.category1;
-    info.category2  = actor->aPhysics.info.category2;
-    info.bitfield1  = actor->aPhysics.info.bitfield1;
-    info.bitfield2  = actor->aPhysics.info.bitfield2;
-    info.unkShort1C = actor->aPhysics.info.unkShort1C;
-    info.callback   = actor->aPhysics.info.callback;
+    #ifndef DEBUG_CS
+    ret callsPerSecond && (GlobalFrameTimer % callsPerSecond == 0);
+    #endif
+}
 
-    actor->aPhysics.removeFromList();
-    actor->aPhysics.initWithStruct(actor, &info);
-    actor->aPhysics.addToList();
-    ret;
+inline dBase_c* GetNextOfType(Actors actorID) {
+    ret (dBase_c*)FindActorByType(actorID, (Actor*)Players[0]);
 }

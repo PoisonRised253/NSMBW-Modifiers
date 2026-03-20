@@ -8,6 +8,7 @@
 //Build Flags
 #define DEBUG
 #define NO_MP
+//#define DEBUG_CS //This causes logs to fill very quickly, all the time...
 #define MOD_SIZE 7
 
 //Infinite-Lives "True" Amount
@@ -22,12 +23,17 @@
 
 //Scaling (Legacy)
 #define SCALE_MOD 0.00125f
+#define SCALE_MOD_OTHER 143.36
 
 //WM-Mode
 #define MAP_SPEED 12
 
 //SpinEternally
-#define TIMER_SPIN 8
+#define TIMER_SPIN 15
+
+//Lonely
+#define TIMER_CLEAR 6
+#define FIND_ENTS 10
 
 //MAXIMUMs and MINIMUMs
 #define FLOAT_MAX 65504.f

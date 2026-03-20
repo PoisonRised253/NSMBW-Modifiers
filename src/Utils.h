@@ -15,5 +15,6 @@ inline void SetLives();
 ext void ToggleMods();
 inline float clampf(float val, float min, float max);
 inline int Round(float x);
-ext void changeActivePhysicsRect(dStageActor_c *actor, float xc, float yc, float xe, float ye);
+inline bool CallSpacer(int callsPerSecond);
+inline dBase_c* GetNextOfType(Actors actorID);
 #endif
