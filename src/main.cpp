@@ -29,7 +29,7 @@ ext void onGameLoop()
         Lonely();
     if(Modifiers[2] && CallSpacer(TIMER_SPIN) && !GetNextOfType(EN_GOALPOLE))
         SpinEternally();
-    if (Modifiers[3])
+    if (Modifiers[3] && CallSpacer(30))
         SmallerAndNoYoshi();
     if (Modifiers[4])
         TowerFunc();

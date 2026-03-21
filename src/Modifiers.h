@@ -3,8 +3,6 @@
 #include "Utils.h"
 #include "g3dhax.h"
 
-ext void Grow(); //Test Func, to be replaced, Grows Y on player->scale
-ext void Shrink(); //Test Func, to be replaced, Shrinks Y on player->scale
 ext void SmallerAndNoYoshi(); //Empties yoshiID and makes Mario be forced into MINI++ state.
 ext void NahFuckThat(bool); //Stops dAc_Py_c from existing
 ext void TowerFunc(); //Lower Jumping

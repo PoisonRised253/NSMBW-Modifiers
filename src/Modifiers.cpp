@@ -1,23 +1,5 @@
 #include "Modifiers.h"
 
-// Mario is experiencing extreme grow sprout!!!
-ext void Grow()
-{
-    if (!Players[0])
-        ret;
-    Players[0]->scale.y += 0.00125f;
-    ret;
-}
-
-// The Red Plumber Man Lied!
-ext void Shrink()
-{
-    if (!Players[0])
-        ret;
-    Players[0]->scale.y -= 0.00125f;
-    ret;
-}
-
 // TODO: Add Multiplayer Support
 ext void SmallerAndNoYoshi()
 {
@@ -29,13 +11,18 @@ ext void SmallerAndNoYoshi()
 
     for (int i = 0; i < 4; i++)
     {
+        dEn_c* itm = (dEn_c*)CreateActor(EN_ITEM, 0xF019, Players[0]->pos, 0, 0);
+        if(itm) {
+            itm->visible = false;
+        }
         if (YoshiPtr[i])
             YoshiPtr[i] = NULL;
     }
 
+    
+
     #ifdef DEBUG
     static int counter = 0x0;
-    // XX XX XX F0
     if(GetActiveRemocon()->heldButtons & WPAD_B) 
     {
         dItem_c* item = (dItem_c*)CreateActor(EN_ITEM,counter,position,0,0);

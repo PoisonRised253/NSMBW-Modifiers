@@ -24,7 +24,10 @@ X=5: All Items fall fast, straight down
 X=6&7: Propeller doesnt float/abides by the laws of physics, doesnt move, but colides with ground (67 not mentioned on purpose, i hate that meme)
 X=8&9: Block_Hit "Unboxing"
 
-0xX0 Section:
+0x0000X000 Section:
+X=F: Item disappears upon touching ground // Maybe
+
+0x000000X0 Section:
 X=0: Default
 X=6: No X Velocity // Just a game theory
 X=7: No X Vel, Slow Fall // Also Just a game theory
