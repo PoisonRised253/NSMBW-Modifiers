@@ -24,14 +24,25 @@ ext void SmallerAndNoYoshi()
     Players[0]->scale.x = 0.25f;
     Players[0]->scale.y = 0.25f;
     Players[0]->scale.z = 0.25f;
+    Vec position = Players[0]->pos;
+    position.y += 50;
 
     for (int i = 0; i < 4; i++)
     {
         if (YoshiPtr[i])
             YoshiPtr[i] = NULL;
     }
-    MarPow = 0x03;
-    OSReport("MP: %d, LP: %d, YTP: %d, BTP: %d\n", MarPow, LuiPow, YTPow, BTPow);
+
+    #ifdef DEBUG
+    static int counter = 0x0;
+    // XX XX XX F0
+    if(GetActiveRemocon()->heldButtons & WPAD_B) 
+    {
+        dItem_c* item = (dItem_c*)CreateActor(EN_ITEM,counter,position,0,0);
+        OSReport("Item Spawn: %p, SETT: 0x%08X\n", &item, counter);
+        counter++;
+    }
+    #endif
     ret;
 }
 

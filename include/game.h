@@ -4262,4 +4262,7 @@ public:
 	u32 _10, _14;
 	u8 flags, _19, _1A, willDisplay, _1C, _1D;
 };
+
+void CreateItemByID();
+
 #endif

@@ -1,0 +1,47 @@
+This is my notes on how to spawn Item entities
+
+##Main Power-ups##
+Mushroom / Default: 0x00, 0x03, 0x05, 0x06, 0x08, 0x0A, 0x0B, 0x0C, 0x0D, 0x0F, 0x10
+FireFlower:         0x09
+IceFlower:          0x0E
+Penguin:            0x11
+Propeller:          0x15
+Mini:               0x19
+Star:               0x01
+1-UP:               0x07
+???:                0xF9 Normal-Sized Mini-Mush
+
+##MISC Power-ups##
+Block-Hit Coin:     0x02, 0x04
+
+##Settings Stuff##
+0xX00 Section:
+X=0: Default
+X=1: Block_Hit Upwards entry animation
+X=3: Propeller Straight upwards spawn
+X=4: Star & Propeller / Items Drops straight down
+X=5: All Items fall fast, straight down
+X=6&7: Propeller doesnt float/abides by the laws of physics, doesnt move, but colides with ground (67 not mentioned on purpose, i hate that meme)
+X=8&9: Block_Hit "Unboxing"
+
+0xX0 Section:
+X=0: Default
+X=6: No X Velocity // Just a game theory
+X=7: No X Vel, Slow Fall // Also Just a game theory
+
+0x0X000000 Section:
+X=1: Right-ward yeetus
+X=2: Freeze / No-Collide (Basically just static, png-like powerups)
+X=3: Upwards-Right yeetus
+X=4: Left-ward yeetus
+X=5: Short Up-right yeet
+X=6: strong down-right yeet
+X=7: Left yeetus, but they come back... ish
+X=8: Drop down chaotically
+X=9: Block_Hit Unboxing???
+X=F: Spawn NOTHING
+
+0xX0000000: No Effect
+
+
+

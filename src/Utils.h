@@ -4,6 +4,7 @@
 #include "game.h"
 #include "scStage.h"
 #include "defines.h"
+#include "item.h"
 
 extern bool Modifiers[MOD_SIZE];
 extern dAc_Py_c *Players[4];

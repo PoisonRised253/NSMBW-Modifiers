@@ -1009,6 +1009,8 @@ SECTIONS {
 	OSReport__FPCce = 2148923504;
 	_Z7OSFatal7GXColorS_PKc = 2149250832;
 
+	CreateItemByID = 2149434720;
+
 	GetSomeSizeRelatedBULLSHIT__Fv = 2148410992;
 	CalculateSomethingAboutRatio__Fffff = 2148411360;
 	CalculateSomethingElseAboutRatio__Fv = 2148411568;
