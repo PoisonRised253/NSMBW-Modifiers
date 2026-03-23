@@ -1,4 +1,4 @@
-source_files: [../src/main.cpp, ../src/Utils.cpp, ../src/Modifiers.cpp]
+source_files: [../src/main.cpp, ../src/Utils.cpp, ../src/Modifiers.cpp, ../src/math.cpp]
 
 hooks:
 
@@ -43,4 +43,15 @@ hooks:
   - name: NoPause
     type: patch
     addr_pal: 0x8004e050
+    data: '4e800020'
+  
+  - name: OnResetEvent
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x801abba8
+    target_func: onRecieveResetEvent
+
+  - name: AfterResetReturn
+    type: patch
+    addr_pal: 0x801abbac
     data: '4e800020'

@@ -35,6 +35,9 @@
 #define TIMER_CLEAR 6
 #define FIND_ENTS 10
 
+//SANY - Small and No Yoshi
+#define MOVE_MOD 1.05f
+
 //MAXIMUMs and MINIMUMs
 #define FLOAT_MAX 65504.f
 #define FLOAT_MIN -65504.f

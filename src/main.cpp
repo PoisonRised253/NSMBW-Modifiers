@@ -29,14 +29,14 @@ ext void onGameLoop()
         Lonely();
     if(Modifiers[2] && CallSpacer(TIMER_SPIN) && !GetNextOfType(EN_GOALPOLE))
         SpinEternally();
-    if (Modifiers[3] && CallSpacer(30))
+    if (Modifiers[3])
         SmallerAndNoYoshi();
     if (Modifiers[4])
         TowerFunc();
-    if (Modifiers[5])
-        WaterLevel();
+    //if (Modifiers[5])
+        //WaterLevel();
     if (Modifiers[6])
-        Worldmapify(true);
+        WaterLevel();
     
 
     #ifdef DEBUG 
@@ -76,5 +76,20 @@ ext void onStageCreated()
     for (int i = 0; i < MOD_SIZE; i++)
         OSReport("Modifiers[%d] is now: %d\n", i, Modifiers[i]);
     #endif
+    ret;
+}
+
+//Use this to reinit the mod, when the game reloads... i dont know if this is how it works, but eh why not
+ext void onRecieveResetEvent() {
+    Players[0] = NULL;
+    Players[1] = NULL;
+    Players[2] = NULL;
+    Players[3] = NULL;
+
+    GlobalFrameTimer = 0;
+    for(int i = 0; i < MOD_SIZE; i++) {
+        Modifiers[i] = false;
+    }
+
     ret;
 }

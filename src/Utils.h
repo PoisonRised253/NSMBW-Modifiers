@@ -5,6 +5,7 @@
 #include "scStage.h"
 #include "defines.h"
 #include "item.h"
+#include "math.h"
 
 extern bool Modifiers[MOD_SIZE];
 extern dAc_Py_c *Players[4];
@@ -14,8 +15,6 @@ inline bool GetPlayers();
 inline void getLevelInfo(u32* lOut, u32* wOut, u8* aOut, u32* exitOut, u32* gameOut);
 inline void SetLives();
 ext void ToggleMods();
-inline float clampf(float val, float min, float max);
-inline int Round(float x);
 inline bool CallSpacer(int callsPerSecond);
 inline dBase_c* GetNextOfType(Actors actorID);
 #endif

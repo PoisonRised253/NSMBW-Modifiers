@@ -70,18 +70,6 @@ ext void ToggleMods() {
     ret;
 }
 
-inline float clampf(float val, float min, float max) {
-    if(val < min) ret min;
-    if(val > max) ret max;
-    
-    ret val;
-}
-
-inline int Round(float x)
-{
-    return (int)(x >= 0.0f ? x + 0.5f : x - 0.5f);
-}
-
 //More CallsPerSecond = Less Calls. Basically inverted... Think 30 = 2 Calls/s
 inline bool CallSpacer(int callsPerSecond)
 {
