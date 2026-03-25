@@ -9,6 +9,8 @@ It does not use Newer gameplay changes/features.
 It uses a mix of existing and newly included addresses in kamek_region.x.   
 It includes .arc edits, and tries to be funny with that.    
 
+If ive learned one thing from making this mod, its definately that Nintendo must be smoking some premium crack at HQ. The Codebase of the Base-Game is so wierd and questionable, im surprised this game didnt fall like a house of cards.
+
 Credit: 
 NewerTeam/NewerSMBW: https://github.com/Newer-Team/NewerSMBW (I used the build system in this repo), Huge Inspiration.  
 MayroSMM: Inspiration (Nightmare Mario Wii :3). 

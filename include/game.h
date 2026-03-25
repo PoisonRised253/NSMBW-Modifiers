@@ -2368,6 +2368,18 @@ public:
 	void clearFlag(int flag);
 	bool testFlag(int flag);
 	void grandPowerSet();
+	void moveSpeedSet(); //ARE WE SERIOUS NINTENDO, JUST LET ME PASS SOMETHING PLEASEEEEEEEEEE
+	void gravitySet(); //maybe requires passing float, however sig is cFv
+	void maxFallSpeedSet(); //I assume i must also pass float, cFv again tho.
+	void setJumpGravity(); //cFv again, maybe float idk fuckin maybe dont be so cryptic Nintendo, if that even is your real name
+	void setCancelCrouch(); //cFv, this time it makes sense.
+	void setBgDamage(); //cFv, maybe pass int? or it might literally just do something like damage=1
+	void setCcAtBody(int); // likely requires to pass the proper ItemID, to set CC based on that powerup's ingame scale
+	void setCcAtCannon();
+	void setCcAtStar();
+	void setCcAtSlip();
+	void setCcAtHipAttack();
+	void setCcAtPenguinSlip();
 
 	static daPlBase_c *findByID(int id);
 };

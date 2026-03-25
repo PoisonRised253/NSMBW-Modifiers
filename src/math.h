@@ -5,6 +5,8 @@
 
 inline float clampf(float val, float min, float max);
 inline int Round(float x);
+inline Vec MakeVec(float x, float y, float z);
+inline Vec2 MakeVec2(float x, float y);
 inline Vec VecAdd(Vec a, Vec b);
 inline Vec VecSub(Vec a, Vec b);
 inline Vec VecMul(Vec a, Vec b);

@@ -1,0 +1,20 @@
+Warning: Spoilers ahead, this will list all Level's features, and some details
+
+
+1-1: Despawn all entities except for Mario, incl. Enemies and Rolling Hills
+
+1-2: Always Spin, This effect is strange, here's the rundown:
+Falling off any platform or ground, will result in the effect activating.
+Walljumping will deactivate the effect until its activated again by the condition above.
+Might cause strange things to happen randomly.
+
+1-3: Mario is made about 2 pixels large, and forced into Mini.
+Yoshi has been removed in a very funny way, i cant explain it, but just look at it lol
+
+1-Tower: Mario's Vertical Speed is limited, just enough to make the level barely possible.
+I do NOT know if all Starcoins are possible.
+Entering the Level with Mini (and retaining Mini) lets you stop Vertical momentum entirely by Groundpounding.
+
+1-4: Not Yet Decided lol, likely to be a subway surfers type mode.
+
+1-5: May be Linear-Movement, meaning Velocity doesnt exist, instead we shift Mario's position based on which button is pressed
