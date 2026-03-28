@@ -4277,4 +4277,255 @@ public:
 
 void CreateItemByID();
 
+namespace dWmLib {
+	//Commented functions arent ready, because i cant figure out what they require me to pass. Ill list the signature after the func
+	//void* ConvertScreenPos(unkType); FPQ34nw4r4math4VEC3
+	//void* findRouteByMaterial(unkType); FPCciPc
+	//void* findShortMaterial(unkType); FPCciPc
+	//Vec getModelNodePos(unkType); FPCQ23m3d6bmdl_ci
+	//Vec getModelNodePos(unkType); FPCQ23m3d6bmdl_cPCc
+	//Vec GetNormalizedScreenPos(); FRC7mVec2_cRC7mVec2_cRC7mVec2_c
+	//void* GetOpenStatusCore(); FiiRC10dCsvData_c
+	//void getPointDir(); FRC7mVec3_cRC7mVec3_c
+	
+	//Vars of unknown type
+	//sc_AnchorShadowName, likely static const char* or static const char[???]. Cant tell
+	//sc_AnimeRootNodeName x2, likely char[][]
+
+	//Ill use _probably at the end of function params, to note highly likely data to insert.
+	//Ill use _maybe as a less likely 50/50 or less chance of being right
+
+	void MakePointNameFromCourseNo(int levelID_probably, int worldID_probably, char* nameBuff_maybe);
+	void MakeRouteName(char* nameBuff_maybe, const char* FromCourse_maybe, const char* ToCourse_maybe);
+	void procClearCourseDataFlag(int, int, int); //unkown ints, maybe world, level, unk. Cant get that third one
+	void procCourseGameOver(bool unk);
+	void procRestoreAllKinokoHouse();
+	void procRestoreKinokoHouse(int courseNode_maybe);
+	void setEnemyRevivalCount(int unk, int worldID_maybe, int count_maybe);
+	void setStartPointKinokoHouseKindNum(unsigned char unk);
+	void updateKinopioGame();
+	void ClearKinopioChukan();
+	void clearZoromeTime();
+	void GetEndPointNameFromRouteName(const char*, char*); //Might be incorrect signature
+	void getEnemyRevivalCount(int, int);
+	void GetKinokoHouseCourseNo(const char*);
+	void getKoopaShipWorld();
+	void GetPointTypeFromPointName(const char*);
+	void GetRouteType(const char*);
+	void getSpecialWorldMessageId(int);
+	void InitKinopioCourse();
+
+	void* GetClearStatus(int, int);
+	void* GetCourseNoFromPointName(const char*);
+	void* GetCourseTypeFromCourseNo(int);
+	void* GetCurrentPlayResultStatus(int, int, int); 
+	void* GetCurrentPlayResultStatus();
+	void* GetOpenStatus(int, int);
+	void* getStartPointType(); //likely rets u32
+	void* getWorldBossProfID(); //likely rets u32
+	void* getZoromeTime();
+	void* MakeKinokoHouseName(int worldID_maybe, char* nameBuff_maybe);
+	void* RestoreKinopioHelpGameInfo();
+	void* savePlayerPosInfo();
+	
+	u32 getMaxCollectionCoinNum(int worldID_probably);
+	u32 getStartPointKinokoHouseKindNum();
+
+	char* GetStartPointNameFromRouteName(const char*, char*); //not certain
+	
+	bool checkIsAllPlayerWaitDemo();
+	bool CheckHalfAreaX(const Vec &);
+	bool CheckHalfAreaY(const Vec &);
+	bool CheckOnCenterLineX(const Vec &);
+	bool CheckOnCenterLineY(const Vec &);
+	bool hasKoopaShipStop();
+	bool IsAirShipCleared(int worldID_probably);
+	bool IsAllComplete(); //This is what causes "Youve collected everything in World X" dialog
+	bool IsAntlionWorld(); //Likely W2
+	bool IsBubbleWorld(); //Likely W7
+	bool IsKillerWorld();
+	bool IsCourseClear(int levelID_probably, int worldId_probably); //likely returns true if beaten, or complete
+	bool isCourseComplete(int levelID_probably, int worldID_probably); //returns true when all star-coins are collected, and/or when secret&normal exit have been aquired
+	bool IsCourseFailed(int levelID_probably, int worldID_probably,int areaID_maybe); //maybe because im not certain like at all
+	bool IsCourseFirstClear(int levelID_probably, int worldID_probably); //Is this the first time the player has succeeded at this level, in this save?
+	bool IsCourseFirstOmoteClear(int levelID_probably, int worldID_probably, int unknown); //ChatGPT says Omote refers to Normal exit, in this specific context
+	bool IsCourseFirstUraClear(int levelID_probably, int worldID_probably, int unknown); //Following that logic, this must mean Secret Exit.
+	bool IsCourseOmoteClear(int levelID_probably, int worldID_probably); //Is Normal Clear?
+	bool IsCourseOmoteClearSimple(int levelID_probably, int worldID_probably); //Dont know why this exists...
+	bool IsCourseOpened(int levelID_probably, int worldID_probably);
+	bool IsCourseOtasukeClear(int levelID_probably, int worldID_probably); //Checks if SuperGuide completed this stage for you. Likely returns false if it got beaten by superguide, then by player
+	bool IsCourseOtasukeClearSimple(int levelID_probably, int worldID_probably); //Also dont know why this exists.
+	bool IsCourseTypeStageFromCourseNo(int levelID_probably); //I cannot decode what this function is supposed to give me, what the fuck does the funcname even mean?
+	bool IsCourseUraClear(int levelID_probably, int worldID_probably); //Was Secret Exit cleared?
+	bool IsCourseUraClearSimple(int levelID_probably, int worldID_probably);
+	bool IsCourseUraOtasukeClearSimple(int levelID_probably, int worldID_probably); //This never occours as far as i know, except for 3-4 & 3-5
+	bool IsKinopioHelpStart(); //I dont know that this could be, but i think its related to when you save a toad, and they spawn a toad house on 0-X (Starting point)
+	bool isKinopioHouseUsed(); //This makes Item Houses unavailable after use. or well, detects their used-ness
+	bool IsKinopioInChukan(); //Dunno
+	bool IsKinopioLifeUpdatable(); //Also Dunno
+	bool IsKinopioOpenCourseClear(); //Maybe 0-X related
+	bool IsKinopioOpenCourseFirstClear();
+	bool IsKinopioStartFirst();
+	bool IsKoopaJrEvent(int levelID_probably, int worldID_probably);
+	bool isKoopaShipAnchor();
+	bool isKoopaShipOnCurrentWorld();
+	bool IsSingleEntry();
+	bool isSpecialWorld(); //Is World9?
+	bool isSpecialWorldCourseOpen(int); //Likely LvlID but not certain, might be a W9 specific intager
+	bool IsStartKinopioHelpDemo(); //You should make something to kill the WM demos, i hate them, they waste my time
+	bool isStartPointKinokoHouse1up();
+	bool isStartPointKinokoHouseRed();
+	bool isStartPointKinokoHouseStar();
+	bool IsWorldOpen(int worldID);
+	bool isYokoCon(int unk); // The fuck is a YokoCon, chatgpt says "Yoko = horizontal", "Con = Controller", however i dont think shaking or turning the controller does shit on WM
+	
+	dEn_c* SearchEnemy(unsigned short unk, int unk2);
+	dEn_c* SearchMapObjFromCourseNo(int levelID_probably, int worldID_probably);
+	dEn_c* SearchMapObjFromCsvIndex(unsigned short unk, int unk2);
+	dEn_c* SearchMapObjFromName(const char* name);
+	
+	//Variables
+
+	static bool IsKinopioChukanOld;
+
+	static u32 CannonNextWorld;
+	static u32 ForceList[30];
+	static u32 KinokoHouseCourseNo;
+	static u32 KinokoTypeName;
+	static u32 LastCourse;
+
+	static void* LoopAnimeRootNodeName;
+	static void* SoundAnimeRootNodeName;
+	static void* ZoromeShadowName;
+};
+
+class PauseManager_c {
+	public:
+	void ConfirmationSelectDecisionWait();
+	void CourseHoinitialize();
+	void CourseOutConfirmation();
+	void execute();
+	void initialize();
+	void onDispOtasukeWindow();
+	void OtasukeDisp();
+	void PauseSetUp(int unk);
+	void ProcMainInit();
+	void ProcMainPause();
+	void ProcMainPauseOff();
+	void ProcMainPauseOffInit();
+	void ProcMainPauseOn();
+	void SelectSoundSet(int unk);
+	void setPause();
+	void setPauseEnable(bool allowPause_probably);
+
+	bool isDisable(); // Might wanna patch this to force ret false
+	bool isOtasukePause();
+
+	//Variables
+
+	PauseManager_c* m_instance;
+	bool m_Created;
+	bool m_Pause;
+	void* m_OtasukeAfter;
+	void* OtasukeInfo;
+	void* __vt__;
+	
+
+	~PauseManager_c();
+};
+
+//class dScSeqMng_c comming soon
+
+class dInfo_c {
+	//Unknwon Params / I dont have the IbaraMode_e enum, which means i cant fuck with these. Symbols wont help either
+	//void SetIbaraNow(); cFiQ27dInfo_c11IbaraMode_e
+	//void SetIbaraOld(); cFiQ27dInfo_c11IbaraMode_e
+	//void* GetMapEnemyInfo(); cFiiRQ27dInfo_c7enemy_s
+	//SetMapEnemyInfo(); cFiiii
+	//SetWorldMapEnemy(); cFiiRCQ27dInfo_c7enemy_s
+	//startGame(); cFRCQ27dInfo_c15StartGameInfo_s
+
+	void addStockItem(int slot_probably);
+	void subStockItem(int slot_probably);
+	void clsStockItem(int slot_probably);
+	void initGame();
+	void initMultiMode();
+	void initStage();
+	void PlayerStateInit();
+	void CourseSelectInit(); //Likely what causes the init of WorldMap, or something idk
+	
+	void* GetIbaraNow(int unk);
+	void* GetIbaraOld(int unk);
+	void* GetWorldMapEnemy(int world_maybe, int enemy_maybe);
+	
+	u32 getCourseNo();
+	u32 getWorldNo();
+	u32 getStockItem(int slot_probably) const;
+
+	static dInfo_c* m_instance;
+	void* m_startGameInfo;
+	void* m_startInfo;
+	void* mGameFlag;
+
+	~dInfo_c();
+};
+
+class dActorMng_c {
+	//void floorEntryBufferEntry(); cFPQ211dActorMng_c14FloorEntryInfo
+	//void createJumpCoin(); cFRC7mVec3_cUcUc 
+	//void createUpCoin(); cFRC7mVec3_cUcUcUc
+	//void createBlockDownCoin(); cFRC7mVec3_cUcUcUc
+
+	void ActorInfoAllClear();
+	void allEnemyDeath(int unk); //Likely Mode, as some other classes have similar funcs
+	void execute();
+	void finalUpdate();
+	void floorEntryBufferAllClear();
+	void floorEntryBufferCheck(Vec2* unk);
+	void floorEntryBufferClear(int unk);
+	void soroban_fuki_execute();
+	void soroban_playercheck();
+
+	bool envAllWaterCheck();
+	bool envObakeCheck();
+	
+	u32 getEnvLightNo();
+	u32 getObjBgZpos(unsigned char);
+	
+	static dActorMng_c* m_instance;
+};
+
+class dBalloonMng_c {
+	//void setItemId(this?); cF9fBaseID_e
+	void BalloonInfoClear();
+	void execute();
+	void item_max_check();
+
+	static dBalloonMng_c* m_instance;
+};
+
+class dActorCreateMng_c {
+	void ActorCreateInfoClear();
+	void incMapObjZposCount();
+	void incMapObjZposCount_layer2();
+	void incZposCount();
+	void incZposCount_layer2();
+	void MapActorInitial_next();
+	void MapActorInitial_set();
+	void ScroolAreaInCheck(int,int,int,int,int,int);
+	void ScroolAreaInLoopCheck(int,int,int,int,int,int);
+	void setMapActorCreate();
+	void setMapActorCreate_next();
+
+	int addMapObjZposCount();
+	int addZposCount_layer2();
+
+	bool GroupIdCheck(unsigned long group_probably);
+
+	//Variables
+
+	static dActorCreateMng_c* m_instance;
+	void* l_GoAheadEnemy;
+};
+
 #endif

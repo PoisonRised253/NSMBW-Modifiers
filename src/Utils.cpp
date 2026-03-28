@@ -49,7 +49,7 @@ ext void ToggleMods() {
 
     if(LevelID == NULL && WorldID == NULL) ret;
 
-    //Peaches Castle (41 - 1)
+    //Peaches Castle (1-40)
     Modifiers[0] = (LevelID == 41 && WorldID == 1);
     //1 - 1
     Modifiers[1] = (LevelID == 1 && WorldID == 1);

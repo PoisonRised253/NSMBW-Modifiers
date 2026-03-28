@@ -52,14 +52,23 @@
 #define PENGUIN 0x05
 #define ICE 0x06
 
-//Stage Exit Types
-#define NORMAL_EXIT 2 // Turns to 0
-#define SECONDARY_ROOM_EXIT 3 //Maybe, could also be secondary room? Maybe
-#define STAGE_FAIL_EXIT 1
-#define STAGE_SUCCESS_EXIT 0
+//dScStage_c::m_exitMode
+#define SUCCESS_EXIT 0
+#define EXIT_FAIL 1
+#define EXIT_PLAYER_CHOICE 2
+#define EXIT_DEFAULT 3
 
-//GameMode
-#define NORMAL_GAME 0
-#define TITLESCREEN_GAME 2 //Also Maybe
+
+//dScStage_c::m_gameMode
+#define GAME_NORMAL 0
+#define GAME_LUIGI_GUIDE 1
+#define GAME_TITLE 2
+#define GAME_RETURN_ON_INPUT 3
+#define GAME_MOVIE 4 //Idk, it spawns some strange overlay, and changes nothing
+
+//dScStage_c::m_miniGame
+#define MINIGAME_NONE 0
+#define MINIGAME_STAR 1
+#define MINIGAME_TOAD_HOUSE 2
 
 #endif

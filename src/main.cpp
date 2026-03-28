@@ -37,13 +37,13 @@ ext void onGameLoop()
         //WaterLevel();
     if (Modifiers[6])
         WaterLevel();
-    
 
-    #ifdef DEBUG 
-    const int buttons = WPAD_A | WPAD_B;
-    if((GetActiveRemocon()->heldButtons & buttons) == buttons) {
-        ToggleMods();
-    }
+    #ifdef DEBUG
+    u32 btns = GetActiveRemocon()->heldButtons;
+    const int dumpLevelData = WPAD_A | WPAD_B;
+
+    if((btns & dumpLevelData) == dumpLevelData) {
+        ToggleMods(); }
     #endif
 
     #ifdef NO_MP
