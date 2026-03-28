@@ -4528,4 +4528,30 @@ class dActorCreateMng_c {
 	void* l_GoAheadEnemy;
 };
 
+class dEnemyMng_c {
+	//void CommonCreateYoshiEgg(); cFR7mVec3_cUlUlSci
+	//void createYoshiEgg(); cFR7mVec3_cUlUlSc
+	//void SonboEatCreateYoshiEgg(); cFR7mVec3_cUlUlSci
+	//void setBigHanaMng(); cFP14daBigHanaMgr_c
+
+	void breakdownSE(int, const Vec &);
+	void clrQuakeComboCount();
+	void clrTogemetComboCount();
+	void createRevivalBallon(Vec3 &pos_maybe, int unk, int unk2); //Haha, Nintendo miswrote Balloon! Was für Opfer.
+	void demo_ivy_create(Vec *);
+	void EnemyInfoAllClear();
+	void incQuakeComboCount();
+	void search_magkiller_delete(int unk);
+	void search_magkiller_entry(float unk, float* unk2, unsigned char unk3);
+	void search_magkiller_line_check(int unk, unsigned char unk2);
+	void setNoGetItemTimer(int unk);
+	void TeresaZposCount();
+
+	void* MagSearchKillerZposCount();
+
+	u32 getNoGetItemTimer(int unk);
+
+	static dEnemyMng_c* m_instance;
+};
+
 #endif
