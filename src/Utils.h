@@ -17,4 +17,7 @@ inline void SetLives();
 ext void ToggleMods();
 inline bool CallSpacer(int callsPerSecond);
 inline dBase_c* GetNextOfType(Actors actorID);
+inline void GetAllOfType(Actors actorID, u8 sizeOfArray, dEn_c* outBuff[], int* outSize);
+inline void ClearObjVel(dEn_c* obj, u8 mode);
+
 #endif

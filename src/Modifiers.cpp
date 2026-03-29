@@ -105,26 +105,28 @@ ext void TowerFunc()
 
 // This function removes Velocity.
 // It replaces moving with positional change, which means Physics on the X axis are basically lost for the Player(s).
-ext void WaterLevel()
+ext void Linearity()
 {
+    const float precalcSpeed = SPEED_WATER_MOD / 60;
     for (int i = 0; i < 4; i++)
     {
         if (!Players[i])
             continue;
-        // float* c = &dWaterManager_c::instance->current;
+        //float* c = &dWaterManager_c::instance->current;
         Players[i]->max_speed.x = SPEED_WATER_MOD;
+        u32 btn = GetActiveRemocon()->heldButtons;
         float *p = &Players[i]->pos.x;
+        
+        if (btn & WPAD_RIGHT)
+        {
+            *p += precalcSpeed;
+        }
+        else if (btn & WPAD_LEFT)
+        {
+            *p += -precalcSpeed;
+        }
+
         Players[i]->speed.x = 0;
-        if (GetActiveRemocon()->heldButtons & WPAD_RIGHT)
-        {
-            *p += SPEED_WATER_MOD / 60;
-            continue;
-        }
-        if (GetActiveRemocon()->heldButtons & WPAD_LEFT)
-        {
-            *p += -(SPEED_WATER_MOD / 60);
-            continue;
-        }
     }
     ret;
 }
@@ -219,22 +221,15 @@ ext void Lonely()
     ret;
 }
 
-#define TRACKS 8
-static int yChoice = 0;
-static const float yPoses[TRACKS] = {1};
-// PAST ME HERE, FINISH THIS FOR 1-4!!!!!!!!!!! NOWWWW!
-
-ext void SubwaySurfers()
-{
-    s32 buttons = GetActiveRemocon()->heldButtons;
-    if (buttons & WPAD_UP)
-        yChoice++;
-    if (buttons & WPAD_DOWN)
-        yChoice--;
-
-    yChoice = clamp(yChoice, 0, TRACKS);
-    for (int i = 0; i < 4; i++)
-    {
-        Players[i]->pos.y = yPoses[yChoice];
+ext void Buoyancy() {
+    daPlBase_c* current;
+    for(int i = 0; i < 4; i++) {
+        if(!Players[i]) continue;
+        Players[i]->scale.x = 1.5f;
+        Players[i]->scale.y = 1;
+        Players[i]->scale.z = 1.5f;
+        current = (daPlBase_c*)Players[i];
+        if(!current) continue;
+        current->WaterMaxFallSpeed = -10000;
     }
 }

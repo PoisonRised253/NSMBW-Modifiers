@@ -16,3 +16,4 @@ NewerTeam/NewerSMBW: https://github.com/Newer-Team/NewerSMBW (I used the build s
 MayroSMM: Inspiration (Nightmare Mario Wii :3). 
 NoirHeart: Inspiration & Reminding me of MayroSMM's existence, after i forgor for like 5 years. 
 RootCubed(github): https://github.com/RootCubed/NSMBW-Maps, Memory Maps.    
+lemurboy12 & Saiveeon: https://gamebanana.com/mods/download/311911#FileInfo_631980, Mario -> Quagsire model change.

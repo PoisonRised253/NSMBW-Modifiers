@@ -2357,6 +2357,11 @@ public:
 	u8 _1460;
 	dStateWrapper_c<daPlBase_c> states2;
 
+	static float WaterJumpSpeed;
+	static float WaterMaxFallSpeed;
+	static float WaterSwimSpeed;
+	static float WaterWalkSpeed;
+
 	void justFaceSpecificDirection(int direction);
 	void moveInDirection(float *targetX, float *speed);
 	bool isReadyForDemoControlAction();
@@ -2556,6 +2561,14 @@ public:
 	void _vfD0(Vec2 *p, float f);
 
 	void doStateChange(dStateBase_c *state); // might return bool, dunno
+
+	static float WATER_FALLMAXSPD;
+	static float WATER_GRAIVTY;
+	static float WATER_ROLL_DEC_RATE;
+	static float WATER_YMAXSPD;
+	static float DEADFALL_SPINSPEED;
+	static float DEADFALL_YSPEED;
+	static float DEADFALL_YSPEED_MAX;
 
 	// Now here's where the fun starts.
 
@@ -4343,7 +4356,7 @@ namespace dWmLib {
 	bool IsAllComplete(); //This is what causes "Youve collected everything in World X" dialog
 	bool IsAntlionWorld(); //Likely W2
 	bool IsBubbleWorld(); //Likely W7
-	bool IsKillerWorld();
+	bool IsKillerWorld(); //Likely W6
 	bool IsCourseClear(int levelID_probably, int worldId_probably); //likely returns true if beaten, or complete
 	bool isCourseComplete(int levelID_probably, int worldID_probably); //returns true when all star-coins are collected, and/or when secret&normal exit have been aquired
 	bool IsCourseFailed(int levelID_probably, int worldID_probably,int areaID_maybe); //maybe because im not certain like at all
@@ -4377,7 +4390,7 @@ namespace dWmLib {
 	bool isStartPointKinokoHouseRed();
 	bool isStartPointKinokoHouseStar();
 	bool IsWorldOpen(int worldID);
-	bool isYokoCon(int unk); // The fuck is a YokoCon, chatgpt says "Yoko = horizontal", "Con = Controller", however i dont think shaking or turning the controller does shit on WM
+	bool isYokoCon(int controllerID_maybe); //Not certain, but this might be used to call a showing of fukidashiInfo's graphics, when attaching/detaching a controller extentions
 	
 	dEn_c* SearchEnemy(unsigned short unk, int unk2);
 	dEn_c* SearchMapObjFromCourseNo(int levelID_probably, int worldID_probably);
@@ -4445,6 +4458,7 @@ class dInfo_c {
 	//SetWorldMapEnemy(); cFiiRCQ27dInfo_c7enemy_s
 	//startGame(); cFRCQ27dInfo_c15StartGameInfo_s
 
+	public:
 	void addStockItem(int slot_probably);
 	void subStockItem(int slot_probably);
 	void clsStockItem(int slot_probably);
@@ -4476,6 +4490,7 @@ class dActorMng_c {
 	//void createUpCoin(); cFRC7mVec3_cUcUcUc
 	//void createBlockDownCoin(); cFRC7mVec3_cUcUcUc
 
+	public:
 	void ActorInfoAllClear();
 	void allEnemyDeath(int unk); //Likely Mode, as some other classes have similar funcs
 	void execute();
@@ -4491,12 +4506,16 @@ class dActorMng_c {
 	
 	u32 getEnvLightNo();
 	u32 getObjBgZpos(unsigned char);
+
+	//Variables
 	
 	static dActorMng_c* m_instance;
 };
 
 class dBalloonMng_c {
 	//void setItemId(this?); cF9fBaseID_e
+
+	public:
 	void BalloonInfoClear();
 	void execute();
 	void item_max_check();
@@ -4505,6 +4524,7 @@ class dBalloonMng_c {
 };
 
 class dActorCreateMng_c {
+	public:
 	void ActorCreateInfoClear();
 	void incMapObjZposCount();
 	void incMapObjZposCount_layer2();
@@ -4534,6 +4554,7 @@ class dEnemyMng_c {
 	//void SonboEatCreateYoshiEgg(); cFR7mVec3_cUlUlSci
 	//void setBigHanaMng(); cFP14daBigHanaMgr_c
 
+	public:
 	void breakdownSE(int, const Vec &);
 	void clrQuakeComboCount();
 	void clrTogemetComboCount();
@@ -4551,7 +4572,121 @@ class dEnemyMng_c {
 
 	u32 getNoGetItemTimer(int unk);
 
+	//Variables
+
 	static dEnemyMng_c* m_instance;
+};
+
+//This might be the biggest class in the game, im gonna be in pain for a while.
+namespace daPyMng_c {
+	//void getPlayerSetPos() cFUcUc | This is commented, simply because the given signature does not make sense to me.
+	//void setCarryOverYoshiInfo(); cFUcUci | dont check out to me.
+	void addNum(int unk);
+	void decNum(int unk);
+	void addNum();
+	void decNum();
+	void addRest(int unk, int unk2, bool unk3);
+	void decRest(int unk);
+	void addScore(int unk, int unk2);
+	void incCoin(int amount_probably);
+	void incRestAll(bool unk);
+	void changeItemKinopioPlrNo(int &unk);
+	void checkBonusNoCap();
+	void checkCorrectCreateInfo();
+	void checkLastAlivePlayer();
+	void courseIn();
+	void create(int unk, Vec* unk2, int unk3, unsigned char unk4);
+	void createCourseInit();
+	void createYoshi(Vec &unk, int unk2, dAcPy_c* playerToCreateOn_maybe);
+	void decideCtrlPlrNo();
+	void deleteCullingYoshi();
+	void executeLastAll();
+	void executeLastPlayer();
+	void exitStage();
+	void initGame();
+	void initStage();
+	void initYoshiPriority(daPlBase_c* yoshi);
+	void releaseYoshi(daPlBase_c* yoshi);
+	void setCourseInStarBGM();
+	void setDefaultParam();
+	void setHipAttackQuake(int playerID_maybe, unsigned char unk2);
+	void setPlayer(int playerID_probably, dAcPy_c* player);
+	void setYoshi(daPlBase_c* yoshi); //Not certain if its player, or yoshi, which is required to pass.
+	void setYoshiPriority(daPlBase_c* yoshiToChange);
+	void startMissBGM();
+	void startStarBGM();
+	void startYoshiBGM();
+	void stopStarBGM();
+	void stopYoshiBGM();
+	void update();
+
+	void* getActScrollInfo();
+	void* getCoinAll();
+	void* getCourseInListPlrNo(int unk);
+	void* getCourseInPlayerModelType(unsigned char playerid_maybe);
+	void* getItemKinopio();
+	void* getItemKinopioNum();
+	void* getPlayerCreateAction(); //This likely refers to the stageIn animation state, which can be set by the level. For example you can set it to be Groundpound, which causes players to grounpound upon being loaded
+	
+	daPlBase_c* getCtrlPlayer(int unk); //Gets the player who's the most towards Bottom-Right of the screen as far as is known
+	daPlBase_c* getPlayer(int playerID); //0-3
+	daPlBase_c* getYoshi(int playerID); //0-3
+
+	u32 getEntryNum();
+	u32 getNumInGame();
+	u32 getScrollNum();
+	u32 getYoshiFruit(unsigned char unk); // I believe it means fruit amount, like how many yoshi has eaten
+	u32 getYoshiNum();
+
+	nw4r::ut::Color getYoshiColor(unsigned char yoshiID_maybe);
+	
+	daYoshi_c* getYoshiDirectP(int yoshiID_probably);
+
+	bool isAcceptQuake(int playerID_maybe);
+	bool isCreateBalloon(int playerID_probably);
+	bool isEffectStop(int playerID_maybe);
+	bool isPlayerPauseEnabled(signed char);
+
+	//Variables
+
+	u32 m_playerID[4];
+	u32 m_yoshiID[4];
+	u32 m_quakeEffectFlag;
+	u32 quakeTimer;
+	u32 m_star_count;
+	u32 m_star_time;
+	u32 m_yoshiFruit;
+	u32 mBgmState; //Probably u32, as it must be a flag of sorts
+	u32 mBonusNoCap;
+	u32 mCoin;
+	u32 mCourseInList;
+	u32 mCreateItem; //Likely which item was equipped when the level started, needs to be tested to be sure.
+	u32 mCtrlPlrNo; //Very likely to be which player currently controlls scrolling, mostly picked by who's most to the right and bottom of the screen.
+	u32 mKinopioCarryCount;
+	u32 mKinopioMode;
+	u32 mNum; //Likely Player amount
+	u32 mPlayerMode; //Using u32, since any data can technically be used in u32, without heavily breaking anything. This is likely an enum, which means its just an int lol
+	u32 mRest;
+	u32 mScore;
+
+	void* mActPlayerInfo;
+	void* mAttention;
+	void* mDemoManager; //Non-Implemented class, doomed to be changed at some point
+	void* mEffectMng; //Might be implemented, too tired to find out.
+	void* mMultiManager; //Also Not yet implemented. (As far as i know)
+	void* mPauseEnableInfo;
+	void* mPlayerType;
+	void* mQuakeTrigger;
+	void* mStopTimerInfo;
+	void* mStopTimerInfoOld;
+	void* mTimeUpPlayerNum;
+
+	bool mAllBalloon;
+	bool mPauseDisable;
+	
+	nw4r::ut::Color m_yoshiColor;
+
+	Vec mPlayerEntry; // Its either a Vec, or an instance reference, in which case i need to update this.
 };
 
 #endif

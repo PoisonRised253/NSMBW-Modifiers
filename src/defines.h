@@ -71,4 +71,6 @@
 #define MINIGAME_STAR 1
 #define MINIGAME_TOAD_HOUSE 2
 
+//Structs go here
+
 #endif

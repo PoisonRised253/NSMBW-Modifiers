@@ -87,3 +87,32 @@ inline bool CallSpacer(int callsPerSecond)
 inline dBase_c* GetNextOfType(Actors actorID) {
     ret (dBase_c*)FindActorByType(actorID, (Actor*)Players[0]);
 }
+
+inline void GetAllOfType(Actors actorID, u8 sizeOfArray, dEn_c* outBuff[], int* outSize) {
+    dEn_c* last;
+    dEn_c* curr;
+    if(!last) last = (dEn_c*)Players[0];
+    for(int i = 0; i < sizeOfArray; i++) {
+        curr = (dEn_c*)FindActorByType(actorID, (Actor*)last);
+        if(!curr) ret;
+        outBuff[i] = curr;
+        last = curr;
+    }
+
+    ret;
+}
+
+//Mode 0: x only
+//Mode 1: y only
+//Mode 2: x & y
+inline void ClearObjVel(dEn_c* obj, u8 mode) {
+    if(!obj) ret;
+    switch(mode) {
+        case 0: obj->speed.x = 0; ret;
+        case 1: obj->speed.y = 1; ret;
+        case 2: obj->speed.x = 0; obj->speed.y = 0; ret;
+        default: ret;
+    }
+
+    ret;
+}

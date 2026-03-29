@@ -5,30 +5,45 @@ hooks:
   - name: OnGameLoop
     type: branch_insn
     branch_type: b
-    src_addr_pal: 0x80143bc8
+    src_addr_pal: 0x800e4874
     target_func: onGameLoop
+
+    #Original: 80143bc8
+    #Desired: 800e1e5c <- dScene Hook, unknown stability, likely bad
+    #Alternative: 800e4874 <- 6dSys hook
 
   - name: PreGameLoop
     type: branch_insn
     branch_type: b
-    src_addr_pal: 0x800e39c0
+    src_addr_pal: 0x800e4814
     target_func: preGameLoop
+
+    #Original: 800e39c0
+    #Desired: 800e1e0c <- dScene hook, doesnt really work, crashes
+    #Alternate: 800e4814
 
   - name: OnStageCreated
     type: branch_insn
     branch_type: b
     src_addr_pal: 0x800bbbb4
     target_func: onStageCreated
-  
-  - name: OnStageCreatedFix
-    type: patch
-    addr_pal: 0x800bbbb8
-    data: '4e800020'
 
-  - name: PreGameFix
-    type: patch
-    addr_pal: 0x801451d4
-    data: '4e800020'
+  #These two "Fix" patches, are not required and do not serve a purpose, theyre just here for archival purposes.
+  
+  #- name: OnStageCreatedFix
+  #  type: patch
+  #  addr_pal: 0x800bbbb8
+  #  data: '4e800020'
+
+  #- name: PreGameFix
+  #  type: patch
+  #  addr_pal: 0x801451d4
+  #  data: '4e800020'
+
+  #- name: AfterResetReturn
+  #  type: patch
+  #  addr_pal: 0x801abbac
+  #  data: '4e800020'
 
   - name: DontDeleteDebug
     type: patch
@@ -50,8 +65,9 @@ hooks:
     branch_type: b
     src_addr_pal: 0x801abba8
     target_func: onRecieveResetEvent
-
-  - name: AfterResetReturn
+    
+  - name: Disable1UPEffect
     type: patch
-    addr_pal: 0x801abbac
+    addr_pal: 0x801591f0
     data: '4e800020'
+  

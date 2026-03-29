@@ -2,41 +2,16 @@
 
 ext void preGameLoop()
 {
-    if(Modifiers[6]) {
-        Worldmapify(false);
-    }
+    ret;
 }
-
-/*
-    Testing Asset
-    
-    if(Modifiers[1])
-        Grow();
-    if(Modifiers[2])
-        Shrink();
-*/
 
 ext void onGameLoop()
 {
     if (!GetPlayers())
         ret;
     GlobalFrameTimer++;
-    
 
-    if (Modifiers[0])
-        NahFuckThat(true);
-    if (Modifiers[1] && CallSpacer(TIMER_CLEAR))
-        Lonely();
-    if(Modifiers[2] && CallSpacer(TIMER_SPIN) && !GetNextOfType(EN_GOALPOLE))
-        SpinEternally();
-    if (Modifiers[3])
-        SmallerAndNoYoshi();
-    if (Modifiers[4])
-        TowerFunc();
-    //if (Modifiers[5])
-        //WaterLevel();
-    if (Modifiers[6])
-        WaterLevel();
+    ApplyModifiers();
 
     #ifdef DEBUG
     u32 btns = GetActiveRemocon()->heldButtons;
@@ -90,6 +65,26 @@ ext void onRecieveResetEvent() {
     for(int i = 0; i < MOD_SIZE; i++) {
         Modifiers[i] = false;
     }
+
+    ret;
+}
+
+//Relaying execution to here for clarity if something fails
+ext void ApplyModifiers() {
+    if (Modifiers[0])
+        NahFuckThat(true);
+    if (Modifiers[1] && CallSpacer(TIMER_CLEAR))
+        Lonely();
+    if(Modifiers[2] && CallSpacer(TIMER_SPIN) && !GetNextOfType(EN_GOALPOLE))
+        SpinEternally();
+    if (Modifiers[3])
+        SmallerAndNoYoshi();
+    if (Modifiers[4])
+        TowerFunc();
+    if (Modifiers[5])
+        Buoyancy();
+    if (Modifiers[6])
+        Linearity();
 
     ret;
 }
