@@ -223,39 +223,25 @@ ext void Lonely()
 
 ext void MarioCantBreathUnderwater()
 {
-    daPlBase_c* p = (daPlBase_c*)Players[0];
+    daPlBase_c *p = (daPlBase_c *)Players[0];
     const float dps = WATER_DRAIN / 60;
     const float sps = SWIM_MOD / 60;
     dEn_c *water = (dEn_c *)GetNextOfType(AC_BG_WATER);
     if (water)
         water->pos.y -= dps;
-
-    if(p) p->WaterSwimSpeed = sps;
-
-    if (CallSpacer(15))
-    {
-        // CreateActor(EN_GESSO_CHILD, (int)0x00001000, Players[0]->last_pos, 0, 0);
-    }
+    if (p)
+        p->WaterSwimSpeed = sps;
 
     ret;
 }
 
-ext void RollingHillRandomization()
+ext void ShyRollers()
 {
-    dStageActor_c* n = Actor_SearchByID(AC_FLOOR_GYRATION);
-    if(n) {
-        u8 rand2 = MakeRandomNumber(16); // low nibble of size
-        u8 rand3 = MakeRandomNumber(16); // speed
-        u32 num = (rand2 << 8) | (rand3 << 4) | 0x1;
-        Vec p = n->pos;
-        CreateActor(AC_FLOOR_GYRATION, num, p, 0, 0);
-        #ifdef DEBUG
-        OSReport("Did it finally work?\n");
-        #endif
+    dStageActor_c *n = (dStageActor_c *)GetNextOfType(AC_FLOOR_GYRATION);
+    for(int i = 0; i < 12; i++) {
+        if(n && !n->visible) n = (dStageActor_c*)FindActorByType(AC_FLOOR_GYRATION, (Actor*)n);
+        if(n) n->visible = false;
     }
-
-    #ifdef DEBUG
-    OSReport("It didnt did it...\n");
-    #endif
+   
     ret;
 }

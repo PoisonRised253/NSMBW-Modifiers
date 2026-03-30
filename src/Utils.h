@@ -21,5 +21,7 @@ inline void GetAllOfType(Actors actorID, u8 sizeOfArray, dEn_c* outBuff[], int* 
 inline void ClearObjVel(dEn_c* obj, u8 mode);
 inline void DeleteUnwanted();
 inline int GetPowerupType(u32 settings);
+volatile inline void LPInsert(u32 newInstr, u32* addr);
+volatile inline void LPRestore(u32 original, u32* addr); //Unfinished
 
 #endif

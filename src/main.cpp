@@ -70,6 +70,21 @@ ext void onRecieveResetEvent() {
     ret;
 }
 
+ext void onBoot() {
+    #ifdef DEBUG
+    OSReport("\n\nLPInsert Patches Start!\n\n\n");
+    LPInsert(INSTR_BLR, LP_ALLOWDEBUG);
+    #endif
+    LPInsert(INSTR_BLR, LP_1UPEFFECT);
+    LPInsert(INSTR_BRICKTIMER, LP_BRICKTIMER);
+    LPInsert(INSTR_BLR, LP_NODEATHPAUSE);
+
+    #ifdef DEBUG
+    OSReport("\n\nLPInsert Patches Successfully!\n\n\n");
+    #endif
+    ret;
+}
+
 //Relaying execution to here for clarity if something fails
 ext void ApplyModifiers(bool pre) {
     DeleteUnwanted(); //Makes sense here, since it automatically means, we're both in a game, and fully initialized
@@ -89,7 +104,7 @@ ext void ApplyModifiers(bool pre) {
     if (Modifiers[6])
         Linearity();
     if (Modifiers[7] && pre && CallSpacer(15)) {
-        RollingHillRandomization();
+        ShyRollers();
     }
 
     ret;

@@ -28,46 +28,42 @@ hooks:
     src_addr_pal: 0x800bbbb4
     target_func: onStageCreated
 
-  #These two "Fix" patches, are not required and do not serve a purpose, theyre just here for archival purposes.
-  
-  #- name: OnStageCreatedFix
-  #  type: patch
-  #  addr_pal: 0x800bbbb8
-  #  data: '4e800020'
+  - name: OnResetEvent
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x801abba8
+    target_func: onRecieveResetEvent
 
-  #- name: PreGameFix
-  #  type: patch
-  #  addr_pal: 0x801451d4
-  #  data: '4e800020'
+  - name: onBootEvent
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8015d82c
+    target_func: onBoot
+
+  #All of these have been moved to onBoot() in main.cpp
 
   #- name: AfterResetReturn
   #  type: patch
   #  addr_pal: 0x801abbac
   #  data: '4e800020'
 
-  - name: DontDeleteDebug
-    type: patch
-    addr_pal: 0x800f1960
-    data: '4e800020'
+  #- name: DontDeleteDebug
+  #  type: patch
+  #  addr_pal: 0x800f1960
+  #  data: '4e800020'
 
-  - name: FuckTimers!
-    type: patch
-    addr_pal: 0x800e3ab8
-    data: '3c0001f4'
+  #- name: FuckTimers!
+  #  type: patch
+  #  addr_pal: 0x800e3ab8
+  #  data: '3c0001f4'
 
-  - name: NoPause
-    type: patch
-    addr_pal: 0x8004e050
-    data: '4e800020'
+  #- name: NoPause
+  #  type: patch
+  #  addr_pal: 0x8004e050
+  #  data: '4e800020'
   
-  - name: OnResetEvent
-    type: branch_insn
-    branch_type: b
-    src_addr_pal: 0x801abba8
-    target_func: onRecieveResetEvent
-    
-  - name: Disable1UPEffect
-    type: patch
-    addr_pal: 0x801591f0
-    data: '4e800020'
-  
+  #- name: Disable1UPEffect
+  #  type: patch
+  #  addr_pal: 0x801591f0
+  #  data: '4e800020'
+

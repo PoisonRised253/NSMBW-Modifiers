@@ -11,6 +11,6 @@ ext void Worldmapify(bool); //Makes the Level kinda like WM
 ext void SpinEternally();
 ext void Lonely();
 ext void MarioCantBreathUnderwater();
-ext void RollingHillRandomization();
+ext void ShyRollers();
 
 #endif

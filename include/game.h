@@ -18,6 +18,8 @@ inline T clamp(T value, T one, T two) { return (value < one) ? one : ((value > t
 #define M_PI 3.14159265358979323846
 #define M_PI_2 (M_PI / 2)
 
+
+
 extern "C"
 {
 	int wcslen(const wchar_t *str);
@@ -34,6 +36,8 @@ extern "C"
 	float sin(float x);
 	float ceil(float x);
 	float floor(float x);
+	void DCFlushRange(u32* addr, u32 size);
+	void ICInvalidateRange(u32* addr, u32 size);
 }
 enum Direction
 {

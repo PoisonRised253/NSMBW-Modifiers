@@ -1,6 +1,8 @@
 SECTIONS {
 	instance__7StageC4 = 2151849944;
 
+	DCFlushRange = 2149237872;
+	ICInvalidateRange = 2149238112;
 	GetResNodeNumEntries__Q34nw4r3g3d6ResMdlCFv = 2149823328;
 	MEMAllocFromAllocator = 2149406016;
 	__vt__Q34nw4r3g3d9AnmObjChr = 2150950544;

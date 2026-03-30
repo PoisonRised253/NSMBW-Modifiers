@@ -1,6 +1,8 @@
 SECTIONS {
 	instance__7StageC4 = 0x8042A2B8;
 
+	DCFlushRange = 0x801AC5B0;
+	ICInvalidateRange = 0x801AC6A0;
 	GetResNodeNumEntries__Q34nw4r3g3d6ResMdlCFv = 0x8023B4A0;
 	MEMAllocFromAllocator = 0x801D5680;
 	__vt__Q34nw4r3g3d9AnmObjChr = 0x8034E9D0;

@@ -75,6 +75,16 @@
 #define MINIGAME_STAR 1
 #define MINIGAME_TOAD_HOUSE 2
 
-//Structs go here
+//Live Patch Helper Stuff
+
+#define INSTR_BLR 0x4e800020
+#define INSTR_NOP 0x60000000
+#define INSTR_BRICKTIMER 0x3C0001F4
+
+//Live Patch Addresses
+#define LP_1UPEFFECT (u32*)0x801591F0
+#define LP_BRICKTIMER (u32*)0x800E3AB8
+#define LP_NODEATHPAUSE (u32*)0x8004e050
+#define LP_ALLOWDEBUG (u32*)0x800F1960
 
 #endif

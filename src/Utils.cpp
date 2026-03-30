@@ -87,7 +87,7 @@ inline bool CallSpacer(int callsPerSecond)
 }
 
 inline dBase_c* GetNextOfType(Actors actorID) {
-    ret (dBase_c*)FindActorByType(actorID, (Actor*)Players[0]);
+    ret (dBase_c*)FindActorByType(actorID, (Actor*)NULL);
 }
 
 inline void GetAllOfType(Actors actorID, u8 sizeOfArray, dEn_c* outBuff[], int* outSize) {
@@ -147,4 +147,26 @@ inline int GetPowerupType(u32 settings) {
         case 0x79: ret 8;
         default: ret 0;
     }
+}
+
+//Live-Patch
+volatile inline void LPInsert(u32 newInstr, u32* addr) {
+    *addr = newInstr;
+    #ifdef DEBUG
+    if(*addr != newInstr) {OSReport("LPIns Failure! Val: %p, At: %p\n", *addr, addr); ret;}
+    else OSReport("LPIns Success at: %p\n", addr);
+    #endif
+
+    DCFlushRange(addr, 4);
+    ICInvalidateRange(addr, 4);
+    ret;
+}
+
+volatile inline void LPRestore(u32 original, u32* addr) {
+    *addr = original;
+
+    DCFlushRange(addr, 4);
+    ICInvalidateRange(addr, 4);
+
+    ret;
 }
