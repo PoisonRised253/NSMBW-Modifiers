@@ -63,6 +63,8 @@ ext void ToggleMods() {
     Modifiers[5] = (LevelID == 4 && WorldID == 1);
     //1 - 5
     Modifiers[6] = (LevelID == 5 && WorldID == 1);
+    //1-6
+    Modifiers[7] = (LevelID == 6 && WorldID == 1);
 
 #ifdef DEBUG
         OSReport("L: %d, W: %d, A: %d, E: %d, G: %d\n", LevelID, WorldID, AreaID, exit, game);
@@ -115,4 +117,34 @@ inline void ClearObjVel(dEn_c* obj, u8 mode) {
     }
 
     ret;
+}
+
+inline void DeleteUnwanted() {
+    dEn_c* target = (dEn_c*)GetNextOfType(EN_BLOCK_HELP);
+    if(target) target->Delete(1);
+}
+
+//0 = Mushroom | 0x00
+//1 = FireFlower | 0x09
+//2 = IceFlower | 0x0E
+//3 = Penguin | 0x11
+//4 = Propeller | 0x15
+//5 = Mini | 0x19
+//6 = Star | 0x01
+//7 = 1-Up | 0x07
+//8 = Normal-Sized Mini | 0x79
+inline int GetPowerupType(u32 settings) {
+    u32 b = settings & 0x03; // last two bits only
+    switch(b) {
+        case 0x00: ret 0;
+        case 0x09: ret 1;
+        case 0x0E: ret 2;
+        case 0x11: ret 3;
+        case 0x15: ret 4;
+        case 0x19: ret 5;
+        case 0x01: ret 6;
+        case 0x07: ret 7;
+        case 0x79: ret 8;
+        default: ret 0;
+    }
 }

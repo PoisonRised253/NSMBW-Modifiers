@@ -26,24 +26,24 @@ ext void SmallerAndNoYoshi()
         }
     }
 
-    if(fullRun) {
-    yoshis[0] = (daYoshi_c *)GetNextOfType(YOSHI);
-    if (yoshis[0])
-        yoshis[1] = (daYoshi_c *)FindActorByType(YOSHI, (Actor *)yoshis[0]);
-    if (yoshis[1])
-        yoshis[2] = (daYoshi_c *)FindActorByType(YOSHI, (Actor *)yoshis[1]);
-    if (yoshis[2])
-        yoshis[3] = (daYoshi_c *)FindActorByType(YOSHI, (Actor *)yoshis[2]);
+    if (fullRun)
+    {
+        yoshis[0] = (daYoshi_c *)GetNextOfType(YOSHI);
+        if (yoshis[0])
+            yoshis[1] = (daYoshi_c *)FindActorByType(YOSHI, (Actor *)yoshis[0]);
+        if (yoshis[1])
+            yoshis[2] = (daYoshi_c *)FindActorByType(YOSHI, (Actor *)yoshis[1]);
+        if (yoshis[2])
+            yoshis[3] = (daYoshi_c *)FindActorByType(YOSHI, (Actor *)yoshis[2]);
 
-    if (yoshis[0])
-        yoshis[0]->id = 0;
-    if (yoshis[1])
-        yoshis[1]->id = 0;
-    if (yoshis[2])
-        yoshis[2]->id = 0;
-    if (yoshis[3])
-        yoshis[3]->id = 0;
-
+        if (yoshis[0])
+            yoshis[0]->id = 0;
+        if (yoshis[1])
+            yoshis[1]->id = 0;
+        if (yoshis[2])
+            yoshis[2]->id = 0;
+        if (yoshis[3])
+            yoshis[3]->id = 0;
     }
 
 #ifdef DEBUG
@@ -112,11 +112,11 @@ ext void Linearity()
     {
         if (!Players[i])
             continue;
-        //float* c = &dWaterManager_c::instance->current;
+        // float* c = &dWaterManager_c::instance->current;
         Players[i]->max_speed.x = SPEED_WATER_MOD;
         u32 btn = GetActiveRemocon()->heldButtons;
         float *p = &Players[i]->pos.x;
-        
+
         if (btn & WPAD_RIGHT)
         {
             *p += precalcSpeed;
@@ -221,15 +221,41 @@ ext void Lonely()
     ret;
 }
 
-ext void Buoyancy() {
-    daPlBase_c* current;
-    for(int i = 0; i < 4; i++) {
-        if(!Players[i]) continue;
-        Players[i]->scale.x = 1.5f;
-        Players[i]->scale.y = 1;
-        Players[i]->scale.z = 1.5f;
-        current = (daPlBase_c*)Players[i];
-        if(!current) continue;
-        current->WaterMaxFallSpeed = -10000;
+ext void MarioCantBreathUnderwater()
+{
+    daPlBase_c* p = (daPlBase_c*)Players[0];
+    const float dps = WATER_DRAIN / 60;
+    const float sps = SWIM_MOD / 60;
+    dEn_c *water = (dEn_c *)GetNextOfType(AC_BG_WATER);
+    if (water)
+        water->pos.y -= dps;
+
+    if(p) p->WaterSwimSpeed = sps;
+
+    if (CallSpacer(15))
+    {
+        // CreateActor(EN_GESSO_CHILD, (int)0x00001000, Players[0]->last_pos, 0, 0);
     }
+
+    ret;
+}
+
+ext void RollingHillRandomization()
+{
+    dStageActor_c* n = Actor_SearchByID(AC_FLOOR_GYRATION);
+    if(n) {
+        u8 rand2 = MakeRandomNumber(16); // low nibble of size
+        u8 rand3 = MakeRandomNumber(16); // speed
+        u32 num = (rand2 << 8) | (rand3 << 4) | 0x1;
+        Vec p = n->pos;
+        CreateActor(AC_FLOOR_GYRATION, num, p, 0, 0);
+        #ifdef DEBUG
+        OSReport("Did it finally work?\n");
+        #endif
+    }
+
+    #ifdef DEBUG
+    OSReport("It didnt did it...\n");
+    #endif
+    ret;
 }

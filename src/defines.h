@@ -9,7 +9,9 @@
 #define DEBUG
 #define NO_MP
 //#define DEBUG_CS //This causes logs to fill very quickly, all the time...
-#define MOD_SIZE 7
+
+//Current amount of activatable modifiers
+#define MOD_SIZE 8
 
 //Infinite-Lives "True" Amount
 #define LIVES_AMOUNT 0x64
@@ -18,8 +20,10 @@
 #define SPEEDCAP_TOWER 3.025f
 #define SPEEDCAP_TOWER_MINI 2.25f
 
-//Water-Modifier
+//Water-Modifiers
 #define SPEED_WATER_MOD 128.f
+#define WATER_DRAIN 4.f
+#define SWIM_MOD 128.f
 
 //Scaling (Legacy)
 #define SCALE_MOD 0.00125f

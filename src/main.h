@@ -14,6 +14,6 @@
 ext void preGameLoop();
 ext void onGameLoop();
 ext void onStageCreated();
-ext void ApplyModifiers();
+ext void ApplyModifiers(bool);
 
 #endif

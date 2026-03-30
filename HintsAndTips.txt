@@ -15,6 +15,9 @@ Yoshi has been removed in a very funny way, i cant explain it, but just look at 
 I do NOT know if all Starcoins are possible.
 Entering the Level with Mini (and retaining Mini) lets you stop Vertical momentum entirely by Groundpounding.
 
-1-4: Not Yet Decided lol, likely to be a subway surfers type mode.
+1-4: The Ocean is draining, be quick! Luckily Quagsire is a Water-Type, so he go fast!
+When the Water is drained, you can spin into, or in Air-Bubbles from the Pipes, to levitate above them.
+At the end of the stage, this is required to go into the pipe to exit the Water section.
 
-1-5: May be Linear-Movement, meaning Velocity doesnt exist, instead we shift Mario's position based on which button is pressed
+1-5: May be Linear-Movement, meaning Velocity doesnt exist.
+Instead we shift Mario's position based on which button is pressed.

@@ -2,6 +2,7 @@
 
 ext void preGameLoop()
 {
+    ApplyModifiers(true);
     ret;
 }
 
@@ -11,7 +12,7 @@ ext void onGameLoop()
         ret;
     GlobalFrameTimer++;
 
-    ApplyModifiers();
+    ApplyModifiers(false);
 
     #ifdef DEBUG
     u32 btns = GetActiveRemocon()->heldButtons;
@@ -70,7 +71,9 @@ ext void onRecieveResetEvent() {
 }
 
 //Relaying execution to here for clarity if something fails
-ext void ApplyModifiers() {
+ext void ApplyModifiers(bool pre) {
+    DeleteUnwanted(); //Makes sense here, since it automatically means, we're both in a game, and fully initialized
+
     if (Modifiers[0])
         NahFuckThat(true);
     if (Modifiers[1] && CallSpacer(TIMER_CLEAR))
@@ -82,9 +85,12 @@ ext void ApplyModifiers() {
     if (Modifiers[4])
         TowerFunc();
     if (Modifiers[5])
-        Buoyancy();
+        MarioCantBreathUnderwater();
     if (Modifiers[6])
         Linearity();
+    if (Modifiers[7] && pre && CallSpacer(15)) {
+        RollingHillRandomization();
+    }
 
     ret;
 }

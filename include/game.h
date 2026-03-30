@@ -2843,10 +2843,10 @@ struct dWaterInfo_s
 
 class dWaterManager_c
 {
-private:
-	dWaterInfo_s blocks[80];
+	
 
 public:
+	dWaterInfo_s blocks[80];
 	float current;
 
 	static dWaterManager_c *instance;
