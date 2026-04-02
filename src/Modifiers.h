@@ -12,5 +12,7 @@ ext void SpinEternally();
 ext void Lonely();
 ext void MarioCantBreathUnderwater();
 ext void ShyRollers();
+ext void TrustYourSenses();
+ext void ModifyMovement(int mode);
 
 #endif

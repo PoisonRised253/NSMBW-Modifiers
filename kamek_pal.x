@@ -2054,7 +2054,6 @@ savePlayerPosInfo__6dWmLibFv = 0x800FD300;
 sc_AnchorShadowName__6dWmLib = 0x80428AB0;
 sc_AnimeRootNodeName__6dWmLib = 0x80428A80;
 sc_AnimeRootNodeName__6dWmLib = 0x80428BD0;
-s_CannonNextWorld__6dWmLib = 0x802F4CF0;
 sc_ForceList__6dWmLib = 0x802FE7A8;
 sc_ForceList__6dWmLib = 0x803017E0;
 sc_ForceList__6dWmLib = 0x80309908;
@@ -2126,6 +2125,9 @@ ProcMainPauseOn__14PauseManager_cFv = 0x800D0CE0;
 SelectSoundSet__14PauseManager_cFi = 0x800D0CF0;
 setPause__14PauseManager_cFv = 0x800D1350;
 setPauseEnable__14PauseManager_cFb = 0x800D0C10;
+
+/* Lone daBossDemo stuff*/
+checkBattleEdDemo = 0x8001D170;
 
 /* 11dScSeqMng_c */
 GetCutArg0__11dCsSeqMng_cFv = 0x80101740;
@@ -2448,6 +2450,124 @@ stopStarBGM__9daPyMng_cFv = 0x80060750;
 stopYoshiBGM__9daPyMng_cFv = 0x80060860;
 update__9daPyMng_cFv = 0x8005F5C0;
 
+/* 5dBc_c */
+__ct__5dBc_cFv = 0x8006CF40;
+__dt__5dBc_cFv = 0x8006CFA0;
+__vt__5dBc_c = 0x8030F6D0;
+_attrLeft__5dBc_cFv = 0x8006EF10;
+_attrNormal__5dBc_cFv = 0x8006EE90;
+_attrNuma__5dBc_cFv = 0x8006EEA0;
+_attrRight__5dBc_cFv = 0x8006EEE0;
+_checkBreakUnit__5dBc_cFUlUcff = 0x8006D6D0;
+_checkCancelWall__5dBc_cFff = 0x8006FEA0;   
+_checkFoot__5dBc_cFffUl = 0x8006DFC0;       
+_checkFootAttr2__5dBc_cFUl = 0x80070630;    
+_checkFootAttr__5dBc_cFUl = 0x80070650;     
+_checkFootBlock__5dBc_cFffUl = 0x8006E490;
+_checkFootSaka__5dBc_cFUl = 0x8006E720;
+_checkFootSakaType__5dBc_cFffPUlPUl = 0x8006E620;
+_checkHead__5dBc_cFffUl = 0x8006F3E0;
+_checkHeadAttr__5dBc_cFUl = 0x800706A0;
+_checkHeadBlock__5dBc_cFffUl = 0x8006F600;
+_checkHeadRev__5dBc_cFUlfUl = 0x8006F750;
+_checkHeadSaka__5dBc_cFUl = 0x8006F7E0;
+_checkObjFoot__5dBc_cFUlf = 0x80073670;
+_checkObjFootLoop__5dBc_cFUlf = 0x80073210;
+_checkObjHead__5dBc_cFUlf = 0x80073FC0;
+_checkObjHeadLoop__5dBc_cFUlf = 0x80073B40;
+_checkObjWall__5dBc_cFUlif = 0x80074AF0;
+_checkObjWallLoop__5dBc_cFUlif = 0x800743D0;
+_checkSakaFly__5dBc_cFUlUl = 0x8006EDB0;
+_checkWall__5dBc_cFffUli = 0x80070130;
+_checkWallAttr__5dBc_cFUli = 0x800706E0;
+_getUnitKind__5dBc_cFUsUsUc = 0x80070C60;
+_getUnitType__5dBc_cFUsUsUc = 0x80070C40;
+_isDifferentPos__5dBc_cFff = 0x800704D0;
+checkBg__5dBc_cFffUcUcUl = 0x800709C0;
+checkBgMameBlock__5dBc_cFffUc = 0x80070B10;
+checkBgMameBlockPlr__5dBc_cFUc = 0x80071060;
+checkBgPlr__5dBc_cFP8dActor_c = 0x80071210;
+checkBgPlrLR__5dBc_cFP8dActor_c = 0x80070EF0;
+checkBgPlrUD__5dBc_cFP8dActor_c = 0x80070E70;
+checkBombBreak__5dBc_cF7mVec2_c7mVec2_c = 0x800768D0;
+checkBreakUnit__5dBc_cFUlUcffUcScUc = 0x8006D770;
+checkDokanDown__5dBc_cFP7mVec3_cPi = 0x800714D0;
+checkDokanLR__5dBc_cFP7mVec3_cUcPiff = 0x80071A60;
+checkDokanUp__5dBc_cFP7mVec3_cPi = 0x800717A0;
+checkFoot__5dBc_cFv = 0x8006DB30;
+checkFootEnm__5dBc_cFv = 0x80072BC0;
+checkGround__5dBc_cFPC7mVec3_cPfPiUcUcSc = 0x800757E0;
+checkGround__5dBc_cFPC7mVec3_cPfUcUcSc = 0x800757B0;
+checkGroundAngle__5dBc_cFPC7mVec3_cPfPsUcUcScPii = 0x80075820;
+checkGroundHalf__5dBc_cFPC7mVec3_cPfUcUc = 0x80075800;
+checkHead__5dBc_cFUl = 0x8006EF40;
+checkHitMameBlock__5dBc_cFffUc = 0x80070A40;
+checkLink__5dBc_cFv = 0x80075090;
+checkManyPoint__5dBc_cFPff = 0x8006D120;
+checkObjBg__5dBc_cFffUcUc = 0x80076630;
+checkObjFoot__5dBc_c = 0x80356208;
+checkObjHead__5dBc_c = 0x80356214;
+checkObjWall__5dBc_c = 0x80356220;
+checkRide__5dBc_cFv = 0x80070CA0;
+checkRideAgain__5dBc_cFP8dActor_cUl = 0x800713B0;
+checkRidePlayer__5dBc_cFP8dActor_cUl = 0x80070CD0;
+checkRoofPlayer__5dBc_cFPC7mVec3_cPf = 0x800728C0;
+checkTenjou__5dBc_cFPC7mVec3_cPfUcUc = 0x80075CA0;
+checkWall__5dBc_cFPC7mVec3_cPC7mVec3_cPfUcUcPP8dActor_c = 0x80075FD0;
+checkWall__5dBc_cFPf = 0x8006FA40;
+checkWallCommon__5dBc_cFii = 0x8006FAA0;
+checkWallEnm__5dBc_cFPf = 0x80072CB0;
+checkWallPlayer__5dBc_cFPC7mVec3_cPC7mVec3_cPf = 0x80072440;
+checkWater__5dBc_cFffUcPf = 0x80075270;
+checkWaterDepth__5dBc_cFffUcUcPf = 0x80076530;
+checkWaterFace__5dBc_cFffUcPf = 0x80075560;
+checkWireNet__5dBc_cFffUc = 0x800767F0;
+clear__5dBc_cFv = 0x8006D000;
+clearBgcSaveAll__5dBc_cFv = 0x80075070;
+clearDamage__5dBc_cFv = 0x8006D440;
+getActor__5dBc_cFf = 0x800705B0;
+getActorKind__5dBc_cFv = 0x80070C80;
+getAirWaterHitAngle__5dBc_cFPs = 0x80075780;
+getAirWaterHitPos__5dBc_cFP7mVec2_c = 0x80075750;
+getBGCoin__5dBc_cFUlUlUlP7mVec3_ci = 0x8006D170;
+getFootAttr__5dBc_cFv = 0x80070720;
+getFootOfs__5dBc_cFP7mVec3_c = 0x80072DB0;
+getHeadAttr__5dBc_cFv = 0x80070730;
+getHeadOfs__5dBc_cFP7mVec3_c = 0x80072F10;
+getHeadSakaAngle__5dBc_cFUc = 0x80070960;
+getHeadSakaMoveAngle__5dBc_cFUc = 0x80070980;
+getLinkW__5dBc_cFP9dBg_ctr_c = 0x80075230;
+getObjBgCoin__5dBc_cFP9dBg_ctr_cP7mVec3_cUl = 0x80074FF0;
+getPlrNo__5dBc_cFf = 0x80070530;
+getSakaAngle__5dBc_cFUc = 0x800708C0;
+getSakaAngleBySpeed__5dBc_cFf = 0x80070900;
+getSakaDir__5dBc_cFv = 0x800707E0;
+getSakaMoveAngle__5dBc_cFUc = 0x80070920;
+getSakaType__5dBc_cFv = 0x80070760;
+getSakaUpDown__5dBc_cFUc = 0x80070820;
+getSakaUpDown__5dBc_cFUcUl = 0x80070870;
+getUnitKind__5dBc_cFffUc = 0x80070BF0;
+getUnitType__5dBc_cFffUc = 0x80070BA0;
+getWallAttr__5dBc_cFi = 0x80070740;
+getWallOfs__5dBc_cFP7mVec3_ci = 0x80073070;
+gUnitX__5dBc_c = 0x8042A088;
+gUnitY__5dBc_c = 0x8042A08A;
+gWaterAngle__5dBc_c = 0x8042A098;
+gWaterPos__5dBc_c = 0x8042A090;
+gWaterType__5dBc_c = 0x8042A08C;
+init__5dBc_cFv = 0x8006CFE0;
+isBGCoin__5dBc_cFUl = 0x8006D160;
+isFoot__5dBc_cFv = 0x80070CB0;
+setBgDamageFlag__5dBc_cFiff = 0x8006D460;
+setBreakBlockHit__5dBc_cFUlUcff = 0x8006D9B0;
+setFootAttr__5dBc_cFUc = 0x80070600;
+setHatenaBlockHit__5dBc_cFUlUcff = 0x8006D8A0;
+setLinkNetPlayer__9dBg_ctr_cFP5dBc_c = 0x800803F0;
+setLinkW__5dBc_cFP9dBg_ctr_cP5dBc_c = 0x800751C0;
+setObjBgCheckFunc__5dBc_cFi = 0x80072D00;
+setRideOnObjBg__5dBc_cFP9dBg_ctr_cRC7mVec3_c = 0x800731E0;
+setWakuCoinAppear__5dBc_cFUlUlUlP7mVec3_c = 0x8006D3B0;
+
 /* Statics and Static Members */
 smc_WATER_FALLMAXSPD__5dEn_c = 0x8042C4A0;   
 smc_WATER_GRAVITY__5dEn_c = 0x8042C498;      
@@ -2462,6 +2582,19 @@ WaterJumpSpeed__10daPlBase_c = 0x8042BB3C;
 WaterMaxFallSpeed__10daPlBase_c = 0x8042BB40;
 WaterSwimSpeed__10daPlBase_c = 0x8042BB38;
 WaterWalkSpeed__10daPlBase_c = 0x8042BB34;
+
+/* Button Bullshit ugh */
+getPressedLeft__14dPlayerInput_cFv = 0x8005E550;
+getHeldLeft__14dPlayerInput_cFv = 0x8005E510;
+
+getPressedRight__14dPlayerInput_cFv = 0x8005E560;
+getHeldRight__14dPlayerInput_cFv = 0x8005E520;
+
+getPressedUp__14dPlayerInput_cFv = 0x8005E530;
+getHeldUp__14dPlayerInput_cFv = 0x8005E4F0;
+
+getPressedDown__14dPlayerInput_cFv = 0x8005E540;
+getHeldDown__14dPlayerInput_cFv = 0x8005E500;
 
 	.text : {
 		FILL (0)

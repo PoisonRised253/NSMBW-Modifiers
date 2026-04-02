@@ -2327,7 +2327,6 @@ public:
 	void setTransientForcedButtons(u32 buttons);   // 8005E960
 	void forceShakingOn();						   // 8005E980
 
-private:
 	int playerID;
 	u16 heldButtons, nowPressed;
 	u16 lastHeldButtons, lastNowPressed;
@@ -4405,7 +4404,6 @@ namespace dWmLib {
 
 	static bool IsKinopioChukanOld;
 
-	static u32 CannonNextWorld;
 	static u32 ForceList[30];
 	static u32 KinokoHouseCourseNo;
 	static u32 KinokoTypeName;
@@ -4415,6 +4413,8 @@ namespace dWmLib {
 	static void* SoundAnimeRootNodeName;
 	static void* ZoromeShadowName;
 };
+
+static u32 CannonNextWorld;
 
 class PauseManager_c {
 	public:

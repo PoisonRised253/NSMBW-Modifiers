@@ -10,7 +10,6 @@
 #include "Utils.h"
 #include "Modifiers.h"
 
-
 ext void preGameLoop();
 ext void onGameLoop();
 ext void onStageCreated();

@@ -8,10 +8,14 @@
 //Build Flags
 #define DEBUG
 #define NO_MP
-//#define DEBUG_CS //This causes logs to fill very quickly, all the time...
+
+/*#ifdef DEBUG
+#define DEBUG_LP
+#define DEBUG_CS
+#endif*/
 
 //Current amount of activatable modifiers
-#define MOD_SIZE 8
+#define MOD_SIZE 11
 
 //Infinite-Lives "True" Amount
 #define LIVES_AMOUNT 0x64
@@ -42,6 +46,12 @@
 //SANY - Small and No Yoshi
 #define MOVE_MOD 1.05f
 
+//TrustYourSenses
+#define TYS_TURNSPEED (s16)8
+
+//QOL
+#define BALLOON_CUSTOMSPEED 64.f
+
 //MAXIMUMs and MINIMUMs
 #define FLOAT_MAX 65504.f
 #define FLOAT_MIN -65504.f
@@ -62,7 +72,6 @@
 #define EXIT_PLAYER_CHOICE 2
 #define EXIT_DEFAULT 3
 
-
 //dScStage_c::m_gameMode
 #define GAME_NORMAL 0
 #define GAME_LUIGI_GUIDE 1
@@ -74,6 +83,7 @@
 #define MINIGAME_NONE 0
 #define MINIGAME_STAR 1
 #define MINIGAME_TOAD_HOUSE 2
+//TODO: Add the others
 
 //Live Patch Helper Stuff
 
@@ -84,7 +94,18 @@
 //Live Patch Addresses
 #define LP_1UPEFFECT (u32*)0x801591F0
 #define LP_BRICKTIMER (u32*)0x800E3AB8
-#define LP_NODEATHPAUSE (u32*)0x8004e050
+#define LP_NODEATHPAUSE (u32*)0x8004E050
 #define LP_ALLOWDEBUG (u32*)0x800F1960
+#define LP_NEXTCANNON (u32*)0x802F4CF0
+#define LP_NOSCORE (u32*)0x8010CDE0
+#define LP_RIGHTSPEED (u32*)0x8042BB20
+#define LP_LEFTSPEED (u32*)0x8042BB24
+#define LP_INITIALJUMPSPEED (u32*)0x8042BB28
+
+//Player related Stuff
+#define DEFAULT_SPEED_RIGHT 0x3f800000
+#define DEFAULT_SPEED_LEFT 0xbf800000
+#define DEFAULT_SPEED_JUMP 0x40683127
+#define STATE_BALLOON 0x8032692c
 
 #endif

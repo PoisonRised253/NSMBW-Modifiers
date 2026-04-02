@@ -29,6 +29,15 @@ inline void SetLives() {
     Player_Lives[1] = LIVES_AMOUNT;
     Player_Lives[2] = LIVES_AMOUNT;
     Player_Lives[3] = LIVES_AMOUNT;
+    for(int i = 0; i < 100; i++) {
+        dInfo_c::m_instance->addStockItem(0);
+        dInfo_c::m_instance->addStockItem(1);
+        dInfo_c::m_instance->addStockItem(2);
+        dInfo_c::m_instance->addStockItem(3);
+        dInfo_c::m_instance->addStockItem(4);
+        dInfo_c::m_instance->addStockItem(5);
+        dInfo_c::m_instance->addStockItem(6);
+    }
     ret;
 }
 
@@ -57,7 +66,7 @@ ext void ToggleMods() {
     Modifiers[2] = (LevelID == 2 && WorldID == 1);
     //1 - 3
     Modifiers[3] = (LevelID == 3 && WorldID == 1);
-    //1 - Tower
+    //1 - Tower 
     Modifiers[4] = (LevelID == 22 && WorldID == 1);
     //1 - 4
     Modifiers[5] = (LevelID == 4 && WorldID == 1);
@@ -65,6 +74,12 @@ ext void ToggleMods() {
     Modifiers[6] = (LevelID == 5 && WorldID == 1);
     //1-6
     Modifiers[7] = (LevelID == 6 && WorldID == 1);
+    //1 - Castle
+    Modifiers[8] = (LevelID == 24 && WorldID == 1);
+    //2 - 1
+    Modifiers[9] = (LevelID == 1 && WorldID == 2);
+    //2-2
+    Modifiers[10] = (LevelID == 2 && WorldID == 2);
 
 #ifdef DEBUG
         OSReport("L: %d, W: %d, A: %d, E: %d, G: %d\n", LevelID, WorldID, AreaID, exit, game);
@@ -86,22 +101,9 @@ inline bool CallSpacer(int callsPerSecond)
     #endif
 }
 
-inline dBase_c* GetNextOfType(Actors actorID) {
-    ret (dBase_c*)FindActorByType(actorID, (Actor*)NULL);
-}
-
-inline void GetAllOfType(Actors actorID, u8 sizeOfArray, dEn_c* outBuff[], int* outSize) {
-    dEn_c* last;
-    dEn_c* curr;
-    if(!last) last = (dEn_c*)Players[0];
-    for(int i = 0; i < sizeOfArray; i++) {
-        curr = (dEn_c*)FindActorByType(actorID, (Actor*)last);
-        if(!curr) ret;
-        outBuff[i] = curr;
-        last = curr;
-    }
-
-    ret;
+inline dEn_c* GetNextOfType(Actors actorID, bool fromPlayer) {
+    if(fromPlayer) ret (dEn_c*)FindActorByType(actorID, (Actor*)Players[0]);
+    ret (dEn_c*)FindActorByType(actorID, (Actor*)NULL);
 }
 
 //Mode 0: x only
@@ -120,7 +122,7 @@ inline void ClearObjVel(dEn_c* obj, u8 mode) {
 }
 
 inline void DeleteUnwanted() {
-    dEn_c* target = (dEn_c*)GetNextOfType(EN_BLOCK_HELP);
+    dEn_c* target = (dEn_c*)GetNextOfType(EN_BLOCK_HELP, false);
     if(target) target->Delete(1);
 }
 
@@ -150,9 +152,9 @@ inline int GetPowerupType(u32 settings) {
 }
 
 //Live-Patch
-volatile inline void LPInsert(u32 newInstr, u32* addr) {
+volatile inline void LivePatch(u32 newInstr, u32* addr) {
     *addr = newInstr;
-    #ifdef DEBUG
+    #ifdef DEBUG_LP
     if(*addr != newInstr) {OSReport("LPIns Failure! Val: %p, At: %p\n", *addr, addr); ret;}
     else OSReport("LPIns Success at: %p\n", addr);
     #endif
@@ -162,11 +164,7 @@ volatile inline void LPInsert(u32 newInstr, u32* addr) {
     ret;
 }
 
-volatile inline void LPRestore(u32 original, u32* addr) {
-    *addr = original;
-
-    DCFlushRange(addr, 4);
-    ICInvalidateRange(addr, 4);
-
+ext void QOLModifications() {
+    //Nullsub for now, last idea didnt work
     ret;
 }

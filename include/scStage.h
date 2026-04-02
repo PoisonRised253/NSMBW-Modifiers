@@ -28,6 +28,7 @@ public:
     // This Might not truely be gamemode.
     static u32 m_gameMode;
     static u32 m_exitMode;
+    static u32 sc_CannonNextWorld;
 
     u8 fill[0x22];
     u8 area;

@@ -21,3 +21,8 @@ At the end of the stage, this is required to go into the pipe to exit the Water 
 
 1-5: May be Linear-Movement, meaning Velocity doesnt exist.
 Instead we shift Mario's position based on which button is pressed.
+
+1-6: Shy Rolling Hills, They hide... Basically just made all Rolling-Hills invisible, because why not.
+
+1-Castle: Mario & The Gang are Invisible, and Kamek accidentally cursed Larry's Floor, Good Luck!
+Use Spin and Wall sliding, to figure out your Position.
