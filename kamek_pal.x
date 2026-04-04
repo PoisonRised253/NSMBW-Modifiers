@@ -24,12 +24,6 @@ SECTIONS {
 	YoshiStateOrig = 0x8014BA60;
 	Exception_Printf___Q24nw4r2dbFPCce = 0x80234BC0;
 
-	MarPow = 0x8154cce4;
-	LuiPow = 0x815472b4;
-	YTPow =  0x8154459c;
-	BTPow =  0x81549fcc;
-	YoshiPtr = 0x80355120;
-
 	executeState_Kani__7dAcPy_cFv = 0x80135e70;
 	executeState_Turn__7dAcPy_cFv = 0x8012d390;
 	executeState_SpinHipAttack__7dAcPy_cFv = 0x80126bc0;

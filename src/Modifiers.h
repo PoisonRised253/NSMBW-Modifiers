@@ -3,16 +3,25 @@
 #include "Utils.h"
 #include "g3dhax.h"
 
-ext void SmallerAndNoYoshi(); //Empties yoshiID and makes Mario be forced into MINI++ state.
-ext void NahFuckThat(bool); //Stops dAc_Py_c from existing
-ext void TowerFunc(); //Lower Jumping
-ext void Linearity(); //Increases SpeedPerFrame and MaxSpeed, per frame
-ext void Worldmapify(bool); //Makes the Level kinda like WM
-ext void SpinEternally();
+//World 1
 ext void Lonely();
+ext void SpinEternally();
+ext void MiniPlusPlus(); 
+ext void TowerFunc(); 
 ext void MarioCantBreathUnderwater();
+ext void Linearity(); 
 ext void ShyRollers();
 ext void TrustYourSenses();
-ext void ModifyMovement(int mode);
+
+//World 2
+ext void LiterallyBulletHell();
+ext void WeGoWee();
+ext void SandyPain();
+ext void PokeyParty();
+ext void FuckTwoSix();
+
+#ifdef DEBUG_UNUSED
+ext void Worldmapify(bool); //Makes the Level kinda like WM
+#endif
 
 #endif

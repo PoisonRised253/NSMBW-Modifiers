@@ -1,11 +1,55 @@
 #include "Modifiers.h"
 
-// TODO: Add Multiplayer Support
-ext void SmallerAndNoYoshi()
+//1 - 1
+//Deletes all Enemies, Powerups, and some spare objects.
+ext void Lonely()
 {
-    if(!Players[0]) ret;
-    bool fullRun = CallSpacer(30);
-    static daYoshi_c *yoshis[4];
+    StageE4::instance->killAllEnemiesAtLevelEnd(0);
+    dBase_c *objects[FIND_ENTS] = {NULL};
+    objects[0] = GetNextOfType(AC_FLOOR_GYRATION, false);
+    objects[1] = GetNextOfType(AC_FLOOR_HOLE_DOKAN, false);
+    objects[2] = GetNextOfType(AC_FLOOR_DOKAN_EIGHT, false);
+    objects[3] = GetNextOfType(EN_CLOUDLT, false);
+    objects[4] = GetNextOfType(EN_REDRING, false);
+    objects[5] = GetNextOfType(EN_COIN, false);
+    objects[6] = GetNextOfType(EN_COIN_FLOOR, false);
+    objects[7] = GetNextOfType(EN_COIN_JUMP, false);
+    objects[8] = GetNextOfType(AC_BLOCK_COIN, false);
+    objects[9] = GetNextOfType(CHUKAN_POINT, false);
+
+    for (int i = 0; i < FIND_ENTS; i++)
+        if (objects[i])
+            objects[i]->Delete();
+
+    ret;
+}
+
+//1 - 2
+//This is a reference to the song Spin Eternally in Beat Saber
+ext void SpinEternally()
+{
+
+    dAcPy_c *P;
+    for (int i = 0; i < 4; i++)
+    {
+        P = (dAcPy_c *)Players[i];
+
+        if (!P)
+            continue;
+        // P->initializeState_HipAttack(); This causes a funny, pressing up or down with this included causes mario to semi-permanently loose his collision
+        P->initializeState_SpinJump();
+        P->executeState_SpinJump();
+    }
+
+    ret;
+}
+
+//1 - 3
+//Turns Mario Very Mini
+ext void MiniPlusPlus()
+{
+    if (!Players[0])
+        ret;
 
     for (int i = 0; i < 4; i++)
     {
@@ -15,91 +59,61 @@ ext void SmallerAndNoYoshi()
         Players[i]->scale.x = 0.25f;
         Players[i]->scale.y = 0.25f;
         Players[i]->scale.z = 0.25f;
-
-        if (fullRun && Players[i]->speed.x)
-        {
-            dEn_c *itm = (dEn_c *)CreateActor(EN_ITEM, 0xF019, Players[i]->pos, 0, 0);
-            if (itm)
-            {
-                itm->visible = false;
-            }
-        }
+        *GetPlayerPowerState(Players[i]) = POWER_MINI;
     }
-
-    if (fullRun)
-    {
-        yoshis[0] = (daYoshi_c *)GetNextOfType(YOSHI, false);
-        if (yoshis[0])
-            yoshis[1] = (daYoshi_c *)FindActorByType(YOSHI, (Actor *)yoshis[0]);
-        if (yoshis[1])
-            yoshis[2] = (daYoshi_c *)FindActorByType(YOSHI, (Actor *)yoshis[1]);
-        if (yoshis[2])
-            yoshis[3] = (daYoshi_c *)FindActorByType(YOSHI, (Actor *)yoshis[2]);
-
-        if (yoshis[0])
-            yoshis[0]->id = 0;
-        if (yoshis[1])
-            yoshis[1]->id = 0;
-        if (yoshis[2])
-            yoshis[2]->id = 0;
-        if (yoshis[3])
-            yoshis[3]->id = 0;
-    }
-    ret;
-}
-
-// Triggers at L: 41, W: 1, A: 255, because funny!
-// This will remove all instances of dAc_Py_c, which means the game refuses to commit video game.
-ext void NahFuckThat(bool delP1)
-{
-    if (delP1)
-    {
-        OSReport("NahFuckThat() ran. Which means a softlock, this is intentional, and Pretty Funny.\n");
-#ifdef NO_MP
-        OSReport("When this message appears, it likely means that you tried Playing with Multiple People.\n This is not yet supported.");
-#endif
-        if (Players[0])
-            Players[0]->Delete(1);
-    }
-
-    if (Players[1])
-        Players[1]->Delete(1);
-    if (Players[2])
-        Players[2]->Delete(1);
-    if (Players[3])
-        Players[3]->Delete(1);
 
     ret;
 }
 
-// This function causes all Player's Y Velocity to be Limited, which means you cant jump as high, and fall slower.
-// This makes 22-1 pretty difficult.
+//1 - 22
+//This function causes all Player's Y Velocity to be Limited, which means you cant jump as high, and fall slower.
+//This makes 1-22/Tower pretty difficult.
 ext void TowerFunc()
 {
-    dEn_c* item = GetNextOfType(EN_ITEM, false);
-    if(item) {
-        if(GetPowerupType(item->settings) == 4)
-        item->Delete(1);
-    }
     float maxY;
     for (int i = 0; i < 4; i++)
     {
         if (!Players[i])
             continue;
+
+        volatile int *pow = GetPlayerPowerState(Players[i]);
         float speedY = Players[i]->speed.y;
+        if (!pow)
+            continue;
+
+        if (*pow == POWER_PROPELLER)
+            *pow = POWER_BIG;
 
         maxY = SPEEDCAP_TOWER;
-        if (MarPow == 0x03)
+        if (*pow == POWER_MINI)
             maxY = SPEEDCAP_TOWER_MINI;
         Players[i]->speed.y = clampf(speedY, -maxY, maxY);
-        if (GetActiveRemocon()->heldButtons & WPAD_DOWN && MarPow == 0x03)
+        if (GetActiveRemocon()->heldButtons & WPAD_DOWN && *pow == POWER_MINI)
             Players[i]->speed.y = clampf(speedY, 0.055f, maxY);
     }
     ret;
 }
 
-// This function removes Velocity.
-// It replaces moving with positional change, which means Physics on the X axis are basically lost for the Player(s).
+//1 - 4
+//This function drains any existing water by moving it downwards...
+//Also tries to make specifically Players[0] have higher swim speed, but might apply to all players.
+ext void MarioCantBreathUnderwater()
+{
+    daPlBase_c *p = (daPlBase_c *)Players[0];
+    const float dps = WATER_DRAIN / 60;
+    const float sps = SWIM_MOD / 60;
+    dEn_c *water = (dEn_c *)GetNextOfType(AC_BG_WATER, false);
+    if (water)
+        water->pos.y -= dps;
+    if (p)
+        p->WaterSwimSpeed = sps;
+
+    ret;
+}
+
+//1 - 5
+//This function removes Velocity on the X axis.
+//It replaces moving with positional change, which means Physics on the X axis are basically lost for the Player(s).
 ext void Linearity()
 {
     const float precalcSpeed = SPEED_WATER_MOD / 60;
@@ -126,9 +140,154 @@ ext void Linearity()
     ret;
 }
 
-// Mode false: preGameLoop();
-// Mode true: postGameLoop();
-// This function makes WorldMap like movement happen in levels.
+//1 - 6
+//Make all Rolling Hills invisible
+ext void ShyRollers()
+{
+    dStageActor_c *n = (dStageActor_c *)GetNextOfType(AC_FLOOR_GYRATION, false);
+    for (int i = 0; i < 12; i++)
+    {
+        if (n && !n->visible)
+            n = (dStageActor_c *)FindActorByType(AC_FLOOR_GYRATION, (Actor *)n);
+        if (n)
+            n->visible = false;
+    }
+
+    ret;
+}
+
+//1 - Castle
+//Simple but hard, turns Mario and Friends invisible, then in second stage (bossfight) makes the ground rotate
+ext void TrustYourSenses()
+{
+    // Using Scale because Players[X]->visible doesnt work.
+    float s = 0;
+    if (!GetNextOfType(OBJ_LARRY, false))
+        s = 0;
+    else
+        s = 1;
+
+    for (int i = 0; i < 4; i++)
+    {
+        if (Players[i])
+        {
+            Players[i]->scale.x = s;
+            Players[i]->scale.y = s;
+            Players[i]->scale.z = s;
+        }
+    }
+
+    dStageActor_c *n = (dStageActor_c *)GetNextOfType(OBJ_LARRY, false);
+    for (int i = 0; i < 6; i++)
+    {
+        if (n)
+        {
+            n->rot.z += TYS_TURNSPEED;
+            n = (dStageActor_c *)FindActorByType(OBJ_LARRY, (Actor *)n);
+            continue;
+        }
+        else
+        {
+            n = NULL;
+            ret;
+        }
+    }
+    ret;
+}
+
+//2 - 1: ModifyMovement(1);
+
+//2 - 2: ModifyMovement(4); + inside-out scaling. Makes the player face and go the wrong way.
+
+//2 - 3
+//Replaces Fire-Piranha's fire with fucking large bullets. Hence the name
+ext void LiterallyBulletHell() {
+    dEn_c* fireball = GetNextOfType(PAKKUN_FIREBALL, false);
+    Vec pos, vel;
+    S16Vec rot;
+    u8 dir;
+
+    for(int i = 0; i < 4; i++) {
+        if(!fireball) fireball = GetNextOfType(PAKKUN_FIREBALL, true);
+        if(!fireball) ret;
+        pos = fireball->pos;
+        vel = fireball->speed;
+        rot = fireball->rot;
+        dir = fireball->direction;
+
+        dEn_c* newSpawned = (dEn_c*)dStageActor_c::create(EN_MAGNUM_KILLER, 0, &pos, &rot, 0);
+        if(newSpawned) {
+            fireball->Delete(1);
+            fireball = NULL;
+            newSpawned->speed = vel;
+            newSpawned->direction = dir;
+        }
+    }
+}
+
+//2 - Tower (2-22)
+//Flips Gravity hehehehehehehehehhe
+ext void WeGoWee() {
+    LivePatch(-DEFAULT_SPEED_JUMP, LP_INITIALJUMPSPEED);
+    for(int i = 0; i < 4; i++)
+    {
+        if(!Players[i]) continue;
+        dEn_c* pl = (dEn_c*)Players[i];
+        Players[i]->speed.y = 2.f;
+
+        if(GetActiveRemocon()->heldButtons & WPAD_DOWN)
+            Players[i]->speed.y = -10.f;
+
+        if(!pl) ret;
+        pl->velocity1.y = pl->speed.y;
+        pl->velocity2.y = pl->speed.y;
+    }
+}
+
+//2 - 4
+//Disables moving rightward, requiring Wind to move.
+ext void SandyPain()
+{
+    ModifyMovement(2);
+    for (int i = 0; i < 4; i++)
+    {
+        if (!Players[i])
+            continue;
+        volatile int *pow = GetPlayerPowerState(Players[i]);
+        if (*pow == POWER_PROPELLER)
+            *pow = POWER_BIG;
+    }
+}
+
+//2 - 5
+ext void PokeyParty() {
+    LivePatch(0xbFFF0000, LP_LEFTSPEED); //Hopefully more than double, refer to DEFAULT_SPEED_LEFT/RIGHT
+    LivePatch(0x3FFF0000, LP_RIGHTSPEED);
+    LivePatch(0x40C83127, LP_INITIALJUMPSPEED);
+    ret;
+}
+
+//I hate 2 - 6 lol
+//This is likely to be very miserable. It turns the spinny platform invisible, cuz i hate that level so much.
+//Why not sabotage it.
+ext void FuckTwoSix() {
+    bool desiredState = CallSpacer(60);
+    
+    dEn_c* lcl = GetNextOfType(LINE_KINOKO_BLOCK, false);
+
+    for(int i = 0; i < 4; i++) {
+        if(!lcl) lcl = GetNextOfType(PAKKUN_FIREBALL, true);
+        if(!lcl) ret; 
+        lcl->visible = desiredState;
+    }
+}
+
+//Unused stuff:
+#ifdef DEBUG_UNUSED
+//Mode false: preGameLoop();
+//Mode true: postGameLoop();
+//This function makes WorldMap like movement happen in levels.
+//Currently unused
 ext void Worldmapify(bool mode)
 {
     if (!Players[0])
@@ -180,130 +339,4 @@ ext void Worldmapify(bool mode)
     ret;
 }
 
-// This is a reference to the song Spin Eternally in Beat Saber
-ext void SpinEternally()
-{
-    dAcPy_c *P;
-    P = (dAcPy_c *)Players[0];
-    if (!P)
-        ret;
-    // P->initializeState_HipAttack(); This causes a funny, pressing up or down with this included causes mario to semi-permanently loose his collision
-    P->initializeState_SpinJump();
-    P->executeState_SpinJump();
-
-    ret;
-}
-
-ext void Lonely()
-{
-    StageE4::instance->killAllEnemiesAtLevelEnd(0);
-    dBase_c *objects[FIND_ENTS] = {NULL};
-    objects[0] = GetNextOfType(AC_FLOOR_GYRATION, false);
-    objects[1] = GetNextOfType(AC_FLOOR_HOLE_DOKAN, false);
-    objects[2] = GetNextOfType(AC_FLOOR_DOKAN_EIGHT, false);
-    objects[3] = GetNextOfType(EN_CLOUDLT, false);
-    objects[4] = GetNextOfType(EN_REDRING, false);
-    objects[5] = GetNextOfType(EN_COIN, false);
-    objects[6] = GetNextOfType(EN_COIN_FLOOR, false);
-    objects[7] = GetNextOfType(EN_COIN_JUMP, false);
-    objects[8] = GetNextOfType(AC_BLOCK_COIN, false);
-    objects[9] = GetNextOfType(CHUKAN_POINT, false);
-
-    for (int i = 0; i < FIND_ENTS; i++)
-        if (objects[i])
-            objects[i]->Delete();
-
-    ret;
-}
-
-ext void MarioCantBreathUnderwater()
-{
-    daPlBase_c *p = (daPlBase_c *)Players[0];
-    const float dps = WATER_DRAIN / 60;
-    const float sps = SWIM_MOD / 60;
-    dEn_c *water = (dEn_c *)GetNextOfType(AC_BG_WATER, false);
-    if (water)
-        water->pos.y -= dps;
-    if (p)
-        p->WaterSwimSpeed = sps;
-
-    ret;
-}
-
-ext void ShyRollers()
-{
-    dStageActor_c *n = (dStageActor_c *)GetNextOfType(AC_FLOOR_GYRATION, false);
-    for(int i = 0; i < 12; i++) {
-        if(n && !n->visible) n = (dStageActor_c*)FindActorByType(AC_FLOOR_GYRATION, (Actor*)n);
-        if(n) n->visible = false;
-    }
-   
-    ret;
-}
-
-//Simple but hard
-ext void TrustYourSenses() {
-    //Using Scale because Players[X]->visible doesnt work.
-    float s = 0;
-    if(!GetNextOfType(OBJ_LARRY, false)) s = 0;
-    else s = 1;
-
-    for(int i = 0; i < 4; i++) {
-        if(Players[i]) { 
-            Players[i]->scale.x = s;
-            Players[i]->scale.y = s;
-            Players[i]->scale.z = s;
-        }
-    }
-
-
-    dStageActor_c *n = (dStageActor_c *)GetNextOfType(OBJ_LARRY, false);
-    for(int i = 0; i < 6; i++) {
-        if(n) {
-            n->rot.z += TYS_TURNSPEED;
-            n = (dStageActor_c*)FindActorByType(OBJ_LARRY, (Actor*)n);
-            continue;
-        } 
-        else {
-            n = NULL;
-            ret;
-        }
-    }
-    ret;
-}
-
-//Modes:
-//0 = Restore
-//1 = Disable Left
-//2 = Disable Right
-//3 = Disable Jump
-//4 = Inverse
-ext void ModifyMovement(int mode) {
-
-    if(mode == 0) {
-        LivePatch(DEFAULT_SPEED_LEFT, LP_LEFTSPEED);
-        LivePatch(DEFAULT_SPEED_RIGHT, LP_RIGHTSPEED);
-        LivePatch(DEFAULT_SPEED_JUMP, LP_INITIALJUMPSPEED);
-        ret;
-    } 
-
-    if(mode == 1 && *LP_LEFTSPEED != 0) {
-        LivePatch(0, LP_LEFTSPEED); ret; }
-
-    if(mode == 2 && *LP_RIGHTSPEED != 0) {
-        LivePatch(0, LP_RIGHTSPEED); ret; }
-    
-    if(mode == 3 && *LP_INITIALJUMPSPEED) {
-        LivePatch(0, LP_INITIALJUMPSPEED); ret; }
-
-    if(mode == 4) {
-        LivePatch(DEFAULT_SPEED_LEFT, LP_RIGHTSPEED);
-        LivePatch(DEFAULT_SPEED_RIGHT, LP_LEFTSPEED);
-        
-        ret;
-    }
-
-    
-    
-    ret;
-}
+#endif

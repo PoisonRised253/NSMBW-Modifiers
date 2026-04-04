@@ -12,10 +12,11 @@
 /*#ifdef DEBUG
 #define DEBUG_LP
 #define DEBUG_CS
+#define DEBUG_UNUSED
 #endif*/
 
 //Current amount of activatable modifiers
-#define MOD_SIZE 11
+#define MOD_SIZE 16
 
 //Infinite-Lives "True" Amount
 #define LIVES_AMOUNT 0x64
@@ -49,22 +50,29 @@
 //TrustYourSenses
 #define TYS_TURNSPEED (s16)8
 
-//QOL
-#define BALLOON_CUSTOMSPEED 64.f
-
 //MAXIMUMs and MINIMUMs
 #define FLOAT_MAX 65504.f
 #define FLOAT_MIN -65504.f
 
 //This is to set the current Powerup State.
-//Enums wont work as intended for some reason so this exists instead.
-#define SMALL 0x00
-#define BIG 0x01
-#define FIRE 0x02
-#define MINI 0x03
-#define PROPELLER 0x04
-#define PENGUIN 0x05
-#define ICE 0x06
+#define POWER_SMALL     0x00
+#define POWER_BIG       0x01
+#define POWER_FIRE      0x02
+#define POWER_MINI      0x03
+#define POWER_PROPELLER 0x04
+#define POWER_PENGUIN   0x05
+#define POWER_ICE       0x06
+
+//Item Spawning Made Easy
+#define ITEM_MUSHROOM   0x00
+#define ITEM_FIRE       0x09
+#define ITEM_ICE        0x0E
+#define ITEM_PENGUIN    0x11
+#define ITEM_PROPELLER  0x15
+#define ITEM_MINI       0x19
+#define ITEM_STAR       0x01
+#define ITEM_1UP        0x07
+#define ITEM_UNKNOWN    0xF9
 
 //dScStage_c::m_exitMode
 #define SUCCESS_EXIT 0
@@ -87,25 +95,25 @@
 
 //Live Patch Helper Stuff
 
-#define INSTR_BLR 0x4e800020
-#define INSTR_NOP 0x60000000
-#define INSTR_BRICKTIMER 0x3C0001F4
+#define INSTR_BLR                0x4e800020
+#define INSTR_NOP                0x60000000
+#define INSTR_BRICKTIMER         0x3C0001F4
 
 //Live Patch Addresses
-#define LP_1UPEFFECT (u32*)0x801591F0
-#define LP_BRICKTIMER (u32*)0x800E3AB8
-#define LP_NODEATHPAUSE (u32*)0x8004E050
-#define LP_ALLOWDEBUG (u32*)0x800F1960
-#define LP_NEXTCANNON (u32*)0x802F4CF0
-#define LP_NOSCORE (u32*)0x8010CDE0
-#define LP_RIGHTSPEED (u32*)0x8042BB20
-#define LP_LEFTSPEED (u32*)0x8042BB24
+#define LP_1UPEFFECT        (u32*)0x801591F0
+#define LP_BRICKTIMER       (u32*)0x800E3AB8
+#define LP_NODEATHPAUSE     (u32*)0x8004E050
+#define LP_ALLOWDEBUG       (u32*)0x800F1960
+#define LP_NEXTCANNON       (u32*)0x802F4CF0
+#define LP_NOSCORE          (u32*)0x8010CDE0
+#define LP_RIGHTSPEED       (u32*)0x8042BB20
+#define LP_LEFTSPEED        (u32*)0x8042BB24
 #define LP_INITIALJUMPSPEED (u32*)0x8042BB28
 
 //Player related Stuff
-#define DEFAULT_SPEED_RIGHT 0x3f800000
-#define DEFAULT_SPEED_LEFT 0xbf800000
-#define DEFAULT_SPEED_JUMP 0x40683127
-#define STATE_BALLOON 0x8032692c
+#define DEFAULT_SPEED_RIGHT       0x3f800000
+#define DEFAULT_SPEED_LEFT        0xbf800000
+#define DEFAULT_SPEED_JUMP        0x40683127
+#define STATEID_BALLOON           0x8032692c
 
 #endif

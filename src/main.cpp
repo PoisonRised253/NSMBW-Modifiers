@@ -10,8 +10,7 @@ ext void onGameLoop()
 {
     if (!GetPlayers())
         ret;
-    GlobalFrameTimer++;
-    
+    GlobalFrameTimer++;    
 
     ApplyModifiers(false);
 
@@ -128,6 +127,10 @@ ext void ApplyModifiers(bool pre)
                 Players[i]->scale.z = -1;
             }
         }
+        if(Modifiers[13]) 
+            SandyPain();
+        if (Modifiers[14])
+            PokeyParty();
 
         ret;
     }
@@ -136,9 +139,16 @@ ext void ApplyModifiers(bool pre)
     {
         DeleteUnwanted();  // Makes sense here, since it automatically means, we're both in a game, and fully 
         if (Modifiers[3])
-            SmallerAndNoYoshi();
+            MiniPlusPlus();
         if (Modifiers[7] && CallSpacer(15))
             ShyRollers();
+        if (Modifiers[11])
+            LiterallyBulletHell();
+        if (Modifiers[12]) 
+            WeGoWee();
+
+        if (Modifiers[15]) 
+            FuckTwoSix();
 
         ret;
     }

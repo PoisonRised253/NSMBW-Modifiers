@@ -1,5 +1,5 @@
 Warning: Spoilers ahead, this will list all Level's features, and some details
-
+<NYI> = Not Yet Implemented
 
 1-1: Despawn all entities except for Mario, incl. Enemies and Rolling Hills
 
@@ -26,3 +26,10 @@ Instead we shift Mario's position based on which button is pressed.
 
 1-Castle: Mario & The Gang are Invisible, and Kamek accidentally cursed Larry's Floor, Good Luck!
 Use Spin and Wall sliding, to figure out your Position.
+
+2-1: You arent allowed to go left. This includes all forces, like walking, running, walljumps, etc.
+
+2-2: Left and Right are switched, sliding on slopes now also goes backwards/upwards
+Powerups also fire in the opposite direction to where youre facing
+
+2-3: <NYI> Replaces Fireballs with Bullets
