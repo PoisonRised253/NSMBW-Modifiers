@@ -1,7 +1,7 @@
 #include "Modifiers.h"
 
-//1 - 1
-//Deletes all Enemies, Powerups, and some spare objects.
+// 1 - 1
+// Deletes all Enemies, Powerups, and some spare objects.
 ext void Lonely()
 {
     StageE4::instance->killAllEnemiesAtLevelEnd(0);
@@ -24,8 +24,8 @@ ext void Lonely()
     ret;
 }
 
-//1 - 2
-//This is a reference to the song Spin Eternally in Beat Saber
+// 1 - 2
+// This is a reference to the song Spin Eternally in Beat Saber
 ext void SpinEternally()
 {
 
@@ -44,8 +44,8 @@ ext void SpinEternally()
     ret;
 }
 
-//1 - 3
-//Turns Mario Very Mini
+// 1 - 3
+// Turns Mario Very Mini
 ext void MiniPlusPlus()
 {
     if (!Players[0])
@@ -65,9 +65,9 @@ ext void MiniPlusPlus()
     ret;
 }
 
-//1 - 22
-//This function causes all Player's Y Velocity to be Limited, which means you cant jump as high, and fall slower.
-//This makes 1-22/Tower pretty difficult.
+// 1 - 22
+// This function causes all Player's Y Velocity to be Limited, which means you cant jump as high, and fall slower.
+// This makes 1-22/Tower pretty difficult.
 ext void TowerFunc()
 {
     float maxY;
@@ -94,9 +94,9 @@ ext void TowerFunc()
     ret;
 }
 
-//1 - 4
-//This function drains any existing water by moving it downwards...
-//Also tries to make specifically Players[0] have higher swim speed, but might apply to all players.
+// 1 - 4
+// This function drains any existing water by moving it downwards...
+// Also tries to make specifically Players[0] have higher swim speed, but might apply to all players.
 ext void MarioCantBreathUnderwater()
 {
     daPlBase_c *p = (daPlBase_c *)Players[0];
@@ -111,11 +111,12 @@ ext void MarioCantBreathUnderwater()
     ret;
 }
 
-//1 - 5
-//This function removes Velocity on the X axis.
-//It replaces moving with positional change, which means Physics on the X axis are basically lost for the Player(s).
+// 1 - 5
+// This function removes Velocity on the X axis.
+// It replaces moving with positional change, which means Physics on the X axis are basically lost for the Player(s).
 ext void Linearity()
 {
+    dEn_c* playerButDifferentClass = NULL;
     const float precalcSpeed = SPEED_WATER_MOD / 60;
     for (int i = 0; i < 4; i++)
     {
@@ -123,6 +124,7 @@ ext void Linearity()
             continue;
         // float* c = &dWaterManager_c::instance->current;
         Players[i]->max_speed.x = SPEED_WATER_MOD;
+        playerButDifferentClass = (dEn_c*)Players[i];
         u32 btn = GetActiveRemocon()->heldButtons;
         float *p = &Players[i]->pos.x;
 
@@ -136,12 +138,15 @@ ext void Linearity()
         }
 
         Players[i]->speed.x = 0;
+        if(!playerButDifferentClass) continue;
+        playerButDifferentClass->velocity1.y = 0;
+        playerButDifferentClass->velocity2.y = 0;
     }
     ret;
 }
 
-//1 - 6
-//Make all Rolling Hills invisible
+// 1 - 6
+// Make all Rolling Hills invisible
 ext void ShyRollers()
 {
     dStageActor_c *n = (dStageActor_c *)GetNextOfType(AC_FLOOR_GYRATION, false);
@@ -156,8 +161,8 @@ ext void ShyRollers()
     ret;
 }
 
-//1 - Castle
-//Simple but hard, turns Mario and Friends invisible, then in second stage (bossfight) makes the ground rotate
+// 1 - Castle
+// Simple but hard, turns Mario and Friends invisible, then in second stage (bossfight) makes the ground rotate
 ext void TrustYourSenses()
 {
     // Using Scale because Players[X]->visible doesnt work.
@@ -195,57 +200,63 @@ ext void TrustYourSenses()
     ret;
 }
 
-//2 - 1: ModifyMovement(1);
+// 2 - 1: ModifyMovement(1);
 
-//2 - 2: ModifyMovement(4); + inside-out scaling. Makes the player face and go the wrong way.
+// 2 - 2: ModifyMovement(4); + inside-out scaling. Makes the player face and go the wrong way.
 
-//2 - 3
-//Replaces Fire-Piranha's fire with fucking large bullets. Hence the name
-ext void LiterallyBulletHell() {
-    dEn_c* fireball = GetNextOfType(PAKKUN_FIREBALL, false);
+// 2 - 3
+// Replaces Fire-Piranha's fire with fucking large bullets. Hence the name
+ext void LiterallyBulletHell()
+{
+    dEn_c *fireball = GetNextOfType(PAKKUN_FIREBALL, false);
     Vec pos, vel;
     S16Vec rot;
     u8 dir;
 
-    for(int i = 0; i < 4; i++) {
-        if(!fireball) fireball = GetNextOfType(PAKKUN_FIREBALL, true);
-        if(!fireball) ret;
-        pos = fireball->pos;
-        vel = fireball->speed;
-        rot = fireball->rot;
-        dir = fireball->direction;
+    if (!fireball)
+        fireball = GetNextOfType(PAKKUN_FIREBALL, true);
+    if (!fireball)
+        ret;
+    pos = fireball->pos;
+    vel = fireball->speed;
+    rot = fireball->rot;
+    dir = fireball->direction;
 
-        dEn_c* newSpawned = (dEn_c*)dStageActor_c::create(EN_MAGNUM_KILLER, 0, &pos, &rot, 0);
-        if(newSpawned) {
-            fireball->Delete(1);
-            fireball = NULL;
-            newSpawned->speed = vel;
-            newSpawned->direction = dir;
-        }
+    dEn_c *newSpawned = (dEn_c *)dStageActor_c::create(EN_MAGNUM_KILLER, 0, &pos, &rot, 0);
+    if (newSpawned)
+    {
+        fireball->Delete(1);
+        fireball = NULL;
+        newSpawned->speed = vel;
+        newSpawned->direction = dir;
+        dEn_c* childLight = (dEn_c*)newSpawned->createChild((Actors)550, newSpawned, 0, &newSpawned->pos, 0, 2);
     }
 }
 
-//2 - Tower (2-22)
-//Flips Gravity hehehehehehehehehhe
-ext void WeGoWee() {
+// 2 - Tower (2-22)
+// Makes the player become an air balloon
+ext void WeGoWee()
+{
     LivePatch(-DEFAULT_SPEED_JUMP, LP_INITIALJUMPSPEED);
-    for(int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++)
     {
-        if(!Players[i]) continue;
-        dEn_c* pl = (dEn_c*)Players[i];
+        if (!Players[i])
+            continue;
+        dEn_c *pl = (dEn_c *)Players[i];
         Players[i]->speed.y = 2.f;
 
-        if(GetActiveRemocon()->heldButtons & WPAD_DOWN)
+        if (GetActiveRemocon()->heldButtons & WPAD_DOWN)
             Players[i]->speed.y = -10.f;
 
-        if(!pl) ret;
+        if (!pl)
+            ret;
         pl->velocity1.y = pl->speed.y;
         pl->velocity2.y = pl->speed.y;
     }
 }
 
-//2 - 4
-//Disables moving rightward, requiring Wind to move.
+// 2 - 4
+// Disables moving rightward, requiring Wind to move.
 ext void SandyPain()
 {
     ModifyMovement(2);
@@ -259,40 +270,45 @@ ext void SandyPain()
     }
 }
 
-//2 - 5
-ext void PokeyParty() {
-    LivePatch(0xbFFF0000, LP_LEFTSPEED); //Hopefully more than double, refer to DEFAULT_SPEED_LEFT/RIGHT
-    LivePatch(0x3FFF0000, LP_RIGHTSPEED);
-    LivePatch(0x40C83127, LP_INITIALJUMPSPEED);
+// 2 - 5
+ext void PokeyParty()
+{
+    dSys_c::setFrameRate(2);
+    LivePatch(0xbfffffff, LP_LEFTSPEED);
+    LivePatch(0x3fffffff, LP_RIGHTSPEED);
     ret;
 }
 
-//I hate 2 - 6 lol
-//This is likely to be very miserable. It turns the spinny platform invisible, cuz i hate that level so much.
-//Why not sabotage it.
-ext void FuckTwoSix() {
+// I hate 2 - 6 lol
+// This is likely to be very miserable. It turns the spinny platform invisible, cuz i hate that level so much.
+// Why not sabotage it.
+ext void FuckTwoSix()
+{
     bool desiredState = CallSpacer(60);
-    
-    dEn_c* lcl = GetNextOfType(LINE_KINOKO_BLOCK, false);
 
-    for(int i = 0; i < 4; i++) {
-        if(!lcl) lcl = GetNextOfType(PAKKUN_FIREBALL, true);
-        if(!lcl) ret; 
+    dEn_c *lcl = GetNextOfType(LINE_KINOKO_BLOCK, false);
+
+    for (int i = 0; i < 4; i++)
+    {
+        if (!lcl)
+            lcl = GetNextOfType(PAKKUN_FIREBALL, true);
+        if (!lcl)
+            ret;
         lcl->visible = desiredState;
     }
 }
 
-//Unused stuff:
+// Unused stuff:
 #ifdef DEBUG_UNUSED
-//Mode false: preGameLoop();
-//Mode true: postGameLoop();
-//This function makes WorldMap like movement happen in levels.
-//Currently unused
+// Mode false: preGameLoop();
+// Mode true: postGameLoop();
+// This function makes WorldMap like movement happen in levels.
+// Currently unused
 ext void Worldmapify(bool mode)
 {
     if (!Players[0])
         ret;
-    const Vec noVec = {0, 0, 0};
+    static const Vec noVec = {0, 0, 0};
     u32 h = 0;
     float x = 0;
     float y = 0;

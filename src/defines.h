@@ -6,8 +6,8 @@
 #define ret return
 
 //Build Flags
-#define DEBUG
-#define NO_MP
+//#define DEBUG
+//#define NO_MP
 
 /*#ifdef DEBUG
 #define DEBUG_LP
@@ -109,6 +109,8 @@
 #define LP_RIGHTSPEED       (u32*)0x8042BB20
 #define LP_LEFTSPEED        (u32*)0x8042BB24
 #define LP_INITIALJUMPSPEED (u32*)0x8042BB28
+//Maybe
+#define LP_SINKING_SPEED    (u32*)0x8042BB2C
 
 //Player related Stuff
 #define DEFAULT_SPEED_RIGHT       0x3f800000

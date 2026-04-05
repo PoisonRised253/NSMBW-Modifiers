@@ -11,6 +11,7 @@ inline Vec VecAdd(Vec a, Vec b);
 inline Vec VecSub(Vec a, Vec b);
 inline Vec VecMul(Vec a, Vec b);
 inline Vec VecDiv(Vec a, Vec b);
+inline Vec2 VecDist(Vec a, Vec b);
 inline Vec VecAddFloat(Vec v, float m);
 inline Vec VecSubFloat(Vec v, float m);
 inline Vec VecMulFloat(Vec v, float m);

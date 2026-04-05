@@ -10,7 +10,7 @@ ext void onGameLoop()
 {
     if (!GetPlayers())
         ret;
-    GlobalFrameTimer++;    
+    GlobalFrameTimer++; 
 
     ApplyModifiers(false);
 
@@ -47,6 +47,7 @@ ext void onStageCreated()
     SetLives();
     LivePatch(dScStage_c::instance()->enteredWorld + 1, LP_NEXTCANNON);
     ModifyMovement(0);
+    dSys_c::setFrameRate(1);
 
     for (int i = 0; i < MOD_SIZE; i++)
         Modifiers[i] = false;
@@ -107,8 +108,6 @@ ext void ApplyModifiers(bool pre)
             NahFuckThat(true);
         if (Modifiers[1] && CallSpacer(TIMER_CLEAR))
             Lonely();
-        if (Modifiers[2] && CallSpacer(TIMER_SPIN) && !GetNextOfType(EN_GOALPOLE, false))
-            SpinEternally();
         if (Modifiers[4])
             TowerFunc();
         if (Modifiers[5])
@@ -138,6 +137,8 @@ ext void ApplyModifiers(bool pre)
     if (pre)
     {
         DeleteUnwanted();  // Makes sense here, since it automatically means, we're both in a game, and fully 
+        if (Modifiers[2] && CallSpacer(TIMER_SPIN) && !GetNextOfType(EN_GOALPOLE, false))
+            SpinEternally();
         if (Modifiers[3])
             MiniPlusPlus();
         if (Modifiers[7] && CallSpacer(15))

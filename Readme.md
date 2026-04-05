@@ -7,7 +7,7 @@ Warning: This was made by someone who's self-taught themselves all of their codi
 This mod uses the NewerSMBW Build System (Kamek, the old one, ripped directly from the Newer Repo (Link in Credits)).   
 It does not use Newer gameplay changes/features.    
 It uses a mix of existing and newly included addresses in kamek_region.x.   
-It includes .arc edits, and tries to be funny with that.    
+It includes .arc edits, and tries to be funny with that. (Repo/Mod_Assets)  
 
 If ive learned one thing from making this mod, its definately that Nintendo must be smoking some premium crack at HQ. The Codebase of the Base-Game is so wierd and questionable, im surprised this game didnt fall like a house of cards.
 

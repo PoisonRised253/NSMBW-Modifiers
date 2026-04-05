@@ -2577,6 +2577,10 @@ WaterMaxFallSpeed__10daPlBase_c = 2151856224;
 WaterSwimSpeed__10daPlBase_c = 2151856216;
 WaterWalkSpeed__10daPlBase_c = 2151856212;
 
+setFrameRate__6dSys_cFUc = 2148419632;
+dStage_Field = 2151844872;
+dStage_Field_Data = 2151844864;
+
 /* Button Bullshit ugh */
 getPressedLeft__14dPlayerInput_cFv = 2147870032;
 getHeldLeft__14dPlayerInput_cFv = 2147869968;

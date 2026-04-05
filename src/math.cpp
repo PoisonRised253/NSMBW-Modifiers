@@ -18,6 +18,7 @@ inline Vec VecAdd(Vec a, Vec b) {ret (Vec){a.x + b.x, a.y + b.y, a.z + b.z};}
 inline Vec VecSub(Vec a, Vec b) {ret (Vec){a.x - b.x, a.y - b.y, a.z - b.z};}
 inline Vec VecMul(Vec a, Vec b) {ret (Vec){a.x * b.x, a.y * b.y, a.z * b.z};}
 inline Vec VecDiv(Vec a, Vec b) {ret (Vec){a.x / b.x, a.y / b.y, a.z / b.z};}
+inline Vec2 VecDist(Vec a, Vec b) {float xd = b.x - a.x; float yd = b.y - a.y; ret MakeVec2(xd, yd); }
 
 inline Vec VecAddFloat(Vec v, float m) {
     v.x += m;

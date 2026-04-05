@@ -1,3 +1,8 @@
+Controls:
+Holding B while on the World Map, Entering a level, disables said level's modifier.
+This can be used if you find a modifier annoying or hard to deal with, if you wish to skip said level.
+
+
 Warning: Spoilers ahead, this will list all Level's features, and some details
 <NYI> = Not Yet Implemented
 
@@ -32,4 +37,22 @@ Use Spin and Wall sliding, to figure out your Position.
 2-2: Left and Right are switched, sliding on slopes now also goes backwards/upwards
 Powerups also fire in the opposite direction to where youre facing
 
-2-3: <NYI> Replaces Fireballs with Bullets
+2-3: Replaces Fireballs with very slow but large Bullets (Banzai Bill)
+Also creates a spotlight around the enemy that shot the Bullet, which exists as long as the bullet is loaded
+
+2-Tower: Too much Helium. You and your theoretical palls are at a childrens birthday party.
+They have helium... Quagsire and the Gang rise into the air and fly into Morton's Tower!
+What a great story huh? Anyway yeah, you float okay... thats the bit... you float..
+Doors might be tricky to enter, but it does work, ive tested it.
+
+2-4: Be Prepared of Sand, more sand, and pain.
+This Level prohibits you from walking rightward, leaving you to travel with the winds of the Desert.
+Subareas might not have wind... i forgor :|
+
+2-5: I dont know what i did here or why...
+The Entire game runs at half speed, Quagsire & Friends' max_speed is wierd, so dont go too fast!
+
+2-6: I dont like this level... at All
+so, ive made it horrible with a very simple change. The Main Gimick is a rotating mushroom block.
+Ive made that mushroom block be visible but only every 60th frame. (1 frame per second of visability)
+Good Luck to whoever likes this level.

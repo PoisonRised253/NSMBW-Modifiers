@@ -4693,4 +4693,14 @@ namespace daPyMng_c {
 	Vec mPlayerEntry; // Its either a Vec, or an instance reference, in which case i need to update this.
 };
 
+class dSys_c {
+	public:
+	static void setFrameRate(unsigned char rate_probably); 
+};
+
+namespace dStage {
+	void* Field;
+	void* Field_Data;
+};
+
 #endif
