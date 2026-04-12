@@ -42,7 +42,7 @@ SECTIONS {
 	setCamera__10dScStage_cFiP9dCamera_c = 2148539216;
 	getCamera__10dScStage_cFi = 2148539232;
 	getGameDisplay__10dScStage_cFv = 2148539248;
-	setLoopType__10dScStage_cFv = 2148539296;
+	setLoopType__10dScStage_cFi = 2148539296;
 	getLoopPosX__10dScStage_cFf = 2148539568;
 	setChangePosFunc__10dScStage_cFi = 2148539856;
 	changePosNormal__10dScStage_cFP7mVec3_c = 2148539888;
@@ -2593,6 +2593,7 @@ getHeldUp__14dPlayerInput_cFv = 2147870192;
 
 getPressedDown__14dPlayerInput_cFv = 2147870272;
 getHeldDown__14dPlayerInput_cFv = 2147870208;
+
 
 	.text : {
 		FILL (0)

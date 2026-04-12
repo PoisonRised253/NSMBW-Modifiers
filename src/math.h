@@ -5,6 +5,8 @@
 
 inline float clampf(float val, float min, float max);
 inline int Round(float x);
+inline Vec2 RoundToNearestTile(Vec pos);
+inline bool IsNaN(float value);
 inline Vec MakeVec(float x, float y, float z);
 inline Vec2 MakeVec2(float x, float y);
 inline Vec VecAdd(Vec a, Vec b);

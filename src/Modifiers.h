@@ -2,6 +2,7 @@
 #define __H_MODIFIERS
 #include "Utils.h"
 #include "g3dhax.h"
+#include "customObjects.h"
 
 //World 1
 ext void Lonely();
@@ -19,6 +20,7 @@ ext void WeGoWee();
 ext void SandyPain();
 ext void PokeyParty();
 ext void FuckTwoSix();
+ext void CastleBlowers();
 
 #ifdef DEBUG_UNUSED
 ext void Worldmapify(bool); //Makes the Level kinda like WM

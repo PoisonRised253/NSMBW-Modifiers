@@ -6,17 +6,20 @@
 #define ret return
 
 //Build Flags
-//#define DEBUG
+#define DEBUG
+
 //#define NO_MP
 
+//This section, if uncommented, will enable all debugs. Warning, the logs will flood constantly.
 /*#ifdef DEBUG
 #define DEBUG_LP
 #define DEBUG_CS
 #define DEBUG_UNUSED
+#define DEBUG_BOUNDS
 #endif*/
 
 //Current amount of activatable modifiers
-#define MOD_SIZE 16
+#define MOD_SIZE 17
 
 //Infinite-Lives "True" Amount
 #define LIVES_AMOUNT 0x64
@@ -42,7 +45,7 @@
 
 //Lonely
 #define TIMER_CLEAR 6
-#define FIND_ENTS 10
+#define FIND_ENTS 7
 
 //SANY - Small and No Yoshi
 #define MOVE_MOD 1.05f
@@ -53,7 +56,10 @@
 //MAXIMUMs and MINIMUMs
 #define FLOAT_MAX 65504.f
 #define FLOAT_MIN -65504.f
+#define FLOAT_MAX_ENCODED 0x47FF0000
 
+
+//This is just free data storage, since its entirely compiletime, but ofcourse entirely constant.
 //This is to set the current Powerup State.
 #define POWER_SMALL     0x00
 #define POWER_BIG       0x01
@@ -109,6 +115,7 @@
 #define LP_RIGHTSPEED       (u32*)0x8042BB20
 #define LP_LEFTSPEED        (u32*)0x8042BB24
 #define LP_INITIALJUMPSPEED (u32*)0x8042BB28
+#define LP_FREEROY          (u32*)0x8042DE28
 //Maybe
 #define LP_SINKING_SPEED    (u32*)0x8042BB2C
 
@@ -119,3 +126,6 @@
 #define STATEID_BALLOON           0x8032692c
 
 #endif
+
+//This line of code, makes a beautifiul effect appear, use with CallSpacer(30)
+//SpawnEffect("Wm_bs_kameckmagic", 0, &this->pos, &r, &MakeVec(this->aoeX / 32, this->aoeY / 64, 1));

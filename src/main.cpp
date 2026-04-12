@@ -1,16 +1,19 @@
 #include "main.h"
+#include "ExecMng.h"
 
 ext void preGameLoop()
 {
+    GlobalFrameTimer++;
     ApplyModifiers(true);
     ret;
 }
 
 ext void onGameLoop()
 {
+      if(CallSpacer(60))
+        SetLives();
     if (!GetPlayers())
         ret;
-    GlobalFrameTimer++; 
 
     ApplyModifiers(false);
 
@@ -44,10 +47,9 @@ ext void onGameLoop()
 
 ext void onStageCreated()
 {
-    SetLives();
-    LivePatch(dScStage_c::instance()->enteredWorld + 1, LP_NEXTCANNON);
-    ModifyMovement(0);
+    dExecMng_c::Reset();
     dSys_c::setFrameRate(1);
+    ModifyMovement(0);
 
     for (int i = 0; i < MOD_SIZE; i++)
         Modifiers[i] = false;
@@ -90,6 +92,7 @@ ext void onBoot()
     LivePatch(INSTR_BRICKTIMER, LP_BRICKTIMER);
     LivePatch(INSTR_BLR, LP_NODEATHPAUSE);
     LivePatch(INSTR_BLR, LP_NOSCORE);
+    LivePatch(FLOAT_MAX_ENCODED, LP_FREEROY);
 
 #ifdef DEBUG
     OSReport("\n\nStatic LivePatch Successfully!\n\n\n");
@@ -148,8 +151,10 @@ ext void ApplyModifiers(bool pre)
         if (Modifiers[12]) 
             WeGoWee();
 
-        if (Modifiers[15]) 
+        if (Modifiers[15])
             FuckTwoSix();
+        if (Modifiers[16])
+            CastleBlowers();
 
         ret;
     }

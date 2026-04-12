@@ -6,16 +6,13 @@ ext void Lonely()
 {
     StageE4::instance->killAllEnemiesAtLevelEnd(0);
     dBase_c *objects[FIND_ENTS] = {NULL};
-    objects[0] = GetNextOfType(AC_FLOOR_GYRATION, false);
-    objects[1] = GetNextOfType(AC_FLOOR_HOLE_DOKAN, false);
-    objects[2] = GetNextOfType(AC_FLOOR_DOKAN_EIGHT, false);
-    objects[3] = GetNextOfType(EN_CLOUDLT, false);
-    objects[4] = GetNextOfType(EN_REDRING, false);
-    objects[5] = GetNextOfType(EN_COIN, false);
-    objects[6] = GetNextOfType(EN_COIN_FLOOR, false);
-    objects[7] = GetNextOfType(EN_COIN_JUMP, false);
-    objects[8] = GetNextOfType(AC_BLOCK_COIN, false);
-    objects[9] = GetNextOfType(CHUKAN_POINT, false);
+    objects[0] = GetNextOfType(EN_CLOUDLT, false);
+    objects[1] = GetNextOfType(EN_REDRING, false);
+    objects[2] = GetNextOfType(EN_COIN, false);
+    objects[3] = GetNextOfType(EN_COIN_FLOOR, false);
+    objects[4] = GetNextOfType(EN_COIN_JUMP, false);
+    objects[5] = GetNextOfType(AC_BLOCK_COIN, false);
+    objects[6] = GetNextOfType(CHUKAN_POINT, false);
 
     for (int i = 0; i < FIND_ENTS; i++)
         if (objects[i])
@@ -28,7 +25,6 @@ ext void Lonely()
 // This is a reference to the song Spin Eternally in Beat Saber
 ext void SpinEternally()
 {
-
     dAcPy_c *P;
     for (int i = 0; i < 4; i++)
     {
@@ -116,7 +112,7 @@ ext void MarioCantBreathUnderwater()
 // It replaces moving with positional change, which means Physics on the X axis are basically lost for the Player(s).
 ext void Linearity()
 {
-    dEn_c* playerButDifferentClass = NULL;
+    dEn_c *playerButDifferentClass = NULL;
     const float precalcSpeed = SPEED_WATER_MOD / 60;
     for (int i = 0; i < 4; i++)
     {
@@ -124,7 +120,7 @@ ext void Linearity()
             continue;
         // float* c = &dWaterManager_c::instance->current;
         Players[i]->max_speed.x = SPEED_WATER_MOD;
-        playerButDifferentClass = (dEn_c*)Players[i];
+        playerButDifferentClass = (dEn_c *)Players[i];
         u32 btn = GetActiveRemocon()->heldButtons;
         float *p = &Players[i]->pos.x;
 
@@ -138,7 +134,8 @@ ext void Linearity()
         }
 
         Players[i]->speed.x = 0;
-        if(!playerButDifferentClass) continue;
+        if (!playerButDifferentClass)
+            continue;
         playerButDifferentClass->velocity1.y = 0;
         playerButDifferentClass->velocity2.y = 0;
     }
@@ -229,7 +226,7 @@ ext void LiterallyBulletHell()
         fireball = NULL;
         newSpawned->speed = vel;
         newSpawned->direction = dir;
-        dEn_c* childLight = (dEn_c*)newSpawned->createChild((Actors)550, newSpawned, 0, &newSpawned->pos, 0, 2);
+        dEn_c *childLight = (dEn_c *)newSpawned->createChild((Actors)550, newSpawned, 0, &newSpawned->pos, 0, 2);
     }
 }
 
@@ -268,6 +265,8 @@ ext void SandyPain()
         if (*pow == POWER_PROPELLER)
             *pow = POWER_BIG;
     }
+    if (GetNextOfType(EN_DOSUN, false))
+        ModifyMovement(0);
 }
 
 // 2 - 5
@@ -295,6 +294,50 @@ ext void FuckTwoSix()
         if (!lcl)
             ret;
         lcl->visible = desiredState;
+    }
+}
+
+ext void CastleBlowers()
+{
+    static bool JustSpawned = false;
+
+    dStageActor_c *obj = GetNextOfType(AC_AUTOSCROOL_SWICH, false);
+    if (!obj) GetNextOfType(AC_AUTOSCROOL_SWICH, true);
+    if (!obj) ret;
+
+    if(JustSpawned) {
+        JustSpawned = false;
+        ret;
+    }
+
+    if (IsNaN(obj->pos.x) || IsNaN(obj->pos.y))
+        ret;
+
+    Vec newPos = obj->pos;
+    int which = obj->settings;
+    JustSpawned = true;
+    switch (which)
+    { 
+        default: ret;
+        case 1:
+        {
+            Vec area = MakeVec(32.f, 128.f, 0.f);
+            dEnElevator_c::create(newPos, area, 64.f, 0);
+            //CreateActor(EN_COIN_FLOOR, 0, newPos, 0, 0);
+            obj->Delete(1);
+            JustSpawned = true;
+            which = 0;
+            ret;
+        }
+        case 2: {
+            Vec area = MakeVec(192.f, 96.f, 0.f);
+            dEnElevator_c::create(newPos, area, 15.f, 0);
+            //CreateActor(EN_COIN_FLOOR, 0, newPos, 0, 0);
+            obj->Delete(1);
+            JustSpawned = true;
+            which = 0;
+            ret;
+        }
     }
 }
 

@@ -1,22 +1,22 @@
-source_files: [../src/main.cpp, ../src/Utils.cpp, ../src/Modifiers.cpp, ../src/math.cpp]
+source_files: [../src/main.cpp, ../src/Utils.cpp, ../src/Modifiers.cpp, ../src/math.cpp, ../src/customObjects.cpp, ../src/ExecMng.cpp]
 
 hooks:
 
-  - name: OnGameLoop
-    type: branch_insn
-    branch_type: b
-    src_addr_pal: 0x800e4874
-    target_func: onGameLoop
+  #- name: OnGameLoop
+  #  type: branch_insn
+  #  branch_type: b
+  #  src_addr_pal: 0x800e4874
+  #  target_func: onGameLoop
 
     #Original: 80143bc8
     #Desired: 800e1e5c <- dScene Hook, unknown stability, likely bad
     #Alternative: 800e4874 <- 6dSys hook
 
-  - name: PreGameLoop
-    type: branch_insn
-    branch_type: b
-    src_addr_pal: 0x800e4814
-    target_func: preGameLoop
+  #- name: PreGameLoop
+  #  type: branch_insn
+  #  branch_type: b
+  #  src_addr_pal: 0x800e4814
+  #  target_func: preGameLoop
 
     #Original: 800e39c0
     #Desired: 800e1e0c <- dScene hook, doesnt really work, crashes
@@ -39,6 +39,39 @@ hooks:
     branch_type: b
     src_addr_pal: 0x8015d82c
     target_func: onBoot
+
+  - name: ExecMngStageSet0
+    type: patch
+    addr_pal: 0x800e4814
+    data: '38600000'
+
+  - name: ExecMngPreExecute
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x800e4818
+    target_func: 'dExecMng_c::DRYExecute(int)'
+
+  - name: ExecMngStageSet2
+    type: patch
+    addr_pal: 0x800e50b4
+    data: '38600002'
+
+  - name: ExecMngExecute
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x800e50b8
+    target_func: 'dExecMng_c::DRYExecute(int)'
+
+  - name: ExecMngStageSet1
+    type: patch
+    addr_pal: 0x800e4874
+    data: '38600001'
+
+  - name: ExecMngPostExecute
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x800e4878
+    target_func: 'dExecMng_c::DRYExecute(int)'
 
   #All of these have been moved to onBoot() in main.cpp
 

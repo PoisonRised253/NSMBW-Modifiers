@@ -3460,7 +3460,7 @@ public:
 	u32 ts1ID, ts2ID, ts3ID, layerID, areaID, frmHeap, is2Castle;
 
 	// Only the public API is listed
-	u16 *getPointerToTile(int x, int y, u32 *blockNum = 0, bool unkBool = 0);
+	static u16 *getPointerToTile(int x, int y, u32 *blockNum = 0, bool unkBool = 0);
 	// TODO: more?
 };
 
@@ -4695,7 +4695,7 @@ namespace daPyMng_c {
 
 class dSys_c {
 	public:
-	static void setFrameRate(unsigned char rate_probably); 
+	static void setFrameRate(unsigned char rate_probably);
 };
 
 namespace dStage {

@@ -2,5 +2,6 @@
 /.vscode
 /processed
 /PA_ASM
+/tmp
 *.ps1
 TODO.txt

@@ -89,7 +89,7 @@ public:
     s32 m_titleCount;
     s32 m_goalType;
     s32 m_exeFrame;
-    s32 m_loopType;
+    static u32 m_loopType;
     void *m_unit_res_num;
     void *m_object_res_num;
     void *m_objectEx_res_num;

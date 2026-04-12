@@ -9,8 +9,18 @@ inline float clampf(float val, float min, float max) {
 
 inline int Round(float x)
 {
-    return (int)(x >= 0.0f ? x + 0.5f : x - 0.5f);
+    ret (int)(x >= 0.0f ? x + 0.5f : x - 0.5f);
 }
+
+inline Vec2 RoundToNearestTile(Vec pos) {
+    Vec2 newPos = {
+        (int)((float)pos.x / 16.f + 0.5f) * 16.f,
+        (int)((float)pos.y / 16.f + 0.5f) * 16.f
+    };
+    ret newPos;
+}
+
+inline bool IsNaN(float value) {ret value != value;}
 
 inline Vec MakeVec(float x, float y, float z)             {ret (Vec){x,y,z};}
 inline Vec2 MakeVec2(float x, float y)                     {ret (Vec2){x,y};}
