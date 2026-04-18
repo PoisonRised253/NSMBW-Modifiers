@@ -2580,6 +2580,7 @@ WaterWalkSpeed__10daPlBase_c = 2151856948;
 setFrameRate__6dSys_cFUc = 2148419872;
 dStage_Field = 2151845656;
 dStage_Field_Data = 2151845648;
+setCancelCrouch__10daPlBase_cFv = 2147777984;
 
 /* Button Bullshit ugh */
 getPressedLeft__14dPlayerInput_cFv = 2147870032;

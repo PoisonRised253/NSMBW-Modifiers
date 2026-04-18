@@ -231,24 +231,15 @@ ext void LiterallyBulletHell()
 }
 
 // 2 - Tower (2-22)
-// Makes the player become an air balloon
+// Disables Walljumping and Groundpound
 ext void WeGoWee()
 {
-    LivePatch(-DEFAULT_SPEED_JUMP, LP_INITIALJUMPSPEED);
-    for (int i = 0; i < 4; i++)
+    for(int i = 0; i < 4; i++)
     {
-        if (!Players[i])
-            continue;
-        dEn_c *pl = (dEn_c *)Players[i];
-        Players[i]->speed.y = 2.f;
-
-        if (GetActiveRemocon()->heldButtons & WPAD_DOWN)
-            Players[i]->speed.y = -10.f;
-
-        if (!pl)
-            ret;
-        pl->velocity1.y = pl->speed.y;
-        pl->velocity2.y = pl->speed.y;
+        if(!Players[i]) continue;
+        u32* state = GetMemberFromOffset(Players[i], 0x10D8);
+        if(state)
+            LivePatch(0x50, state);
     }
 }
 
@@ -290,7 +281,7 @@ ext void FuckTwoSix()
     for (int i = 0; i < 4; i++)
     {
         if (!lcl)
-            lcl = GetNextOfType(PAKKUN_FIREBALL, true);
+            lcl = GetNextOfType(LINE_KINOKO_BLOCK, true);
         if (!lcl)
             ret;
         lcl->visible = desiredState;
@@ -302,10 +293,13 @@ ext void CastleBlowers()
     static bool JustSpawned = false;
 
     dStageActor_c *obj = GetNextOfType(AC_AUTOSCROOL_SWICH, false);
-    if (!obj) GetNextOfType(AC_AUTOSCROOL_SWICH, true);
-    if (!obj) ret;
+    if (!obj)
+        GetNextOfType(AC_AUTOSCROOL_SWICH, true);
+    if (!obj)
+        ret;
 
-    if(JustSpawned) {
+    if (JustSpawned)
+    {
         JustSpawned = false;
         ret;
     }
@@ -317,27 +311,29 @@ ext void CastleBlowers()
     int which = obj->settings;
     JustSpawned = true;
     switch (which)
-    { 
-        default: ret;
-        case 1:
-        {
-            Vec area = MakeVec(32.f, 128.f, 0.f);
-            dEnElevator_c::create(newPos, area, 64.f, 0);
-            //CreateActor(EN_COIN_FLOOR, 0, newPos, 0, 0);
-            obj->Delete(1);
-            JustSpawned = true;
-            which = 0;
-            ret;
-        }
-        case 2: {
-            Vec area = MakeVec(192.f, 96.f, 0.f);
-            dEnElevator_c::create(newPos, area, 15.f, 0);
-            //CreateActor(EN_COIN_FLOOR, 0, newPos, 0, 0);
-            obj->Delete(1);
-            JustSpawned = true;
-            which = 0;
-            ret;
-        }
+    {
+    default:
+        ret;
+    case 1:
+    {
+        Vec area = MakeVec(32.f, 128.f, 0.f);
+        dEnElevator_c::create(newPos, area, 64.f, 0);
+        // CreateActor(EN_COIN_FLOOR, 0, newPos, 0, 0);
+        obj->Delete(1);
+        JustSpawned = true;
+        which = 0;
+        ret;
+    }
+    case 2:
+    {
+        Vec area = MakeVec(192.f, 96.f, 0.f);
+        dEnElevator_c::create(newPos, area, 15.f, 0);
+        // CreateActor(EN_COIN_FLOOR, 0, newPos, 0, 0);
+        obj->Delete(1);
+        JustSpawned = true;
+        which = 0;
+        ret;
+    }
     }
 }
 

@@ -227,10 +227,10 @@ volatile inline int *GetPlayerPowerState(dAc_Py_c *player)
     ret(int *) powerStateProbs;
 }
 
-volatile inline bool *checkGrounded(dAc_Py_c *player)
+volatile inline int *checkGrounded(dAc_Py_c *player)
 {
-    unsigned char *grounded = (unsigned char *)player + (0x10D7);
-    ret(bool *) grounded;
+    unsigned char *grounded = (unsigned char *)player + (0x10D4);
+    ret(int *) grounded;
 }
 
 // Live-Patch
@@ -355,11 +355,17 @@ inline int GetNextFreeArrayEntry(T* arr[], int size) {
 }
 
 inline void SetGroundedAll() {
-    volatile bool* g = NULL;
+    volatile int* g = NULL;
     for(int i = 0; i < 4; i++) {
         if(!Players[i]) continue;
-        g = checkGrounded(Players[i]);
+         g = checkGrounded(Players[i]);
         if(!g) { OSReport("Grounded is Empty, or cannot be reached\n"); continue; }
         *g = true;
     }
+}
+
+inline u32* GetMemberFromOffset(void* object, u32 offset) {
+    u32* p = (u32*)((unsigned char*)object + offset);
+    if(!p) ret NULL;
+    ret p;
 }
