@@ -1,4 +1,5 @@
 #include "Utils.h"
+#include "dCourse.h"
 
 bool Modifiers[MOD_SIZE] = {false};
 dAc_Py_c *Players[4] = {NULL, NULL, NULL, NULL};
@@ -121,10 +122,11 @@ ext void ToggleMods()
     // 2 - 6
     Modifiers[15] = (LevelID == 6 && WorldID == 2);
     // 2- 24
-    Modifiers[16] = (LevelID == 24 && WorldID == 2);
+    Modifiers[16] = ((LevelID == 24 || LevelID == 25) && WorldID == 2);
 
 #ifdef DEBUG
     OSReport("L: %d, W: %d, A: %d, E: %d, G: %d\n", LevelID, WorldID, AreaID, exit, game);
+    OSReport("StartGameInfoPtr: %p\n", &dInfo_c::m_instance->m_startGameInfo);
 #endif
     ret;
 }
@@ -219,18 +221,6 @@ inline int GetPowerupType(u32 settings)
     default:
         ret 0;
     }
-}
-
-volatile inline int *GetPlayerPowerState(dAc_Py_c *player)
-{
-    unsigned char *powerStateProbs = (unsigned char *)player + (0x14E0);
-    ret(int *) powerStateProbs;
-}
-
-volatile inline int *checkGrounded(dAc_Py_c *player)
-{
-    unsigned char *grounded = (unsigned char *)player + (0x10D4);
-    ret(int *) grounded;
 }
 
 // Live-Patch
@@ -354,18 +344,42 @@ inline int GetNextFreeArrayEntry(T* arr[], int size) {
     ret 0xFFFF;
 }
 
-inline void SetGroundedAll() {
-    volatile int* g = NULL;
+inline u32* GetMemberFromOffset(void* object, u32 offset) {
+    ret (u32*)((unsigned char*)object + offset);
+}
+
+volatile inline bool* isDemo(dAc_Py_c* player) {
+    ret (volatile bool*)GetMemberFromOffset(player, 0x1460);
+}
+
+volatile inline int *GetPlayerPowerState(dAc_Py_c *player) {
+    ret (volatile int*) GetMemberFromOffset(player, 0x14E0);
+}
+
+volatile inline int *checkGrounded(dAc_Py_c *player) {
+    ret (volatile int*) GetMemberFromOffset(player, 0x10D4);
+}
+
+volatile inline bool isPause() {
+    PauseManager_c* instance = PauseManager_c::m_instance;
+    if(!instance) ret false;
+    ret (bool)*GetMemberFromOffset(instance, 0x4);
+}
+
+inline void DisablePropeller() {
+    volatile int* itm = NULL;
     for(int i = 0; i < 4; i++) {
-        if(!Players[i]) continue;
-         g = checkGrounded(Players[i]);
-        if(!g) { OSReport("Grounded is Empty, or cannot be reached\n"); continue; }
-        *g = true;
+        if(!Players[i])
+        itm = GetPlayerPowerState(Players[i]);
+        if(*itm == POWER_PROPELLER) *itm = POWER_FIRE;
     }
 }
 
-inline u32* GetMemberFromOffset(void* object, u32 offset) {
-    u32* p = (u32*)((unsigned char*)object + offset);
-    if(!p) ret NULL;
-    ret p;
-}
+/* Did not work, but slighly insightful
+ext void PatchCastleIDs() {
+    asm("cmpwi r3, 0x17");
+    asm("bne+ skip");
+    asm("subi r3, r3, 4");
+    asm("skip: ");
+    ret;
+}*/

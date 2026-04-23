@@ -6,7 +6,9 @@ dEnElevator_c *elevators[CO_ARRAY_SIZE];
 // 1 = exec
 // 2 = post
 void dExecMng_c::DRYExecute(int stage)
-{
+{    
+    if(isPause()) ret;
+    
     RunCustom(stage);
     switch(stage) {
         case 0: {
@@ -41,22 +43,33 @@ void dExecMng_c::Register(dStageActor_c* obj, int typeID, bool force) {
     int freeSlot = 0;
 
     switch(typeID) {
-        default: OSReport("Register() failed, Unknown Type\n"); ret;
+        default: {
+            #ifdef DEBUG
+            OSReport("Register() failed, Unknown Type\n"); 
+            #endif
+            ret;
+        }
+
         case 0: {
             freeSlot = GetNextFreeArrayEntry(elevators, CO_ARRAY_SIZE);
             if(freeSlot == 0xFFFF && force) freeSlot = 0;
             else if (freeSlot == 0xFFFF && !force) {
-                OSReport("Register() failed, Full Array without Force\n");
+                #ifdef DEBUG
+                    OSReport("Register() failed, Full Array without Force\n");
+                #endif
                 ret;
             }
             elevators[freeSlot] = (dEnElevator_c*)obj;
-            OSReport("Registered an Elevator at Arr + %p\n", freeSlot);
+            #ifdef DEBUG
+                OSReport("Registered an Elevator at Arr + %i\n", freeSlot);
+            #endif
             ret;
         }
     }
 }
 
 //This function is made this way, to avoid too much compiled size.
+//Also i dont like virtual calls, so like... you wont be seeing them here
 void dExecMng_c::RunCustom(int action) {
     for(int i = 0; i < CO_ARRAY_SIZE; i++) {
         if (action == 0 && elevators[i]) {elevators[i]->beforeExecute();}

@@ -7,7 +7,7 @@ class dCourse_c {
 	public:
 		virtual ~dCourse_c();
 
-		void loadFromFile(int courseID);
+		static void loadFromFile(int courseID);
 
 		struct tilesets_s {
 			char name0[32];

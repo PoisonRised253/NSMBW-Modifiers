@@ -23,7 +23,7 @@ ext void Lonely()
 
 // 1 - 2
 // This is a reference to the song Spin Eternally in Beat Saber
-ext void SpinEternally()
+ext void SpinEternally(bool anotherBoolLol)
 {
     dAcPy_c *P;
     for (int i = 0; i < 4; i++)
@@ -33,7 +33,9 @@ ext void SpinEternally()
         if (!P)
             continue;
         // P->initializeState_HipAttack(); This causes a funny, pressing up or down with this included causes mario to semi-permanently loose his collision
+        if(anotherBoolLol)
         P->initializeState_SpinJump();
+        if(!anotherBoolLol)
         P->executeState_SpinJump();
     }
 
@@ -64,6 +66,7 @@ ext void MiniPlusPlus()
 // 1 - 22
 // This function causes all Player's Y Velocity to be Limited, which means you cant jump as high, and fall slower.
 // This makes 1-22/Tower pretty difficult.
+// TODO: Make jumping even lower based on how many players are playing. This way it doesnt become easier with more people.
 ext void TowerFunc()
 {
     float maxY;
@@ -110,6 +113,7 @@ ext void MarioCantBreathUnderwater()
 // 1 - 5
 // This function removes Velocity on the X axis.
 // It replaces moving with positional change, which means Physics on the X axis are basically lost for the Player(s).
+// This is currently very broken in multiplayer
 ext void Linearity()
 {
     dEn_c *playerButDifferentClass = NULL;
@@ -231,14 +235,15 @@ ext void LiterallyBulletHell()
 }
 
 // 2 - Tower (2-22)
-// Disables Walljumping and Groundpound
+// Disables Walljumping and Groundpound (TODO line 92)
 ext void WeGoWee()
 {
     for(int i = 0; i < 4; i++)
     {
         if(!Players[i]) continue;
+        u8 sDir = Players[i]->collMgr.currentSlopeDirection;
         u32* state = GetMemberFromOffset(Players[i], 0x10D8);
-        if(state)
+        if(state && sDir == 2.f)
             LivePatch(0x50, state);
     }
 }
@@ -252,9 +257,7 @@ ext void SandyPain()
     {
         if (!Players[i])
             continue;
-        volatile int *pow = GetPlayerPowerState(Players[i]);
-        if (*pow == POWER_PROPELLER)
-            *pow = POWER_BIG;
+        DisablePropeller();
     }
     if (GetNextOfType(EN_DOSUN, false))
         ModifyMovement(0);
@@ -288,9 +291,36 @@ ext void FuckTwoSix()
     }
 }
 
+
+
 ext void CastleBlowers()
 {
+    if(!dScStage_c::instance()) ret;
+    //if(&dScStage_c::instance()->area != NULL && dScStage_c::instance()->area != 255 && dScStage_c::instance()->area != 0) ret;
+    static bool fuse = false;
     static bool JustSpawned = false;
+
+    if(!fuse && dScStage_c::instance()->area == 255 && Players[0] && Players[0]->pos.x != 0) {
+        dNext_c* n = dNext_c::get();
+        if(!n) ret;
+        fuse = true;
+
+        dScStage_c::instance()->area = 0;
+        dScStage_c::instance()->enteredLevel = 0x18;
+        dInfo_c::m_instance->m_startGameInfo->level1 = 25;
+
+        asm("li r7, 1");
+        n->setChangeSceneNextDat(0x0, 0x2, 5);
+        //n->simpleChangeScene(0x0, 0x2, 5); half-worked
+        daPlBase_c* player = (daPlBase_c*)Players[0];
+        if(!player) ret;
+        player->changeNextScene(1);
+
+        dScStage_c::instance()->setLoopType(0);
+        dScStage_c::m_loopType = 0;
+    }
+
+    if(dScStage_c::instance()->area == 255) fuse = false;
 
     dStageActor_c *obj = GetNextOfType(AC_AUTOSCROOL_SWICH, false);
     if (!obj)
@@ -326,7 +356,7 @@ ext void CastleBlowers()
     }
     case 2:
     {
-        Vec area = MakeVec(192.f, 96.f, 0.f);
+        Vec area = MakeVec(384.f, 320.f, 0.f);
         dEnElevator_c::create(newPos, area, 15.f, 0);
         // CreateActor(EN_COIN_FLOOR, 0, newPos, 0, 0);
         obj->Delete(1);

@@ -32,7 +32,7 @@ int dEnElevator_c::onCreate() {
     float yOffset = this->aoeY / 2;
     yOffset -= 8;
 
-    SpawnEffect("Wm_ob_stream", 0, &VecSub(this->pos, MakeVec(0,yOffset,0)), &r, &MakeVec(this->aoeX / 32, this->aoeY / 64, -1000));
+    SpawnEffect("Wm_ob_stream", 0, &VecSub(this->pos, MakeVec(0,yOffset,0)), &r, &MakeVec(this->aoeX / 32, this->aoeY / 64, 6500.0));
     ret 1;
 }
 
@@ -41,6 +41,7 @@ int dEnElevator_c::beforeExecute() {
     this->tr = MakeVec(this->pos.x + (aoeX / 2), this->pos.y + (aoeY / 2), 0);
     ret 1; 
 }
+
 int dEnElevator_c::afterExecute()  {ret 1; }
 bool dEnElevator_c::isOutOfView() {ret false; }
 
@@ -51,18 +52,20 @@ int dEnElevator_c::execute()
     for (int i = 0; i < 4; i++)
     {
         dEn_c* p = (dEn_c*)Players[i];
+        daPlBase_c* p2 = (daPlBase_c*)Players[i];
         if (p && ObjectBoundCheck(bl, tr, p->pos)) {
+            *checkGrounded(Players[i]) = true;
             if(this->mode == 0) {
                 float f = force / 60;
                 p->speed.y += f;
-                //p->velocity1.y += f;
-                //p->velocity2.y += f;
             }
             if(this->mode == 1) {
                 p->speed.y = force;
                 //p->velocity1.y = force;
                 //p->velocity2.y = force;
             }
+            p2->input.clearShakeInputs();
+            OSReport("Input at: %p\n", &p2->input);
         }
     }
     ret 1;
@@ -78,6 +81,7 @@ int dEnElevator_c::onDelete() {
     this->tr.x = NULL;
     this->tr.y = NULL;
     this->tr.z = NULL;
+    this->deleteForever = 1;
 
     ret 1;
 }

@@ -84,7 +84,7 @@ ext void onRecieveResetEvent()
 ext void onBoot()
 {
 #ifdef DEBUG
-    OSReport("\n\nStatic LivePatch Start!\n\n\n");
+    OSReport("Static LivePatch Start!\n");
     LivePatch(INSTR_BLR, LP_ALLOWDEBUG);
 #endif
 
@@ -92,10 +92,10 @@ ext void onBoot()
     LivePatch(INSTR_BRICKTIMER, LP_BRICKTIMER);
     LivePatch(INSTR_BLR, LP_NODEATHPAUSE);
     LivePatch(INSTR_BLR, LP_NOSCORE);
-    LivePatch(FLOAT_MAX_ENCODED, LP_FREEROY);
+    //LivePatch(0xFFFFFFFF, LP_FREEROY); //Trying to save Roy's castle
 
 #ifdef DEBUG
-    OSReport("\n\nStatic LivePatch Successfully!\n\n\n");
+    OSReport("Static LivePatch Successfully!\n");
 #endif
     ret;
 }
@@ -104,6 +104,10 @@ ext void onBoot()
 ext void ApplyModifiers(bool pre)
 {
     QOLModifications();
+
+    //Isolate Modifier[2], to allow to trigger it either way, with a difference in action based on 'bool pre'
+    if (Modifiers[2] && CallSpacer(TIMER_SPIN) && !GetNextOfType(EN_GOALPOLE, false))
+            SpinEternally(pre);
 
     if (!pre)
     {
@@ -119,9 +123,12 @@ ext void ApplyModifiers(bool pre)
             Linearity();
         if(Modifiers[8]) 
             TrustYourSenses();
-        if(Modifiers[9]) 
+        if(Modifiers[9]) {
             ModifyMovement(1);
+            DisablePropeller();
+        }
         if(Modifiers[10]) {
+            DisablePropeller();
             ModifyMovement(4);
             for(int i = 0; i < 4; i++) {
                 if(!Players[i]) continue;
@@ -140,8 +147,6 @@ ext void ApplyModifiers(bool pre)
     if (pre)
     {
         DeleteUnwanted();  // Makes sense here, since it automatically means, we're both in a game, and fully 
-        if (Modifiers[2] && CallSpacer(TIMER_SPIN) && !GetNextOfType(EN_GOALPOLE, false))
-            SpinEternally();
         if (Modifiers[3])
             MiniPlusPlus();
         if (Modifiers[7] && CallSpacer(15))
@@ -155,6 +160,11 @@ ext void ApplyModifiers(bool pre)
             FuckTwoSix();
         if (Modifiers[16])
             CastleBlowers();
+
+        #ifdef DEBUG_SLOPE
+        if(Players[0])
+            OSReport("SlopeInfo{A: %p, D: %p}\n", Players[0]->collMgr.currentSlopeAngle, Players[0]->collMgr.currentSlopeDirection);
+        #endif
 
         ret;
     }

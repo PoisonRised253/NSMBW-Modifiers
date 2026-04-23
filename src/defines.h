@@ -16,6 +16,7 @@
 #define DEBUG_CS
 #define DEBUG_UNUSED
 #define DEBUG_BOUNDS
+#define DEBUG_SLOPE
 #endif*/
 
 //Current amount of activatable modifiers
@@ -81,7 +82,7 @@
 #define ITEM_UNKNOWN    0xF9
 
 //dScStage_c::m_exitMode
-#define SUCCESS_EXIT 0
+#define EXIT_SUCCESS 0
 #define EXIT_FAIL 1
 #define EXIT_PLAYER_CHOICE 2
 #define EXIT_DEFAULT 3
@@ -116,6 +117,8 @@
 #define LP_LEFTSPEED        (u32*)0x8042BB24
 #define LP_INITIALJUMPSPEED (u32*)0x8042BB28
 #define LP_FREEROY          (u32*)0x8042DE28
+#define LP_ALLOWPRESSTWO    (u32*)0x8005e574
+#define LP_ALLOWHOLDTWO     (u32*)0x8005e584
 //Maybe
 #define LP_SINKING_SPEED    (u32*)0x8042BB2C
 

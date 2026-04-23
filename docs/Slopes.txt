@@ -1,0 +1,17 @@
+This doc contains data to work with Slopes.
+Data collected using: Players[0]->collMgr.currentSlopeAngle, 
+Players[0]->collMgr.currentSlopeDirection;
+
+A = Angle;
+D = Direction;
+
+Direction's based on visuals are put in '()', it notes which direction youll go when sliding.
+
+Flat Ground: A: 0x0, D = 0x2
+Slight Angled slope (DownRight): A: 0xfffff605, D: 0x0
+Mid Angled Slope (DownRight): A: 0xffffed16, D: 0x0
+Heavy Angled Slope (DownRight): A: 0xffffe000, D: 0x0
+
+Slight Angled Slope (DownLeft): 0x000009fb, D: 0x1
+Mid Angled Slope (DownLeft): A: 0x000012ea, D: 0x1
+Heavy Angled Slope (DownLeft): 0x00002000, D: 0x0

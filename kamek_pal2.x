@@ -1339,7 +1339,7 @@ SECTIONS {
 	_Z24SearchForIndexOfPlayerIDi = 2147877136;
 
 	QueryPlayerAvailability__Fi = 2148222816;
-	DoStartLevel__FPvP14StartLevelInfo = 2148251600;
+	DoStartLevel__FPvP14StartGameInfo = 2148251600;
 	SetSomeConditionShit__FiiUi = 2148542432;
 	WpadShit__Fi = 2148988800;
 	CheckIfContinueShouldBeActivated__Fv = 2148225856;
@@ -2210,7 +2210,7 @@ SetIbaraNow__7dInfo_cFiQ27dInfo_c11IbaraMode_e = 2148252832;
 SetIbaraOld__7dInfo_cFiQ27dInfo_c11IbaraMode_e = 2148252848;
 SetMapEnemyInfo__7dInfo_cFiiii = 2148252704;
 SetWorldMapEnemy__7dInfo_cFiiRCQ27dInfo_c7enemy_s = 2148252608;
-startGame__7dInfo_cFRCQ27dInfo_c15StartGameInfo_s = 2148251600;
+startGame__7dInfo_cFRCQ27dInfo_c13StartGameInfo = 2148251600;
 startStaffCredit__7dInfo_cFv = 2148251856;
 subStockItem__7dInfo_cFi = 2148250496;
 
@@ -2595,6 +2595,89 @@ getHeldUp__14dPlayerInput_cFv = 2147869936;
 getPressedDown__14dPlayerInput_cFv = 2147870016;
 getHeldDown__14dPlayerInput_cFv = 2147869952;
 
+clearShakeInputs__14dPlayerInput_cFv = 2147870608;
+
+loadFromFile__9dCourse_cFi = 2148065264;
+
+__ct__7dNext_cFv = 2148334816;
+changeScene__7dNext_cFv = 2148336112;
+createInstance__7dNext_cFPQ23EGG4Heap = 2148334848;
+deleteInstance__7dNext_cFv = 2148334928;
+execute__7dNext_cFv = 2148336480;
+initialize__7dNext_cFv = 2148334960;
+m_instance__7dNext_c = 2151850656;
+searchNextNum__7dNext_cFUcffPi = 2148335504;
+setChangeSceneNextDat__7dNext_cFUcUcQ28dFader_c12fader_type_e = 2148334992;
+setChangeSceneNextDat__7dNext_cFUcUci = 2148334992;
+setOwnNextData__7dNext_cFUcUc = 2148335088;
+simpleChangeScene__7dNext_cFUcQ28dFader_c12fader_type_e = 2148335872;
+simpleChangeScene__7dNext_cFUcUcQ28dFader_c12fader_type_e = 2148335904;
+simpleChangeScene__7dNext_cFUcUci = 2148335904;
+
+__ct__11dMj2dGame_cFv = 2148327344;
+__dt__11dMj2dGame_cFv = 2148402048;
+getCoin__11dMj2dGame_cCFi = 2148327904;
+getContinue__11dMj2dGame_cCFi = 2148328464;
+getCourseDataFlag__11dMj2dGame_cCFii = 2148328592;
+getCreateItem__11dMj2dGame_cCFi = 2148327872;
+getCSEnemyPosIndex__11dMj2dGame_cCFii = 2148328896;
+getCSEnemyRevivalCnt__11dMj2dGame_cCFii = 2148328768;
+getCSEnemySceneNo__11dMj2dGame_cCFii = 2148328832;
+getCSEnemyWalkDir__11dMj2dGame_cCFii = 2148328960;
+getDeathCount__11dMj2dGame_cCFiib = 2148328368;
+getIbaraNow__11dMj2dGame_cCFv = 2148329040;
+getKinopioCourseNo__11dMj2dGame_cCFi = 2148329008;
+getPlrID__11dMj2dGame_cCFi = 2148327776;
+getPlrMode__11dMj2dGame_cCFi = 2148327808;
+getRest__11dMj2dGame_cCFi = 2148327840;
+getScore__11dMj2dGame_cCFv = 2148327936;
+getStaffCreditHighScore__11dMj2dGame_cFv = 2148327984;
+getStartKinokoKind__11dMj2dGame_cCFi = 2148328256;
+getTotalWorldCollectCoin__11dMj2dGame_cFi = 2148328064;
+initialize__11dMj2dGame_cFv = 2148327360;
+isCollectCoin__11dMj2dGame_cCFiii = 2148328192;
+isCourseDataFlag__11dMj2dGame_cCFiiUl = 2148328624;
+isOtehonMenuOpenFlag__11dMj2dGame_cCFi = 2148328016;
+isWorldDataFlag__11dMj2dGame_cCFiUc = 2148328512;
+offCourseDataFlag__11dMj2dGame_cFiiUl = 2148328704;
+offWorldDataFlag__11dMj2dGame_cFiUc = 2148328560;
+onCourseDataFlag__11dMj2dGame_cFiiUl = 2148328672;
+onOtehonMenuOpenFlag__11dMj2dGame_cFi = 2148328000;
+onWorldDataFlag__11dMj2dGame_cFiUc = 2148328528;
+setCoin__11dMj2dGame_cFiSc = 2148327888;
+setCollectCoin__11dMj2dGame_cFiiUc = 2148328048;
+setContinue__11dMj2dGame_cFiSc = 2148328448;
+setCreateItem__11dMj2dGame_cFiUc = 2148327856;
+setCSEnemyPosIndex__11dMj2dGame_cFiiUc = 2148328864;
+setCSEnemyRevivalCnt__11dMj2dGame_cFiii = 2148328736;
+setCSEnemySceneNo__11dMj2dGame_cFiiUc = 2148328800;
+setCSEnemyWalkDir__11dMj2dGame_cFiiUc = 2148328928;
+setDeathCount__11dMj2dGame_cFiibUc = 2148328272;
+setIbaraNow__11dMj2dGame_cFi = 2148329024;
+setKinopioCourseNo__11dMj2dGame_cFii = 2148328992;
+setPlrID__11dMj2dGame_cFii = 2148327760;
+setPlrMode__11dMj2dGame_cFiUc = 2148327792;
+setRest__11dMj2dGame_cFiUc = 2148327824;
+setScore__11dMj2dGame_cFUl = 2148327920;
+setStaffCreditHighScore__11dMj2dGame_cFUs = 2148327952;
+setStartKinokoKind__11dMj2dGame_cFiUc = 2148328240;
+setStockItem__11dMj2dGame_cFiSc = 2148328480;
+versionUpdate__11dMj2dGame_cFv = 2148327696;
+
+__ct__13dMj2dHeader_cFv = 2148329056;
+getPlayCountCoinBattle__13dMj2dHeader_cCFii = 2148329264;
+getPlayCountFreeMode__13dMj2dHeader_cCFii = 2148329200;
+initialize__13dMj2dHeader_cFv = 2148329072;
+isMultiWorldOpenFlag__13dMj2dHeader_cFi = 2148329360;
+onMultiWorldOpenFlag__13dMj2dHeader_cFi = 2148329328;
+setPlayCountCoinBattle__13dMj2dHeader_cFiii = 2148329296;
+setPlayCountFreeMode__13dMj2dHeader_cFiii = 2148329232;
+setSelectFileNo__13dMj2dHeader_cFSc = 2148329184;
+versionUpdate__13dMj2dHeader_cFv = 2148329392;
+
+setNextScene__10dScStage_cFUsiQ210dScStage_c6Exit_eQ28dFader_c12fader_type_e = 2148541296;
+
+changeNextScene__10daPlBase_cFi = 2147802992;
 
 	.text : {
 		FILL (0)

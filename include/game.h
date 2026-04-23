@@ -8,6 +8,58 @@
 #define ret return
 #include <g3dhax.h>
 
+class dInfo_c {
+	//Unknwon Params / I dont have the IbaraMode_e enum, which means i cant fuck with these. Symbols wont help either
+	//void SetIbaraNow(); cFiQ27dInfo_c11IbaraMode_e
+	//void SetIbaraOld(); cFiQ27dInfo_c11IbaraMode_e
+	//void* GetMapEnemyInfo(); cFiiRQ27dInfo_c7enemy_s
+	//SetMapEnemyInfo(); cFiiii
+	//SetWorldMapEnemy(); cFiiRCQ27dInfo_c7enemy_s
+	public:
+	struct StartGameInfo
+	{
+	int maybeUnused;
+	unsigned char replayTypeMaybe; // 0x04
+	unsigned char entrance;		   // 0x05
+	unsigned char areaMaybe;	   // 0x06
+	unsigned char unk4;			   // 0x07
+	unsigned int purpose;		   // 0x08
+	unsigned char world1;		   // 0x0C
+	unsigned char level1;		   // 0x0D
+	unsigned char world2;		   // 0x0E
+	unsigned char level2;		   // 0x0F
+	};
+
+	
+	void startGame(const StartGameInfo &info);
+	void addStockItem(int slot_probably);
+	void subStockItem(int slot_probably);
+	void clsStockItem(int slot_probably);
+	void initGame();
+	void initMultiMode();
+	void initStage();
+	void PlayerStateInit();
+	void CourseSelectInit(); //Likely what causes the init of WorldMap, or something idk
+	
+	void* GetIbaraNow(int unk);
+	void* GetIbaraOld(int unk);
+	void* GetWorldMapEnemy(int world_maybe, int enemy_maybe);
+	
+	u32 getCourseNo();
+	u32 getWorldNo();
+	u32 getStockItem(int slot_probably) const;
+
+	static dInfo_c* m_instance;
+	StartGameInfo* m_startGameInfo;
+	void* m_startInfo;
+	void* mGameFlag;
+
+	~dInfo_c();
+};
+
+extern bool DontShowPreGame;
+extern dInfo_c::StartGameInfo RESTART_CRSIN_LevelStartStruct;
+
 template <typename T>
 inline T min(T one, T two) { return (one < two) ? one : two; }
 template <typename T>
@@ -81,22 +133,6 @@ extern int Player_Lives[4];
 extern int Player_Coins[4];
 void __sinit__d_a_en_kuribo_base_cpp();
 
-struct StartLevelInfo
-{
-	int maybeUnused;
-	unsigned char replayTypeMaybe; // 0x04
-	unsigned char entrance;		   // 0x05
-	unsigned char areaMaybe;	   // 0x06
-	unsigned char unk4;			   // 0x07
-	unsigned int purpose;		   // 0x08
-	unsigned char world1;		   // 0x0C
-	unsigned char level1;		   // 0x0D
-	unsigned char world2;		   // 0x0E
-	unsigned char level2;		   // 0x0F
-};
-extern bool DontShowPreGame;
-extern StartLevelInfo RESTART_CRSIN_LevelStartStruct;
-
 class GMgr8
 {
 public:
@@ -163,7 +199,7 @@ inline void *GetGameMgr()
 }
 
 bool QueryPlayerAvailability(int id);
-void DoStartLevel(void *gameMgr, StartLevelInfo *sl);
+void DoStartLevel(void *gameMgr, dInfo_c::StartGameInfo *sl);
 
 // Level Conditions
 //     1 : Has Toad Block
@@ -2389,6 +2425,8 @@ public:
 	void setCcAtHipAttack();
 	void setCcAtPenguinSlip();
 
+	void changeNextScene(int mode); //Aka Area
+
 	static daPlBase_c *findByID(int id);
 };
 
@@ -4331,7 +4369,6 @@ namespace dWmLib {
 	void getSpecialWorldMessageId(int);
 	void InitKinopioCourse();
 
-	void* GetClearStatus(int, int);
 	void* GetCourseNoFromPointName(const char*);
 	void* GetCourseTypeFromCourseNo(int);
 	void* GetCurrentPlayResultStatus(int, int, int); 
@@ -4344,6 +4381,7 @@ namespace dWmLib {
 	void* RestoreKinopioHelpGameInfo();
 	void* savePlayerPosInfo();
 	
+	u32 GetClearStatus(int worldID, int LevelID);
 	u32 getMaxCollectionCoinNum(int worldID_probably);
 	u32 getStartPointKinokoHouseKindNum();
 
@@ -4371,7 +4409,7 @@ namespace dWmLib {
 	bool IsCourseOpened(int levelID_probably, int worldID_probably);
 	bool IsCourseOtasukeClear(int levelID_probably, int worldID_probably); //Checks if SuperGuide completed this stage for you. Likely returns false if it got beaten by superguide, then by player
 	bool IsCourseOtasukeClearSimple(int levelID_probably, int worldID_probably); //Also dont know why this exists.
-	bool IsCourseTypeStageFromCourseNo(int levelID_probably); //I cannot decode what this function is supposed to give me, what the fuck does the funcname even mean?
+	bool IsCourseTypeStageFromCourseNo(int levelID_probably); //I cannot decode what this function is supposed to give me, what the fuck does the funcname even mean? | Update: Might be if the course is considered "a stage"
 	bool IsCourseUraClear(int levelID_probably, int worldID_probably); //Was Secret Exit cleared?
 	bool IsCourseUraClearSimple(int levelID_probably, int worldID_probably);
 	bool IsCourseUraOtasukeClearSimple(int levelID_probably, int worldID_probably); //This never occours as far as i know, except for 3-4 & 3-5
@@ -4440,7 +4478,7 @@ class PauseManager_c {
 
 	//Variables
 
-	PauseManager_c* m_instance;
+	static PauseManager_c* m_instance;
 	bool m_Created;
 	bool m_Pause;
 	void* m_OtasukeAfter;
@@ -4452,41 +4490,6 @@ class PauseManager_c {
 };
 
 //class dScSeqMng_c comming soon
-
-class dInfo_c {
-	//Unknwon Params / I dont have the IbaraMode_e enum, which means i cant fuck with these. Symbols wont help either
-	//void SetIbaraNow(); cFiQ27dInfo_c11IbaraMode_e
-	//void SetIbaraOld(); cFiQ27dInfo_c11IbaraMode_e
-	//void* GetMapEnemyInfo(); cFiiRQ27dInfo_c7enemy_s
-	//SetMapEnemyInfo(); cFiiii
-	//SetWorldMapEnemy(); cFiiRCQ27dInfo_c7enemy_s
-	//startGame(); cFRCQ27dInfo_c15StartGameInfo_s
-
-	public:
-	void addStockItem(int slot_probably);
-	void subStockItem(int slot_probably);
-	void clsStockItem(int slot_probably);
-	void initGame();
-	void initMultiMode();
-	void initStage();
-	void PlayerStateInit();
-	void CourseSelectInit(); //Likely what causes the init of WorldMap, or something idk
-	
-	void* GetIbaraNow(int unk);
-	void* GetIbaraOld(int unk);
-	void* GetWorldMapEnemy(int world_maybe, int enemy_maybe);
-	
-	u32 getCourseNo();
-	u32 getWorldNo();
-	u32 getStockItem(int slot_probably) const;
-
-	static dInfo_c* m_instance;
-	void* m_startGameInfo;
-	void* m_startInfo;
-	void* mGameFlag;
-
-	~dInfo_c();
-};
 
 class dActorMng_c {
 	//void floorEntryBufferEntry(); cFPQ211dActorMng_c14FloorEntryInfo
@@ -4696,6 +4699,72 @@ namespace daPyMng_c {
 class dSys_c {
 	public:
 	static void setFrameRate(unsigned char rate_probably);
+};
+
+
+class dMj2dHeader_c {
+
+};
+
+class dMj2dGame_c {
+
+	public:
+
+	u32 getCoin(int playerID_maybe) const;
+	u32 getContinue(int playerID_maybe) const;
+	u32 getDeathCount(int playerID_maybe, int unk, bool unk2) const;
+	u32 getKinopioCourseNo(int worldID_maybe) const;
+	u32 getPlrID(int RangeOneToFour_probably) const;
+
+	static void* getCourseDataFlag(int levelID_probably, int worldID_probably); //Seems important
+	void* getCreateItem(int playerID_maybe) const; //I believe this gets which powerup was equipped upon level start
+	void* getCSEnemyPosIndex(int unk, int worldID_maybe) const;
+	void* getCSEnemyRevivalCnt(int unk, int worldID_maybe) const;
+	void* getCSEnemySceneNo(int unk, int worldID_maybe) const;
+	void* getCSEnemyWalkDir(int unk, int worldID_maybe) const;
+	void* getIBaraNow() const;
+	void* getPlrMode(int RangeOneToFour_probably) const;
+	void* getRest(int playerID_maybe) const;
+	void* getScore() const; // Score does not exist in this hack, therefore returns 0 (or throws Exceptions)
+	void* getStaffCreditHighScore(); //Also might throw Exceptions
+	void* getStartKinokoKind() const;
+	void* getTotalWorldCollectCoin(int levelID_maybe);
+
+	void initialize();
+	void offCourseDataFlag(int levelID_maybe, int worldID_maybe, unsigned char data);
+	void offWorldDataFlag(int worldID_maybe, unsigned char data);
+	void onCourseDataFlag(int levelID_maybe, int worldID_maybe, unsigned long data);
+	void onWorldDataFlag(int worldID_maybe, unsigned char data);
+
+	void setCoin(int playerID_maybe, signed char amnt_maybe);
+	void setCollectCoin(int coinID, signed char amnt_maybe);
+	void setContinue();
+	
+	bool isCollectCoin(int levelID_maybe, int worldID_maybe, int coinID_maybe) const; // If no workie, try switching where you pass which param
+	bool isCourseDataFlag(int levelID_maybe, int worldID_maybe, unsigned long NintendoStopBeingMysterious) const;
+	bool isWorldDataFlag(int worldID_maybe, unsigned char whyNintendo) const;
+	
+	// bool isOtehonMenuOpenFlag(int unk) const; NINTENDO, STOP BEING SO FUCKING MSYTERIOUS "isModelMenuOpenFlag?????????????????????????????????????????"
+
+	dMj2dGame_c();
+	~dMj2dGame_c(); 
+};
+
+class dNext_c {
+	static dNext_c* m_instance;
+
+	public:
+
+	static dNext_c* get() {ret m_instance; }
+	void changeScene();
+	void createInstance(void* EGGHeap);
+	void deleteInstance();
+	void execute();
+	void initialize();
+	void searchNextNum(unsigned char, float, float, int*);
+	void setChangeSceneNextDat(unsigned char, unsigned char, int); //cFUcUcQ28dFader_c12fader_type_e; Dont feel like doing this shit
+	void setOwnNextData(unsigned char area, unsigned char zone);
+	void simpleChangeScene(unsigned char, unsigned char, int);
 };
 
 namespace dStage {

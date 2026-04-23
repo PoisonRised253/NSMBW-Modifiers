@@ -15,6 +15,13 @@ class dScStage_c
 {
     static dScStage_c *m_instance;
 
+    enum Exit {
+        EXIT_DEFAULT = 0,
+        EXIT_FAIL,
+        EXIT_SUCCESS,
+        EXIT_PLAYER_CHOICE = 3
+    };
+
 public:
     static dScStage_c *instance()
     {
@@ -61,6 +68,8 @@ public:
     void calcTitleCount();
     void setTitleReplayRandomTable();
     u32 getExitMode();
+
+    void setNextScene(unsigned short unk, int unk2, Exit exitValue);
 
     void *mCdArcName;
     void *m_unit_res_list;

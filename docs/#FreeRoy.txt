@@ -1,0 +1,3 @@
+Im now gonna try to patch this by Loading 2-23, which doesnt exist in vanilla
+
+For this, i will have to study StartGameInfo.

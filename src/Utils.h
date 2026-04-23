@@ -19,14 +19,17 @@ inline dEn_c *GetNextOfType(Actors actorID, bool fromPlayer);
 inline void ClearObjVel(dEn_c *obj, u8 mode);
 inline void DeleteUnwanted();
 inline int GetPowerupType(u32 settings);
-volatile inline int *GetPlayerPowerState(dAc_Py_c *player);
-volatile inline int *checkGrounded(dAc_Py_c *player);
+
 volatile void LivePatch(u32 newInstr, u32 *addr);
 ext void QOLModifications();
 ext void ModifyMovement(int mode);
 ext void NahFuckThat(bool); // Stops dAc_Py_c from existing
 inline bool ObjectBoundCheck(Vec boundsMin, Vec boundsMax, Vec pos);
 inline u32* GetMemberFromOffset(void* object, u32 offset);
+volatile inline int *GetPlayerPowerState(dAc_Py_c *player);
+volatile inline int *checkGrounded(dAc_Py_c *player);
+volatile inline bool isPause();
+inline void DisablePropeller();
 
 template <typename T>
 inline int GetNextFreeArrayEntry(T* arr[], int size);

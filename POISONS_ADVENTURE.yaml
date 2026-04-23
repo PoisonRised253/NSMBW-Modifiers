@@ -73,6 +73,17 @@ hooks:
     src_addr_pal: 0x800e4878
     target_func: 'dExecMng_c::DRYExecute(int)'
 
+  #- name: FuckCastleIDs
+  #  type: branch_insn
+  #  branch_type: b
+  #  src_addr_pal: 0x800f9724
+  #  target_func: PatchCastleIDs
+
+  #- name: FuckCastleIDsReturn
+  #  type: patch
+  #  addr_pal: 0x800f9728
+  #  data: '4e800020'
+
   #All of these have been moved to onBoot() in main.cpp
 
   #- name: AfterResetReturn

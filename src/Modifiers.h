@@ -6,7 +6,7 @@
 
 //World 1
 ext void Lonely();
-ext void SpinEternally();
+ext void SpinEternally(bool anotherBoolLol);
 ext void MiniPlusPlus(); 
 ext void TowerFunc(); 
 ext void MarioCantBreathUnderwater();
