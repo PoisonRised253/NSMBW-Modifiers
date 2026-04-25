@@ -33,10 +33,10 @@ ext void SpinEternally(bool anotherBoolLol)
         if (!P)
             continue;
         // P->initializeState_HipAttack(); This causes a funny, pressing up or down with this included causes mario to semi-permanently loose his collision
-        if(anotherBoolLol)
-        P->initializeState_SpinJump();
-        if(!anotherBoolLol)
-        P->executeState_SpinJump();
+        if (anotherBoolLol)
+            P->initializeState_SpinJump();
+        if (!anotherBoolLol)
+            P->executeState_SpinJump();
     }
 
     ret;
@@ -238,12 +238,13 @@ ext void LiterallyBulletHell()
 // Disables Walljumping and Groundpound (TODO line 92)
 ext void WeGoWee()
 {
-    for(int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++)
     {
-        if(!Players[i]) continue;
+        if (!Players[i])
+            continue;
         u8 sDir = Players[i]->collMgr.currentSlopeDirection;
-        u32* state = GetMemberFromOffset(Players[i], 0x10D8);
-        if(state && sDir == 2.f)
+        u32 *state = GetMemberFromOffset(Players[i], 0x10D8);
+        if (state && sDir == 2.f && *state != 0x001BE000 && *state != 0x001B6000)
             LivePatch(0x50, state);
     }
 }
@@ -291,18 +292,19 @@ ext void FuckTwoSix()
     }
 }
 
-
-
 ext void CastleBlowers()
 {
-    if(!dScStage_c::instance()) ret;
-    //if(&dScStage_c::instance()->area != NULL && dScStage_c::instance()->area != 255 && dScStage_c::instance()->area != 0) ret;
+    if (!dScStage_c::instance())
+        ret;
+    // if(&dScStage_c::instance()->area != NULL && dScStage_c::instance()->area != 255 && dScStage_c::instance()->area != 0) ret;
     static bool fuse = false;
     static bool JustSpawned = false;
 
-    if(!fuse && dScStage_c::instance()->area == 255 && Players[0] && Players[0]->pos.x != 0) {
-        dNext_c* n = dNext_c::get();
-        if(!n) ret;
+    if (!fuse && dScStage_c::instance()->area == 255 && Players[0] && Players[0]->pos.x != 0)
+    {
+        dNext_c *n = dNext_c::get();
+        if (!n)
+            ret;
         fuse = true;
 
         dScStage_c::instance()->area = 0;
@@ -311,16 +313,33 @@ ext void CastleBlowers()
 
         asm("li r7, 1");
         n->setChangeSceneNextDat(0x0, 0x2, 5);
-        //n->simpleChangeScene(0x0, 0x2, 5); half-worked
-        daPlBase_c* player = (daPlBase_c*)Players[0];
-        if(!player) ret;
+        // n->simpleChangeScene(0x0, 0x2, 5); half-worked
+        daPlBase_c *player = (daPlBase_c *)Players[0];
+        if (!player)
+            ret;
         player->changeNextScene(1);
 
         dScStage_c::instance()->setLoopType(0);
         dScStage_c::m_loopType = 0;
     }
 
-    if(dScStage_c::instance()->area == 255) fuse = false;
+    if (dScStage_c::instance()->area == 255)
+        fuse = false;
+
+    dStageActor_c *n = (dStageActor_c *)GetNextOfType(OBJ_ROY, false);
+    for (int i = 0; i < 6; i++)
+    {
+        if (n)
+        {
+            n->visible = false;
+            n = (dStageActor_c *)FindActorByType(OBJ_ROY, (Actor *)n);
+            continue;
+        }
+        else
+        {
+            n = NULL;
+        }
+    }
 
     dStageActor_c *obj = GetNextOfType(AC_AUTOSCROOL_SWICH, false);
     if (!obj)
@@ -346,9 +365,9 @@ ext void CastleBlowers()
         ret;
     case 1:
     {
-        Vec area = MakeVec(32.f, 128.f, 0.f);
-        dEnElevator_c::create(newPos, area, 64.f, 0);
-        // CreateActor(EN_COIN_FLOOR, 0, newPos, 0, 0);
+        Vec area = MakeVec(192.f, 96.f, 0.f);
+        dEnElevator_c::create(newPos, area, 32.f, 0);
+        obj->deleteForever = true;
         obj->Delete(1);
         JustSpawned = true;
         which = 0;
@@ -356,14 +375,47 @@ ext void CastleBlowers()
     }
     case 2:
     {
-        Vec area = MakeVec(384.f, 320.f, 0.f);
-        dEnElevator_c::create(newPos, area, 15.f, 0);
-        // CreateActor(EN_COIN_FLOOR, 0, newPos, 0, 0);
+        Vec area = MakeVec(384.f, 96.f, 0.f);
+        dEnElevator_c::create(newPos, area, 28.f, 0);
+        obj->deleteForever = true;
         obj->Delete(1);
         JustSpawned = true;
         which = 0;
         ret;
     }
+    case 3:
+    {
+        Vec area = MakeVec(256.f, 64.f, 0.f);
+        dEnElevator_c::create(newPos, area, 32.f, 0);
+        obj->deleteForever = true;
+        obj->Delete(1);
+        JustSpawned = true;
+        which = 0;
+        ret;
+    }
+    case 4:
+    {
+        Vec area = MakeVec(96.f, 256.f, 0.f);
+        dEnElevator_c::create(newPos, area, 32.f, 0);
+        obj->deleteForever = true;
+        obj->Delete(1);
+        JustSpawned = true;
+        which = 0;
+        ret;
+    }
+    }
+    ret;
+}
+
+//A wordplay on Mario Run, the hit(n't) mobile game
+ext void MarioSlide() {
+    for(int i = 0; i < 4; i++) {
+    if(!Players[i]) ret;
+    u32* state = GetMemberFromOffset(Players[i], 0x10D8);
+    volatile int* ground = checkGrounded(Players[i]);
+    if(*ground == 1 || Players[i]->speed.x == 0) ret;
+
+    *state = 0x28a;
     }
 }
 

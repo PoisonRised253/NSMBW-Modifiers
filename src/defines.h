@@ -20,7 +20,7 @@
 #endif*/
 
 //Current amount of activatable modifiers
-#define MOD_SIZE 17
+#define MOD_SIZE 18
 
 //Infinite-Lives "True" Amount
 #define LIVES_AMOUNT 0x64

@@ -11,18 +11,20 @@ private:
     float aoeY;
     float force;
     int mode;
+    bool playerWithin[4];
     Vec bl;
     Vec tr;
     static dEnElevator_c *build();
+    bool isOutOfView();
     
 public:
     static dEnElevator_c *create(Vec pos, Vec AreaOfEffect, float force, int mode);
     int beforeExecute();
     int execute();
     int afterExecute();
-    int onCreate();
+    int onCreate(float rotfix);
     int onDelete();
-    bool isOutOfView();
+    void ApplyForce(dEn_c* actor);
 };
 
 

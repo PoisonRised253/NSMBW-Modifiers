@@ -161,6 +161,9 @@ ext void ApplyModifiers(bool pre)
         if (Modifiers[16])
             CastleBlowers();
 
+        if(Modifiers[17])
+            MarioSlide();
+
         #ifdef DEBUG_SLOPE
         if(Players[0])
             OSReport("SlopeInfo{A: %p, D: %p}\n", Players[0]->collMgr.currentSlopeAngle, Players[0]->collMgr.currentSlopeDirection);

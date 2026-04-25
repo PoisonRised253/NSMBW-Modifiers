@@ -22,6 +22,9 @@ ext void PokeyParty();
 ext void FuckTwoSix();
 ext void CastleBlowers();
 
+//World 3
+ext void MarioSlide();
+
 #ifdef DEBUG_UNUSED
 ext void Worldmapify(bool); //Makes the Level kinda like WM
 #endif

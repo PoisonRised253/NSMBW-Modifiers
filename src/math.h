@@ -9,6 +9,7 @@ inline Vec2 RoundToNearestTile(Vec pos);
 inline bool IsNaN(float value);
 inline Vec MakeVec(float x, float y, float z);
 inline Vec2 MakeVec2(float x, float y);
+inline S16Vec MakeVec16(s16 x, s16 y, s16 z);
 inline Vec VecAdd(Vec a, Vec b);
 inline Vec VecSub(Vec a, Vec b);
 inline Vec VecMul(Vec a, Vec b);

@@ -121,8 +121,10 @@ ext void ToggleMods()
     Modifiers[14] = (LevelID == 5 && WorldID == 2);
     // 2 - 6
     Modifiers[15] = (LevelID == 6 && WorldID == 2);
-    // 2- 24
+    // 2 - 24
     Modifiers[16] = ((LevelID == 24 || LevelID == 25) && WorldID == 2);
+    // 3 - 1
+    Modifiers[17] = (LevelID == 1 && WorldID == 3);
 
 #ifdef DEBUG
     OSReport("L: %d, W: %d, A: %d, E: %d, G: %d\n", LevelID, WorldID, AreaID, exit, game);
@@ -364,6 +366,14 @@ volatile inline bool isPause() {
     PauseManager_c* instance = PauseManager_c::m_instance;
     if(!instance) ret false;
     ret (bool)*GetMemberFromOffset(instance, 0x4);
+}
+
+//Entirely made by ChatGPT, still dont know how to bitshift
+inline u32 NoJumping(u32 value) {
+    u32 x = (value >> 24) & 0xFF;
+    if (x == 1 || x == 3)
+        x = 0;
+    ret ((value & 0x00FFFFFF) | (x << 24));
 }
 
 inline void DisablePropeller() {

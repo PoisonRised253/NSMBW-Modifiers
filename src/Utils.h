@@ -30,6 +30,7 @@ volatile inline int *GetPlayerPowerState(dAc_Py_c *player);
 volatile inline int *checkGrounded(dAc_Py_c *player);
 volatile inline bool isPause();
 inline void DisablePropeller();
+inline u32 NoJumping(u32 value);
 
 template <typename T>
 inline int GetNextFreeArrayEntry(T* arr[], int size);

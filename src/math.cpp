@@ -24,6 +24,7 @@ inline bool IsNaN(float value) {ret value != value;}
 
 inline Vec MakeVec(float x, float y, float z)             {ret (Vec){x,y,z};}
 inline Vec2 MakeVec2(float x, float y)                     {ret (Vec2){x,y};}
+inline S16Vec MakeVec16(s16 x, s16 y, s16 z)           {ret (S16Vec){x,y,z};}
 inline Vec VecAdd(Vec a, Vec b) {ret (Vec){a.x + b.x, a.y + b.y, a.z + b.z};}
 inline Vec VecSub(Vec a, Vec b) {ret (Vec){a.x - b.x, a.y - b.y, a.z - b.z};}
 inline Vec VecMul(Vec a, Vec b) {ret (Vec){a.x * b.x, a.y * b.y, a.z * b.z};}
