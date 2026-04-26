@@ -116,7 +116,7 @@ ext void MarioCantBreathUnderwater()
 // This is currently very broken in multiplayer
 ext void Linearity()
 {
-    dEn_c *playerButDifferentClass = NULL;
+    daPlBase_c *playerButDifferentClass = NULL;
     const float precalcSpeed = SPEED_WATER_MOD / 60;
     for (int i = 0; i < 4; i++)
     {
@@ -124,24 +124,18 @@ ext void Linearity()
             continue;
         // float* c = &dWaterManager_c::instance->current;
         Players[i]->max_speed.x = SPEED_WATER_MOD;
-        playerButDifferentClass = (dEn_c *)Players[i];
-        u32 btn = GetActiveRemocon()->heldButtons;
+        playerButDifferentClass = (daPlBase_c*)Players[i];
         float *p = &Players[i]->pos.x;
 
-        if (btn & WPAD_RIGHT)
-        {
+        int l = playerButDifferentClass->input.getHeldLeft();
+        int r = playerButDifferentClass->input.getHeldRight();
+
+        if (r)
             *p += precalcSpeed;
-        }
-        else if (btn & WPAD_LEFT)
-        {
+        if (l)
             *p += -precalcSpeed;
-        }
 
         Players[i]->speed.x = 0;
-        if (!playerButDifferentClass)
-            continue;
-        playerButDifferentClass->velocity1.y = 0;
-        playerButDifferentClass->velocity2.y = 0;
     }
     ret;
 }
@@ -151,7 +145,7 @@ ext void Linearity()
 ext void ShyRollers()
 {
     dStageActor_c *n = (dStageActor_c *)GetNextOfType(AC_FLOOR_GYRATION, false);
-    for (int i = 0; i < 12; i++)
+    for (int i = 0; i < 6; i++)
     {
         if (n && !n->visible)
             n = (dStageActor_c *)FindActorByType(AC_FLOOR_GYRATION, (Actor *)n);
@@ -218,18 +212,15 @@ ext void LiterallyBulletHell()
         fireball = GetNextOfType(PAKKUN_FIREBALL, true);
     if (!fireball)
         ret;
-    pos = fireball->pos;
-    vel = fireball->speed;
-    rot = fireball->rot;
-    dir = fireball->direction;
 
-    dEn_c *newSpawned = (dEn_c *)dStageActor_c::create(EN_MAGNUM_KILLER, 0, &pos, &rot, 0);
+    dEn_c *newSpawned = (dEn_c *)dStageActor_c::create(EN_MAGNUM_KILLER, 0, &fireball->pos, &fireball->rot, 0);
     if (newSpawned)
     {
+        newSpawned->speed = fireball->speed;
+        newSpawned->direction = fireball->direction;
+        
         fireball->Delete(1);
         fireball = NULL;
-        newSpawned->speed = vel;
-        newSpawned->direction = dir;
         dEn_c *childLight = (dEn_c *)newSpawned->createChild((Actors)550, newSpawned, 0, &newSpawned->pos, 0, 2);
     }
 }
@@ -265,11 +256,11 @@ ext void SandyPain()
 }
 
 // 2 - 5
+// we go fast... also artificial lag, in spirit of the average Nintendo Online experience at Mario Maker 2's peak.
 ext void PokeyParty()
 {
     dSys_c::setFrameRate(2);
-    LivePatch(0xbfffffff, LP_LEFTSPEED);
-    LivePatch(0x3fffffff, LP_RIGHTSPEED);
+    ModifyMovement(5);
     ret;
 }
 
@@ -297,15 +288,13 @@ ext void CastleBlowers()
     if (!dScStage_c::instance())
         ret;
     // if(&dScStage_c::instance()->area != NULL && dScStage_c::instance()->area != 255 && dScStage_c::instance()->area != 0) ret;
-    static bool fuse = false;
     static bool JustSpawned = false;
 
-    if (!fuse && dScStage_c::instance()->area == 255 && Players[0] && Players[0]->pos.x != 0)
+    if (dScStage_c::instance()->area == 255 && Players[0] && Players[0]->pos.x != 0)
     {
         dNext_c *n = dNext_c::get();
         if (!n)
             ret;
-        fuse = true;
 
         dScStage_c::instance()->area = 0;
         dScStage_c::instance()->enteredLevel = 0x18;
@@ -313,7 +302,6 @@ ext void CastleBlowers()
 
         asm("li r7, 1");
         n->setChangeSceneNextDat(0x0, 0x2, 5);
-        // n->simpleChangeScene(0x0, 0x2, 5); half-worked
         daPlBase_c *player = (daPlBase_c *)Players[0];
         if (!player)
             ret;
@@ -322,9 +310,6 @@ ext void CastleBlowers()
         dScStage_c::instance()->setLoopType(0);
         dScStage_c::m_loopType = 0;
     }
-
-    if (dScStage_c::instance()->area == 255)
-        fuse = false;
 
     dStageActor_c *n = (dStageActor_c *)GetNextOfType(OBJ_ROY, false);
     for (int i = 0; i < 6; i++)
@@ -359,51 +344,29 @@ ext void CastleBlowers()
     Vec newPos = obj->pos;
     int which = obj->settings;
     JustSpawned = true;
-    switch (which)
-    {
-    default:
-        ret;
-    case 1:
-    {
+    if(which <= 0) ret;
+
+    if(which == 1) {
         Vec area = MakeVec(192.f, 96.f, 0.f);
         dEnElevator_c::create(newPos, area, 32.f, 0);
-        obj->deleteForever = true;
-        obj->Delete(1);
-        JustSpawned = true;
-        which = 0;
-        ret;
     }
-    case 2:
-    {
+    if(which == 2) {
         Vec area = MakeVec(384.f, 96.f, 0.f);
         dEnElevator_c::create(newPos, area, 28.f, 0);
-        obj->deleteForever = true;
-        obj->Delete(1);
-        JustSpawned = true;
-        which = 0;
-        ret;
     }
-    case 3:
-    {
+    if(which == 3) {
         Vec area = MakeVec(256.f, 64.f, 0.f);
         dEnElevator_c::create(newPos, area, 32.f, 0);
-        obj->deleteForever = true;
-        obj->Delete(1);
-        JustSpawned = true;
-        which = 0;
-        ret;
     }
-    case 4:
-    {
+    if(which == 4) {
         Vec area = MakeVec(96.f, 256.f, 0.f);
         dEnElevator_c::create(newPos, area, 32.f, 0);
-        obj->deleteForever = true;
-        obj->Delete(1);
-        JustSpawned = true;
-        which = 0;
-        ret;
     }
-    }
+    
+    obj->deleteForever = true;
+    obj->Delete(1);
+    JustSpawned = true;
+    which = 0;
     ret;
 }
 
@@ -415,7 +378,32 @@ ext void MarioSlide() {
     volatile int* ground = checkGrounded(Players[i]);
     if(*ground == 1 || Players[i]->speed.x == 0) ret;
 
-    *state = 0x28a;
+    *state = 0x29a;
+    }
+}
+
+// The Heavy Approves, plumber-tested.
+// Maybe these bullets truely do cost $200 per shot.
+ext void RealisticBullet() {
+    #ifdef DEBUG
+    dEn_c* launcher = GetNextOfType(EN_KILLER_HOUDAI, false);
+    if(launcher) OSReport("Launcher: %p, Settings: %p\n", launcher, &launcher->settings);
+    #endif
+    static dEn_c* bullet = GetNextOfType(EN_KILLER, false);
+    if(!bullet) bullet = GetNextOfType(EN_KILLER, true);
+    if(!bullet) ret;
+
+    for(int i = 0; i < 8; i++) {
+        if(bullet->direction == LEFT) {
+            bullet->pos.x -= 8;
+        }
+        else if(bullet->direction == RIGHT) {
+            bullet->pos.x += 8;
+        }
+
+        bullet = (dEn_c*)FindActorByType(EN_KILLER, (Actor*)bullet);
+        if(bullet) continue;
+        else ret;
     }
 }
 

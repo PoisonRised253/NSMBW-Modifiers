@@ -4,6 +4,7 @@
 bool Modifiers[MOD_SIZE] = {false};
 dAc_Py_c *Players[4] = {NULL, NULL, NULL, NULL};
 int GlobalFrameTimer = 0;
+int currentMoveMod = 0;
 
 inline bool GetPlayers()
 {
@@ -125,6 +126,8 @@ ext void ToggleMods()
     Modifiers[16] = ((LevelID == 24 || LevelID == 25) && WorldID == 2);
     // 3 - 1
     Modifiers[17] = (LevelID == 1 && WorldID == 3);
+    // 3 - 2
+    Modifiers[18] = (LevelID == 2 && WorldID == 3);
 
 #ifdef DEBUG
     OSReport("L: %d, W: %d, A: %d, E: %d, G: %d\n", LevelID, WorldID, AreaID, exit, game);
@@ -260,7 +263,9 @@ ext void QOLModifications()
 // 4 = Inverse
 ext void ModifyMovement(int mode)
 {
-
+    if(mode == currentMoveMod) ret;
+    
+    currentMoveMod = mode;
     if (mode == 0)
     {
         LivePatch(DEFAULT_SPEED_LEFT, LP_LEFTSPEED);
@@ -291,6 +296,14 @@ ext void ModifyMovement(int mode)
     {
         LivePatch(DEFAULT_SPEED_LEFT, LP_RIGHTSPEED);
         LivePatch(DEFAULT_SPEED_RIGHT, LP_LEFTSPEED);
+
+        ret;
+    }
+
+    if (mode == 5) 
+    {
+        LivePatch(0xbfffffff, LP_LEFTSPEED);
+        LivePatch(0x3fffffff, LP_RIGHTSPEED);
 
         ret;
     }
@@ -379,7 +392,7 @@ inline u32 NoJumping(u32 value) {
 inline void DisablePropeller() {
     volatile int* itm = NULL;
     for(int i = 0; i < 4; i++) {
-        if(!Players[i])
+        if(!Players[i]) continue;
         itm = GetPlayerPowerState(Players[i]);
         if(*itm == POWER_PROPELLER) *itm = POWER_FIRE;
     }

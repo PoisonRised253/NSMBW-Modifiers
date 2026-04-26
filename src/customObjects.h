@@ -27,5 +27,4 @@ public:
     void ApplyForce(dEn_c* actor);
 };
 
-
 #endif

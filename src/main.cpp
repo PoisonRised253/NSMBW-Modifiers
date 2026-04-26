@@ -51,6 +51,9 @@ ext void onStageCreated()
     dSys_c::setFrameRate(1);
     ModifyMovement(0);
 
+    //Speed up swimming, i hate slow water levels. Plus We're literally a water pokemon now, so it checks.
+    daPlBase_c::WaterSwimSpeed = SWIM_MOD / 60;
+
     for (int i = 0; i < MOD_SIZE; i++)
         Modifiers[i] = false;
     if(!(GetActiveRemocon()->heldButtons & WPAD_B))
@@ -119,8 +122,6 @@ ext void ApplyModifiers(bool pre)
             TowerFunc();
         if (Modifiers[5])
             MarioCantBreathUnderwater();
-        if (Modifiers[6])
-            Linearity();
         if(Modifiers[8]) 
             TrustYourSenses();
         if(Modifiers[9]) {
@@ -149,6 +150,8 @@ ext void ApplyModifiers(bool pre)
         DeleteUnwanted();  // Makes sense here, since it automatically means, we're both in a game, and fully 
         if (Modifiers[3])
             MiniPlusPlus();
+        if (Modifiers[6])
+            Linearity();
         if (Modifiers[7] && CallSpacer(15))
             ShyRollers();
         if (Modifiers[11])
@@ -161,8 +164,11 @@ ext void ApplyModifiers(bool pre)
         if (Modifiers[16])
             CastleBlowers();
 
-        if(Modifiers[17])
+        if (Modifiers[17])
             MarioSlide();
+
+        if (Modifiers[18])
+            RealisticBullet();
 
         #ifdef DEBUG_SLOPE
         if(Players[0])

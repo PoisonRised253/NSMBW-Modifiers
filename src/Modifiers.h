@@ -24,6 +24,7 @@ ext void CastleBlowers();
 
 //World 3
 ext void MarioSlide();
+ext void RealisticBullet();
 
 #ifdef DEBUG_UNUSED
 ext void Worldmapify(bool); //Makes the Level kinda like WM
