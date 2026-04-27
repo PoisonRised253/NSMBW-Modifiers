@@ -1,5 +1,30 @@
-execute() = 80163140;
-activate() = 80161050;
-
 Callers of Activate:
 80162cb4 & 80162ce0
+
+18daBulletLauncher_c::preExecute(); doesnt Exist / default behaviour
+18daBulletLauncher_c::postExecute(); doesnt Exist / default behaviour
+
+18daBulletLauncher_c::execute(); //0x80163140 or 0x80a4e9d0
+18daBulletLauncher_c::activate(); 
+
+something to keep note of, not quite sure what it is yet: 8153fa98
+
+Possibly postExecute() 80a5042c
+
+caller of preExecute__5dEn_c: 80161e30 - 0x4
+
+unknown member functions:
+80a4fcd0, 80a50390, 80a50430, 80a51020
+
+unconfirmed wether turely is a member: 80161050
+
+random note: 8153fec4
+
+Spawning custom objects is possible by modifying this code to load an arbitrary actorID: 80a4d074 ("li r3,127" by default)
+
+Data:
+
+Animation Frame     +0x0A3C
+table[20]           +0x0B44
+Cooldown            +0x0E1C
+State:              +0x0E34

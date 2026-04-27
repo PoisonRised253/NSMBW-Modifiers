@@ -4767,6 +4767,26 @@ class dNext_c {
 	void simpleChangeScene(unsigned char, unsigned char, int);
 };
 
+class daBulletLaucher_c : public dEn_c {
+	int execute();
+	void activate();
+
+	public:
+
+	u32* getFrame() const {
+		ret (u32*)((unsigned char*)this + 0x0A3C);
+	}
+
+	//For instant set to 1
+	u32* getCooldown() const {
+		ret (u32*)((unsigned char*)this + 0xE1C);
+	}
+
+	u32* getState() const {
+		ret (u32*)((unsigned char*)this + 0x0E34);
+	}
+};
+
 namespace dStage {
 	void* Field;
 	void* Field_Data;

@@ -386,8 +386,16 @@ ext void MarioSlide() {
 // Maybe these bullets truely do cost $200 per shot.
 ext void RealisticBullet() {
     #ifdef DEBUG
-    dEn_c* launcher = GetNextOfType(EN_KILLER_HOUDAI, false);
-    if(launcher) OSReport("Launcher: %p, Settings: %p\n", launcher, &launcher->settings);
+    daBulletLaucher_c* launcher = NULL;
+    for(int i = 0; i < 4; i++) {
+        if(!launcher)
+            launcher = (daBulletLaucher_c*)GetNextOfType(EN_KILLER_HOUDAI, false);
+            
+        if(launcher) {
+            *launcher->getCooldown() = 1;
+            launcher = (daBulletLaucher_c*)FindActorByType(EN_KILLER_HOUDAI, (Actor*)launcher);
+        }
+    }
     #endif
     static dEn_c* bullet = GetNextOfType(EN_KILLER, false);
     if(!bullet) bullet = GetNextOfType(EN_KILLER, true);
