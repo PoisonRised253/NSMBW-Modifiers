@@ -1404,6 +1404,7 @@ SECTIONS {
 	_Z20CheckIfWeCantDoStuffv = 0x8076DB90;
 	_Z15QueryGlobal5758j = 0x800B3B50;
 
+
 	UpdateSavefileChecksums = 0x800E05A0;
 
 

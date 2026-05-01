@@ -6,6 +6,7 @@
 
 #define CO_ARRAY_SIZE 32
 extern dEnElevator_c* elevators[CO_ARRAY_SIZE];
+extern dParenting_c* parentings[CO_ARRAY_SIZE];
 
 class dExecMng_c {
     private:
@@ -14,7 +15,7 @@ class dExecMng_c {
 
     public:
     static void Reset();
-    static void Register(dStageActor_c* obj, int typeID, bool force);
+    static void Register(void* obj, int typeID, bool force);
 };
 
 #endif

@@ -51,6 +51,10 @@ ext void onStageCreated()
     dSys_c::setFrameRate(1);
     ModifyMovement(0);
 
+    //Reset, to get rid of 3-3's modifier, whenever a stage loads.
+    //LivePatch(0x2c030000, LP_AUTOICE);
+    //LivePatch(0x3b888889, LP_GROWICE);
+
     //Speed up swimming, i hate slow water levels. Plus We're literally a water pokemon now, so it checks.
     daPlBase_c::WaterSwimSpeed = SWIM_MOD / 60;
 
@@ -58,7 +62,7 @@ ext void onStageCreated()
         Modifiers[i] = false;
     if(!(GetActiveRemocon()->heldButtons & WPAD_B))
         ToggleMods();
-    else OSReport("Modifiers were Disabled during Level Init\n");
+    else { OSReport("Modifiers Disabled at Level Init\n"); ret; }
 
 #ifdef DEBUG
     for (int i = 0; i < MOD_SIZE; i++)
@@ -169,6 +173,10 @@ ext void ApplyModifiers(bool pre)
 
         if (Modifiers[18])
             RealisticBullet();
+        if (Modifiers[19])
+            Icey();
+        if (Modifiers[20])
+            AutoIce();
 
         #ifdef DEBUG_SLOPE
         if(Players[0])

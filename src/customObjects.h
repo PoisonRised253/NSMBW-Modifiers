@@ -27,4 +27,19 @@ public:
     void ApplyForce(dEn_c* actor);
 };
 
+class dParenting_c {
+    private:
+    bool isPopulated();
+    dActor_c* parent;
+    dActor_c* child;
+    Vec offset;
+    bool active;
+
+    public:
+    void update();
+
+    dParenting_c(dActor_c* parent, dActor_c* child, bool active);
+    ~dParenting_c();
+};
+
 #endif

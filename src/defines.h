@@ -20,7 +20,7 @@
 #endif*/
 
 //Current amount of activatable modifiers
-#define MOD_SIZE 19
+#define MOD_SIZE 21
 
 //Infinite-Lives "True" Amount
 #define LIVES_AMOUNT 0x64
@@ -119,6 +119,8 @@
 #define LP_FREEROY          (u32*)0x8042DE28
 #define LP_ALLOWPRESSTWO    (u32*)0x8005e574
 #define LP_ALLOWHOLDTWO     (u32*)0x8005e584
+#define LP_AUTOICE          (u32*)0x80a215dc
+#define LP_GROWICE          (u32*)0x80ad0f44
 //Maybe
 #define LP_SINKING_SPEED    (u32*)0x8042BB2C
 

@@ -283,6 +283,8 @@ ext void FuckTwoSix()
     }
 }
 
+//TODO: PLEASE FIX HomeMenu pause exploit.
+//TODO: Fix MP failure to die, when floating infinitely.
 ext void CastleBlowers()
 {
     if (!dScStage_c::instance())
@@ -385,23 +387,21 @@ ext void MarioSlide() {
 // The Heavy Approves, plumber-tested.
 // Maybe these bullets truely do cost $200 per shot.
 ext void RealisticBullet() {
-    #ifdef DEBUG
     daBulletLaucher_c* launcher = NULL;
-    for(int i = 0; i < 4; i++) {
+    for(int i = 0; i < 8; i++) {
         if(!launcher)
             launcher = (daBulletLaucher_c*)GetNextOfType(EN_KILLER_HOUDAI, false);
-            
         if(launcher) {
-            *launcher->getCooldown() = 1;
+            *launcher->getCooldown() = clamp((int)*launcher->getCooldown(), 1, 10);
+            *launcher->getAnimAllowShoot() = 0;
             launcher = (daBulletLaucher_c*)FindActorByType(EN_KILLER_HOUDAI, (Actor*)launcher);
         }
     }
-    #endif
     static dEn_c* bullet = GetNextOfType(EN_KILLER, false);
     if(!bullet) bullet = GetNextOfType(EN_KILLER, true);
     if(!bullet) ret;
 
-    for(int i = 0; i < 8; i++) {
+    for(int i = 0; i < 40; i++) {
         if(bullet->direction == LEFT) {
             bullet->pos.x -= 8;
         }
@@ -413,6 +413,15 @@ ext void RealisticBullet() {
         if(bullet) continue;
         else ret;
     }
+}
+
+ext void Icey() {
+    //LivePatch(0x2c090001, LP_AUTOICE);
+    //LivePatch(0x3E800000, LP_GROWICE);
+}
+
+ext void AutoIce() {
+    
 }
 
 // Unused stuff:

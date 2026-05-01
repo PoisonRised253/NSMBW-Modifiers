@@ -1404,6 +1404,7 @@ SECTIONS {
 	_Z20CheckIfWeCantDoStuffv = 2155273168;
 	_Z15QueryGlobal5758j = 2148219728;
 
+
 	UpdateSavefileChecksums = 2148402352;
 
 

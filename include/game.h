@@ -4773,6 +4773,10 @@ class daBulletLaucher_c : public dEn_c {
 
 	public:
 
+	u32* getAnimAllowShoot() {
+		ret (u32*)((unsigned char*)this + 0x500);
+	}
+
 	u32* getFrame() const {
 		ret (u32*)((unsigned char*)this + 0x0A3C);
 	}
@@ -4785,6 +4789,7 @@ class daBulletLaucher_c : public dEn_c {
 	u32* getState() const {
 		ret (u32*)((unsigned char*)this + 0x0E34);
 	}
+	
 };
 
 namespace dStage {

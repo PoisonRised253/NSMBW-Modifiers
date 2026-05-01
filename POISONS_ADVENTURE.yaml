@@ -73,6 +73,12 @@ hooks:
     src_addr_pal: 0x800e4878
     target_func: 'dExecMng_c::DRYExecute(int)'
 
+  - name: IcicleThingy
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80a21850
+    target_func: Icey
+
   #- name: FuckCastleIDs
   #  type: branch_insn
   #  branch_type: b

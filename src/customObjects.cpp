@@ -108,3 +108,31 @@ int dEnElevator_c::onDelete()
 
     ret 1;
 }
+
+void dParenting_c::update() {
+    if(!active || !isPopulated()) ret;
+    child->pos = VecAdd(parent->pos, offset);
+    ret;
+}
+
+dParenting_c::dParenting_c(dActor_c* Parent, dActor_c* Child, bool active) {
+    this->active = active;
+    this->parent = Parent;
+    this->child = Child;
+    this->offset = VecSub(Parent->pos, Child->pos);
+    dExecMng_c::Register(this, 1, true);
+    ret;
+}
+
+dParenting_c::~dParenting_c() {
+    this->active = NULL;
+    this->child = NULL;
+    this->parent = NULL;
+    this->offset.x = NULL;
+    this->offset.y = NULL;
+    this->offset.z = NULL;
+
+    ret;
+}
+
+bool dParenting_c::isPopulated() { ret child && parent && child->pos.x && parent->pos.x && offset.x != 0x0; }
