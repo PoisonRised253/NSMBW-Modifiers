@@ -201,8 +201,12 @@ ext void TrustYourSenses()
 
 // 2 - 3
 // Replaces Fire-Piranha's fire with fucking large bullets. Hence the name
+// TODO: FIX DUPE
 ext void LiterallyBulletHell()
 {
+    static bool justSpawned;
+    if(justSpawned) { justSpawned = false; ret; }
+
     dEn_c *fireball = GetNextOfType(PAKKUN_FIREBALL, false);
     Vec pos, vel;
     S16Vec rot;
@@ -216,6 +220,7 @@ ext void LiterallyBulletHell()
     dEn_c *newSpawned = (dEn_c *)dStageActor_c::create(EN_MAGNUM_KILLER, 0, &fireball->pos, &fireball->rot, 0);
     if (newSpawned)
     {
+        justSpawned = true;
         newSpawned->speed = fireball->speed;
         newSpawned->direction = fireball->direction;
         
@@ -249,7 +254,7 @@ ext void SandyPain()
     {
         if (!Players[i])
             continue;
-        DisablePropeller();
+        DisablePropeller(POWER_FIRE);
     }
     if (GetNextOfType(EN_DOSUN, false))
         ModifyMovement(0);
@@ -416,8 +421,9 @@ ext void RealisticBullet() {
 }
 
 ext void Icey() {
-    //LivePatch(0x2c090001, LP_AUTOICE);
-    //LivePatch(0x3E800000, LP_GROWICE);
+    LivePatch(0x2c090001, LP_AUTOICE);
+    LivePatch(0x3E800000, LP_GROWICE);
+    ret;
 }
 
 ext void AutoIce() {

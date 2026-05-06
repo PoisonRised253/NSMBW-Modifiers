@@ -29,9 +29,12 @@ inline bool ObjectBoundCheck(Vec boundsMin, Vec boundsMax, Vec pos);
 inline u32* GetMemberFromOffset(void* object, u32 offset);
 volatile inline int *GetPlayerPowerState(dAc_Py_c *player);
 volatile inline int *checkGrounded(dAc_Py_c *player);
+volatile inline int *checkAllowedMoves(dAc_Py_c *player);
 volatile inline bool isPause();
-inline void DisablePropeller();
+ext void DisablePropeller(u32 replaceWithItemID);
 inline u32 NoJumping(u32 value);
+inline void DumpPlayer(int which);
+ext void HandleDEBUGHotkeys();
 
 template <typename T>
 inline int GetNextFreeArrayEntry(T* arr[], int size);

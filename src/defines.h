@@ -92,11 +92,11 @@
 #define GAME_LUIGI_GUIDE 1
 #define GAME_TITLE 2
 #define GAME_RETURN_ON_INPUT 3
-#define GAME_MOVIE 4 //Idk, it spawns some strange overlay, and changes nothing
+#define GAME_MOVIE 4 //1-41's Hint Movies
 
 //dScStage_c::m_miniGame
 #define MINIGAME_NONE 0
-#define MINIGAME_STAR 1
+#define MINIGAME_STAR_HOUSE 1
 #define MINIGAME_TOAD_HOUSE 2
 //TODO: Add the others
 

@@ -1,6 +1,9 @@
 #include "main.h"
 #include "ExecMng.h"
 
+//Check Note in main.h to see why this exists
+ext void NullSub() {asm("blr");}
+
 ext void preGameLoop()
 {
     GlobalFrameTimer++;
@@ -18,13 +21,7 @@ ext void onGameLoop()
     ApplyModifiers(false);
 
 #ifdef DEBUG
-    u32 btns = GetActiveRemocon()->heldButtons;
-    const int dumpLevelData = WPAD_A | WPAD_B;
-
-    if ((btns & dumpLevelData) == dumpLevelData)
-    {
-        ToggleMods();
-    }
+    HandleDEBUGHotkeys();
 #endif
 
 #ifdef NO_MP
@@ -53,7 +50,7 @@ ext void onStageCreated()
 
     //Reset, to get rid of 3-3's modifier, whenever a stage loads.
     //LivePatch(0x2c030000, LP_AUTOICE);
-    //LivePatch(0x3b888889, LP_GROWICE);
+    LivePatch(0x3b888889, LP_GROWICE);
 
     //Speed up swimming, i hate slow water levels. Plus We're literally a water pokemon now, so it checks.
     daPlBase_c::WaterSwimSpeed = SWIM_MOD / 60;
@@ -130,10 +127,10 @@ ext void ApplyModifiers(bool pre)
             TrustYourSenses();
         if(Modifiers[9]) {
             ModifyMovement(1);
-            DisablePropeller();
+            DisablePropeller(POWER_FIRE);
         }
         if(Modifiers[10]) {
-            DisablePropeller();
+            DisablePropeller(POWER_ICE);
             ModifyMovement(4);
             for(int i = 0; i < 4; i++) {
                 if(!Players[i]) continue;

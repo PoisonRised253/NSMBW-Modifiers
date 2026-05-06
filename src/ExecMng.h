@@ -16,6 +16,7 @@ class dExecMng_c {
     public:
     static void Reset();
     static void Register(void* obj, int typeID, bool force);
+    static void Run1Hz();
 };
 
 #endif

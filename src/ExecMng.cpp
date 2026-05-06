@@ -7,7 +7,7 @@ dParenting_c *parentings[CO_ARRAY_SIZE];
 // 1 = exec
 // 2 = post
 void dExecMng_c::DRYExecute(int stage)
-{    
+{   
     if(isPause()) ret;
     
     RunCustom(stage);
@@ -90,6 +90,7 @@ void dExecMng_c::Register(void* obj, int typeID, bool force) {
 //This function is made this way, to avoid too much compiled size.
 //Also i dont like virtual calls, so like... you wont be seeing them here
 void dExecMng_c::RunCustom(int action) {
+    Run1Hz();
     for(int i = 0; i < CO_ARRAY_SIZE; i++) {
         if (action == 0) {
             if(elevators[i])
@@ -115,4 +116,9 @@ void dExecMng_c::RunCustom(int action) {
         }
         
     }
+}
+
+void dExecMng_c::Run1Hz() {
+    if(GlobalFrameTimer != 60) ret;
+    ret;
 }

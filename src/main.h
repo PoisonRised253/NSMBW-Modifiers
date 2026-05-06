@@ -10,6 +10,8 @@
 #include "Utils.h"
 #include "Modifiers.h"
 
+//Included to make the compiler stop screaming that preGameLoop() is at 0x0 of the compiled file.
+ext void NullSub();
 ext void preGameLoop();
 ext void onGameLoop();
 ext void onStageCreated();

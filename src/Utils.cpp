@@ -191,6 +191,7 @@ inline void DeleteUnwanted()
     dEn_c *target = (dEn_c *)GetNextOfType(EN_BLOCK_HELP, false);
     if (target)
         target->Delete(1);
+    ret;
 }
 
 // 0 = Mushroom | 0x00
@@ -377,13 +378,17 @@ volatile inline int *checkGrounded(dAc_Py_c *player) {
     ret (volatile int*) GetMemberFromOffset(player, 0x10D4);
 }
 
+volatile inline int *checkAllowedMoves(dAc_Py_c *player) {
+    ret (volatile int*) GetMemberFromOffset(player, 0x10D8);
+}
+
 volatile inline bool isPause() {
     PauseManager_c* instance = PauseManager_c::m_instance;
     if(!instance) ret false;
     ret (bool)*GetMemberFromOffset(instance, 0x4);
 }
 
-//Entirely made by ChatGPT, still dont know how to bitshift
+//Entirely made by ChatGPT, still dont know how to bitshift, someone please teach me
 inline u32 NoJumping(u32 value) {
     u32 x = (value >> 24) & 0xFF;
     if (x == 1 || x == 3)
@@ -391,13 +396,44 @@ inline u32 NoJumping(u32 value) {
     ret ((value & 0x00FFFFFF) | (x << 24));
 }
 
-inline void DisablePropeller() {
+ext void DisablePropeller(u32 replaceWithItemID) {
     volatile int* itm = NULL;
     for(int i = 0; i < 4; i++) {
         if(!Players[i]) continue;
         itm = GetPlayerPowerState(Players[i]);
-        if(*itm == POWER_PROPELLER) *itm = POWER_FIRE;
+        if(*itm == POWER_PROPELLER) *itm = replaceWithItemID;
     }
+    ret;
+}
+
+inline void DumpPlayer(int which) {
+    #ifndef DEBUG
+    ret;
+    #endif
+
+    #ifdef DEBUG
+    if(!Players[which]) { OSReport("DumpPlayer: Player %i does not Exist\n", which); ret; }
+    OSReport("\n--------------------------------------\n---Player %i Dump:---\n---Power: %p---\n---IsDemo: %i---\n---IsPause: %i---\n---IsGrounded: %i---\n---State: %p---\n--------------------------------------\n\n", which, *GetPlayerPowerState(Players[which]), *isDemo(Players[which]), isPause(), (bool)*checkGrounded(Players[which]), *checkAllowedMoves(Players[which]));
+    ret;
+    #endif
+}
+
+ext void HandleDEBUGHotkeys() {
+    u32 btns = GetActiveRemocon()->heldButtons;
+
+    const int dumpLevelData = WPAD_A | WPAD_B;
+
+    if ((btns & dumpLevelData) == dumpLevelData)
+        ToggleMods();
+
+    const int dumpPlayer = WPAD_B | WPAD_ONE;
+    if ((btns & dumpPlayer) == dumpPlayer) {
+        DumpPlayer(0);
+        DumpPlayer(1);
+        DumpPlayer(2);
+        DumpPlayer(3);
+    }
+    ret;
 }
 
 /* Did not work, but slighly insightful
