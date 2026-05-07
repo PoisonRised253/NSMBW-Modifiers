@@ -7,6 +7,7 @@
 
 //Build Flags
 #define DEBUG
+#define DEBUG_UNUSED
 
 //#define NO_MP
 
@@ -14,7 +15,7 @@
 /*#ifdef DEBUG
 #define DEBUG_LP
 #define DEBUG_CS
-#define DEBUG_UNUSED
+
 #define DEBUG_BOUNDS
 #define DEBUG_SLOPE
 #endif*/
@@ -53,6 +54,9 @@
 
 //TrustYourSenses
 #define TYS_TURNSPEED (s16)8
+
+#define MARIOSLIDE_SPEED 1.5f
+#define MARIOSLIDE_LIMIT 100
 
 //MAXIMUMs and MINIMUMs
 #define FLOAT_MAX 65504.f
@@ -106,6 +110,8 @@
 #define INSTR_NOP                0x60000000
 #define INSTR_BRICKTIMER         0x3C0001F4
 
+//TODO: These are for EU_1 / EU_2, and will very likely break immensely in other regions.
+//Please Group these by Region, then figure out how you can enable them per makeGame's chosen region target.
 //Live Patch Addresses
 #define LP_1UPEFFECT        (u32*)0x801591F0
 #define LP_BRICKTIMER       (u32*)0x800E3AB8
@@ -121,6 +127,7 @@
 #define LP_ALLOWHOLDTWO     (u32*)0x8005e584
 #define LP_AUTOICE          (u32*)0x80a215dc
 #define LP_GROWICE          (u32*)0x80ad0f44
+#define LP_AUTOHOLDDOWN     (u32*)0x8005e500
 //Maybe
 #define LP_SINKING_SPEED    (u32*)0x8042BB2C
 
@@ -128,9 +135,10 @@
 #define DEFAULT_SPEED_RIGHT       0x3f800000
 #define DEFAULT_SPEED_LEFT        0xbf800000
 #define DEFAULT_SPEED_JUMP        0x40683127
-#define STATEID_BALLOON           0x8032692c
+#define STATEID_BALLOON           0x80376870
 
 #endif
 
 //This line of code, makes a beautifiul effect appear, use with CallSpacer(30)
 //SpawnEffect("Wm_bs_kameckmagic", 0, &this->pos, &r, &MakeVec(this->aoeX / 32, this->aoeY / 64, 1));
+//c425f0a5 -> c42604ce

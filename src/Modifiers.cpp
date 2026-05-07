@@ -382,10 +382,14 @@ ext void MarioSlide() {
     for(int i = 0; i < 4; i++) {
     if(!Players[i]) ret;
     u32* state = GetMemberFromOffset(Players[i], 0x10D8);
+    u32* state2 = GetMemberFromOffset(Players[i], 0x10D4);
+    
     volatile int* ground = checkGrounded(Players[i]);
-    if(*ground == 1 || Players[i]->speed.x == 0) ret;
+    *GetPlayerPowerState(Players[i]) = POWER_PENGUIN;
+    SetUpper(state2, 0x00F0);
 
-    *state = 0x29a;
+    if(*ground == 0 || Players[i]->speed.x == 0 || Players[i]->speed.y > 0.1f) { LivePatch(0xa0030004, LP_AUTOHOLDDOWN); continue;}
+    LivePatch(0x38000001, LP_AUTOHOLDDOWN);
     }
 }
 

@@ -22,7 +22,6 @@ inline void DeleteUnwanted();
 inline int GetPowerupType(u32 settings);
 
 volatile void LivePatch(u32 newInstr, u32 *addr);
-ext void QOLModifications();
 ext void ModifyMovement(int mode);
 ext void NahFuckThat(bool); // Stops dAc_Py_c from existing
 inline bool ObjectBoundCheck(Vec boundsMin, Vec boundsMax, Vec pos);
@@ -31,10 +30,13 @@ volatile inline int *GetPlayerPowerState(dAc_Py_c *player);
 volatile inline int *checkGrounded(dAc_Py_c *player);
 volatile inline int *checkAllowedMoves(dAc_Py_c *player);
 volatile inline bool isPause();
+volatile inline int *GetPlayerState(dAc_Py_c *player);
 ext void DisablePropeller(u32 replaceWithItemID);
+ext void SetUpper(u32* variable, u16 value);
+ext void SetLower(u32* variable, u16 value);
 inline u32 NoJumping(u32 value);
-inline void DumpPlayer(int which);
-ext void HandleDEBUGHotkeys();
+ext void DumpPlayer(int which);
+ext void HandleHotkeys();
 
 template <typename T>
 inline int GetNextFreeArrayEntry(T* arr[], int size);

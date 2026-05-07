@@ -20,9 +20,8 @@ ext void onGameLoop()
 
     ApplyModifiers(false);
 
-#ifdef DEBUG
-    HandleDEBUGHotkeys();
-#endif
+    HandleHotkeys();
+
 
 #ifdef NO_MP
 #ifndef DEBUG
@@ -48,12 +47,11 @@ ext void onStageCreated()
     dSys_c::setFrameRate(1);
     ModifyMovement(0);
 
-    //Reset, to get rid of 3-3's modifier, whenever a stage loads.
-    //LivePatch(0x2c030000, LP_AUTOICE);
-    LivePatch(0x3b888889, LP_GROWICE);
-
     //Speed up swimming, i hate slow water levels. Plus We're literally a water pokemon now, so it checks.
     daPlBase_c::WaterSwimSpeed = SWIM_MOD / 60;
+    daPlBase_c::WaterMaxFallSpeed = SWIM_MOD / 120;
+    daPlBase_c::WaterJumpSpeed = SWIM_MOD / 30;
+    daPlBase_c::WaterWalkSpeed = SWIM_MOD / 45;
 
     for (int i = 0; i < MOD_SIZE; i++)
         Modifiers[i] = false;
@@ -107,7 +105,7 @@ ext void onBoot()
 // Relaying execution to here for clarity if something fails
 ext void ApplyModifiers(bool pre)
 {
-    QOLModifications();
+    AntiBubble();
 
     //Isolate Modifier[2], to allow to trigger it either way, with a difference in action based on 'bool pre'
     if (Modifiers[2] && CallSpacer(TIMER_SPIN) && !GetNextOfType(EN_GOALPOLE, false))
@@ -142,6 +140,8 @@ ext void ApplyModifiers(bool pre)
             SandyPain();
         if (Modifiers[14])
             PokeyParty();
+        if (Modifiers[17])
+            MarioSlide();
 
         ret;
     }
@@ -183,5 +183,20 @@ ext void ApplyModifiers(bool pre)
         ret;
     }
 
+    ret;
+}
+
+ext void AntiBubble() {
+    for(int i = 0; i < 4; i++) {
+        if(!Players[i]) continue;
+        if(*GetPlayerState(Players[i]) != STATEID_BALLOON) continue;
+
+        if(i > 0 && Players[clamp(i - 1, 0, 4)] != NULL) Players[i]->pos = Players[clamp(i - 1, 0, 4)]->pos;
+        else if(Players[clamp(i + 1, 0, 4)]) Players[i]->pos = Players[clamp(i + 1, 0, 4)]->pos;
+        dEn_c* bubble = GetNextOfType(EN_HATENA_BALLOON, false);
+        if(!bubble) continue;
+        bubble->visible = false;
+        bubble->pos = Players[i]->pos;
+    }
     ret;
 }

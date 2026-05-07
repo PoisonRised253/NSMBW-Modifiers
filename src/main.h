@@ -18,5 +18,6 @@ ext void onStageCreated();
 ext void onRecieveResetEvent();
 ext void onBoot();
 ext void ApplyModifiers(bool);
+ext void AntiBubble();
 
 #endif

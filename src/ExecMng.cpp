@@ -31,6 +31,13 @@ void dExecMng_c::DRYExecute(int stage)
 
 void dExecMng_c::Reset()
 {
+    //Reset, to get rid of 3-3's modifier, whenever a stage loads.
+    LivePatch(0x2c030000, LP_AUTOICE);
+    LivePatch(0x3b888889, LP_GROWICE);
+
+    //Reset, clears autoHoldDown
+    LivePatch(0xa0030004, LP_AUTOHOLDDOWN);
+
     for (int i = 0; i < CO_ARRAY_SIZE; i++)
     {
         if (elevators[i])

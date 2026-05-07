@@ -252,12 +252,6 @@ volatile void LivePatch(u32 newInstr, u32 *addr)
     ret;
 }
 
-ext void QOLModifications()
-{
-    // Nullsub for now, last idea didnt work
-    ret;
-}
-
 // Modes:
 // 0 = Restore
 // 1 = Disable Left
@@ -382,6 +376,10 @@ volatile inline int *checkAllowedMoves(dAc_Py_c *player) {
     ret (volatile int*) GetMemberFromOffset(player, 0x10D8);
 }
 
+volatile inline int *GetPlayerState(dAc_Py_c *player) {
+    ret (volatile int*)GetMemberFromOffset(player, 0x1478);
+}
+
 volatile inline bool isPause() {
     PauseManager_c* instance = PauseManager_c::m_instance;
     if(!instance) ret false;
@@ -406,26 +404,36 @@ ext void DisablePropeller(u32 replaceWithItemID) {
     ret;
 }
 
-inline void DumpPlayer(int which) {
-    #ifndef DEBUG
-    ret;
-    #endif
+ext void SetUpper(u32* variable, u16 value) {
+    u32 val = *variable;
+    val &= 0x0000FFFF;
+    val |= (value << 16);
+    *variable = val;
+}
 
-    #ifdef DEBUG
+ext void SetLower(u32* variable, u16 value) {
+    u32 val = *variable;
+    val &= 0xFFFF0000;
+    val |= value;
+    *variable = val;
+}
+
+#ifdef DEBUG
+ext void DumpPlayer(int which) {
     if(!Players[which]) { OSReport("DumpPlayer: Player %i does not Exist\n", which); ret; }
     OSReport("\n--------------------------------------\n---Player %i Dump:---\n---Power: %p---\n---IsDemo: %i---\n---IsPause: %i---\n---IsGrounded: %i---\n---State: %p---\n--------------------------------------\n\n", which, *GetPlayerPowerState(Players[which]), *isDemo(Players[which]), isPause(), (bool)*checkGrounded(Players[which]), *checkAllowedMoves(Players[which]));
     ret;
-    #endif
 }
+#endif
 
-ext void HandleDEBUGHotkeys() {
+ext void HandleHotkeys() {
     u32 btns = GetActiveRemocon()->heldButtons;
 
     const int dumpLevelData = WPAD_A | WPAD_B;
 
     if ((btns & dumpLevelData) == dumpLevelData)
         ToggleMods();
-
+#ifdef DEBUG
     const int dumpPlayer = WPAD_B | WPAD_ONE;
     if ((btns & dumpPlayer) == dumpPlayer) {
         DumpPlayer(0);
@@ -433,6 +441,7 @@ ext void HandleDEBUGHotkeys() {
         DumpPlayer(2);
         DumpPlayer(3);
     }
+#endif
     ret;
 }
 
