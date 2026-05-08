@@ -18,6 +18,9 @@ ext void onGameLoop()
     if (!GetPlayers())
         ret;
 
+    for(int i = 0; i < 4; i++)
+        if(Players[i] && *GetPlayerState(Players[i]) != STATEID_BALLOON) Players[i]->scale = MakeVec(1,1,1);
+
     ApplyModifiers(false);
 
     HandleHotkeys();
@@ -94,6 +97,7 @@ ext void onBoot()
     LivePatch(INSTR_BRICKTIMER, LP_BRICKTIMER);
     LivePatch(INSTR_BLR, LP_NODEATHPAUSE);
     LivePatch(INSTR_BLR, LP_NOSCORE);
+    LivePatch(INSTR_BLR, LP_FUKIDELETER);
     //LivePatch(0xFFFFFFFF, LP_FREEROY); //Trying to save Roy's castle
 
 #ifdef DEBUG
@@ -190,9 +194,11 @@ ext void AntiBubble() {
     for(int i = 0; i < 4; i++) {
         if(!Players[i]) continue;
         if(*GetPlayerState(Players[i]) != STATEID_BALLOON) continue;
+        dAc_Py_c* p = Players[clamp(i - 1, 0, 4)];
+        dAc_Py_c* p2 = Players[clamp(i + 1, 0, 4)];
 
-        if(i > 0 && Players[clamp(i - 1, 0, 4)] != NULL) Players[i]->pos = Players[clamp(i - 1, 0, 4)]->pos;
-        else if(Players[clamp(i + 1, 0, 4)]) Players[i]->pos = Players[clamp(i + 1, 0, 4)]->pos;
+        if(i > 0 && p != NULL) { Players[i]->pos = VecAdd(p->pos, MakeVec(0, 8.f, 0)); Players[i]->scale = MakeVec(0,0,0);}
+        else if(p2) {Players[i]->pos = VecAdd(p2->pos, MakeVec(0, 8.f, 0)); Players[i]->scale = MakeVec(0,0,0); }
         dEn_c* bubble = GetNextOfType(EN_HATENA_BALLOON, false);
         if(!bubble) continue;
         bubble->visible = false;

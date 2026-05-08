@@ -7,7 +7,7 @@
 
 //Build Flags
 #define DEBUG
-#define DEBUG_UNUSED
+
 
 //#define NO_MP
 
@@ -15,7 +15,7 @@
 /*#ifdef DEBUG
 #define DEBUG_LP
 #define DEBUG_CS
-
+#define DEBUG_UNUSED
 #define DEBUG_BOUNDS
 #define DEBUG_SLOPE
 #endif*/
@@ -128,6 +128,7 @@
 #define LP_AUTOICE          (u32*)0x80a215dc
 #define LP_GROWICE          (u32*)0x80ad0f44
 #define LP_AUTOHOLDDOWN     (u32*)0x8005e500
+#define LP_FUKIDELETER      (u32*)0x800b1910
 //Maybe
 #define LP_SINKING_SPEED    (u32*)0x8042BB2C
 
@@ -141,4 +142,3 @@
 
 //This line of code, makes a beautifiul effect appear, use with CallSpacer(30)
 //SpawnEffect("Wm_bs_kameckmagic", 0, &this->pos, &r, &MakeVec(this->aoeX / 32, this->aoeY / 64, 1));
-//c425f0a5 -> c42604ce

@@ -36,7 +36,8 @@ ext void SetUpper(u32* variable, u16 value);
 ext void SetLower(u32* variable, u16 value);
 inline u32 NoJumping(u32 value);
 ext void DumpPlayer(int which);
-ext void HandleHotkeys();
+ext void HandleHotkeys(); 
+ext dEn_c* GetNearestPlayer(Vec relativeTo);
 
 template <typename T>
 inline int GetNextFreeArrayEntry(T* arr[], int size);

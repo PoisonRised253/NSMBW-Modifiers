@@ -423,7 +423,7 @@ ext void DumpPlayer(int which) {
     if(!Players[which]) { OSReport("DumpPlayer: Player %i does not Exist\n", which); ret; }
     OSReport("\n--------------------------------------\n---Player %i Dump:---\n---Power: %p---\n---IsDemo: %i---\n---IsPause: %i---\n---IsGrounded: %i---\n---State: %p---\n--------------------------------------\n\n", which, *GetPlayerPowerState(Players[which]), *isDemo(Players[which]), isPause(), (bool)*checkGrounded(Players[which]), *checkAllowedMoves(Players[which]));
     ret;
-}
+} 
 #endif
 
 ext void HandleHotkeys() {
@@ -443,6 +443,20 @@ ext void HandleHotkeys() {
     }
 #endif
     ret;
+}
+
+ext dEn_c* GetNearestPlayer(Vec relativeTo) {
+    dEn_c* Winner = NULL;
+    float bestDist = 1000.f;
+
+    for(int i = 0; i < 4; i++) {
+        if(!Players[i]) continue;
+        Vec2 res = DistSq(relativeTo, Players[i]->pos);
+        float current = res.x + res.y;
+        if(current < bestDist && current > 0.0125f) {bestDist = current; Winner = (dEn_c*)Players[i];}
+    }
+
+    ret Winner;
 }
 
 /* Did not work, but slighly insightful

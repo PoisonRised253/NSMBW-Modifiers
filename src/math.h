@@ -15,7 +15,7 @@ inline Vec VecSub(Vec a, Vec b);
 inline Vec VecMul(Vec a, Vec b);
 inline Vec VecDiv(Vec a, Vec b);
 inline Vec2 VecDist(Vec a, Vec b);
-inline float DistSq(const Vec3& a, const Vec3& b);
+inline Vec2 DistSq(const Vec3& a, const Vec3& b);
 inline Vec VecAddFloat(Vec v, float m);
 inline Vec VecSubFloat(Vec v, float m);
 inline Vec VecMulFloat(Vec v, float m);
