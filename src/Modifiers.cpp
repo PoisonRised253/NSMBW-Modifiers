@@ -1,4 +1,5 @@
 #include "Modifiers.h"
+#include "daEnemies_c.h"
 
 // 1 - 1
 // Deletes all Enemies, Powerups, and some spare objects.
@@ -383,12 +384,11 @@ ext void MarioSlide() {
     if(!Players[i]) ret;
     u32* state = GetMemberFromOffset(Players[i], 0x10D8);
     u32* state2 = GetMemberFromOffset(Players[i], 0x10D4);
-    
     volatile int* ground = checkGrounded(Players[i]);
     *GetPlayerPowerState(Players[i]) = POWER_PENGUIN;
     SetUpper(state2, 0x00F0);
 
-    if(*ground == 0 || Players[i]->speed.x == 0 || Players[i]->speed.y > 0.1f) { LivePatch(0xa0030004, LP_AUTOHOLDDOWN); continue;}
+    if(*ground == 0 || Players[i]->speed.x || Players[i]->speed.y > 0.125f) { LivePatch(0xa0030004, LP_AUTOHOLDDOWN); continue;}
     LivePatch(0x38000001, LP_AUTOHOLDDOWN);
     }
 }
@@ -396,14 +396,14 @@ ext void MarioSlide() {
 // The Heavy Approves, plumber-tested.
 // Maybe these bullets truely do cost $200 per shot.
 ext void RealisticBullet() {
-    daBulletLaucher_c* launcher = NULL;
+    daBulletLauncher_c* launcher = NULL;
     for(int i = 0; i < 8; i++) {
         if(!launcher)
-            launcher = (daBulletLaucher_c*)GetNextOfType(EN_KILLER_HOUDAI, false);
+            launcher = (daBulletLauncher_c*)GetNextOfType(EN_KILLER_HOUDAI, false);
         if(launcher) {
             *launcher->getCooldown() = clamp((int)*launcher->getCooldown(), 1, 10);
             *launcher->getAnimAllowShoot() = 0;
-            launcher = (daBulletLaucher_c*)FindActorByType(EN_KILLER_HOUDAI, (Actor*)launcher);
+            launcher = (daBulletLauncher_c*)FindActorByType(EN_KILLER_HOUDAI, (Actor*)launcher);
         }
     }
     static dEn_c* bullet = GetNextOfType(EN_KILLER, false);
@@ -430,8 +430,24 @@ ext void Icey() {
     ret;
 }
 
-ext void AutoIce() {
-    
+// 3 - G
+ext void BetterGhosts() {
+    daBoo_c *n = (daBoo_c *)GetNextOfType(EN_TERESA, false);
+
+    for (int i = 0; i < 12; i++)
+    {
+        if (n)
+        {
+            bool state = !(bool)(n->speed.x || n->speed.y);
+            n->visible = state;
+            OSReport("Operated on %p\n", n);
+            n = (daBoo_c *)FindActorByType(EN_TERESA, (Actor *)n);
+            continue;
+        }
+        else ret;
+        
+    }
+    ret;
 }
 
 // Unused stuff:

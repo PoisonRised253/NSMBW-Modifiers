@@ -25,6 +25,8 @@ ext void onGameLoop()
 
     HandleHotkeys();
 
+    //OSReport("BALLS!: %p\n", FindActorByType(LEMMY_BALL, NULL));
+
 
 #ifdef NO_MP
 #ifndef DEBUG
@@ -98,6 +100,8 @@ ext void onBoot()
     LivePatch(INSTR_BLR, LP_NODEATHPAUSE);
     LivePatch(INSTR_BLR, LP_NOSCORE);
     LivePatch(INSTR_BLR, LP_FUKIDELETER);
+    LivePatch(INSTR_EXITUNLCEARED, LP_EXITUNCLEARED_1);
+    LivePatch(INSTR_EXITUNLCEARED, LP_EXITUNCLEARED_2);
     //LivePatch(0xFFFFFFFF, LP_FREEROY); //Trying to save Roy's castle
 
 #ifdef DEBUG
@@ -177,7 +181,7 @@ ext void ApplyModifiers(bool pre)
         if (Modifiers[19])
             Icey();
         if (Modifiers[20])
-            AutoIce();
+            BetterGhosts();
 
         #ifdef DEBUG_SLOPE
         if(Players[0])

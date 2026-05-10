@@ -69,7 +69,9 @@ public:
     void setTitleReplayRandomTable();
     u32 getExitMode();
 
-    void setNextScene(unsigned short unk, int unk2, Exit exitValue);
+    void setNextScene(unsigned short unk, int unk2, Exit exitValue, void*);
+    void setNextScene(unsigned short unk, int unk2, void*, void*);
+    void setNextScene();
 
     void *mCdArcName;
     void *m_unit_res_list;

@@ -109,6 +109,7 @@
 #define INSTR_BLR                0x4e800020
 #define INSTR_NOP                0x60000000
 #define INSTR_BRICKTIMER         0x3C0001F4
+#define INSTR_EXITUNLCEARED      0x48000018
 
 //TODO: These are for EU_1 / EU_2, and will very likely break immensely in other regions.
 //Please Group these by Region, then figure out how you can enable them per makeGame's chosen region target.
@@ -129,6 +130,9 @@
 #define LP_GROWICE          (u32*)0x80ad0f44
 #define LP_AUTOHOLDDOWN     (u32*)0x8005e500
 #define LP_FUKIDELETER      (u32*)0x800b1910
+#define LP_EXITUNCLEARED_1  (u32*)0x800d0d40
+#define LP_EXITUNCLEARED_2  (u32*)0x800d0e88
+
 //Maybe
 #define LP_SINKING_SPEED    (u32*)0x8042BB2C
 

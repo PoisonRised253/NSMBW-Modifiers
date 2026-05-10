@@ -130,6 +130,8 @@ ext void ToggleMods()
     Modifiers[18] = (LevelID == 2 && WorldID == 3);
     // 3 - 3
     Modifiers[19] = (LevelID == 3 && WorldID == 3);
+    // 3- G
+    Modifiers[20] = (LevelID == 21 && WorldID == 3);
 
 #ifdef DEBUG
     OSReport("L: %d, W: %d, A: %d, E: %d, G: %d\n", LevelID, WorldID, AreaID, exit, game);

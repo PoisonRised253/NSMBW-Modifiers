@@ -1,0 +1,4 @@
+Base: 0x815410a8
+
+0x8C8: Animation Toggle for the effect which appears while hunting the player;
+

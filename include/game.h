@@ -4701,6 +4701,7 @@ class dSys_c {
 	static void setFrameRate(unsigned char rate_probably);
 };
 
+void exitStage();
 
 class dMj2dHeader_c {
 
@@ -4767,34 +4768,95 @@ class dNext_c {
 	void simpleChangeScene(unsigned char, unsigned char, int);
 };
 
-class daBulletLaucher_c : public dEn_c {
-	int execute();
-	void activate();
-
-	public:
-
-	u32* getAnimAllowShoot() {
-		ret (u32*)((unsigned char*)this + 0x500);
-	}
-
-	u32* getFrame() const {
-		ret (u32*)((unsigned char*)this + 0x0A3C);
-	}
-
-	//For instant set to 1
-	u32* getCooldown() const {
-		ret (u32*)((unsigned char*)this + 0xE1C);
-	}
-
-	u32* getState() const {
-		ret (u32*)((unsigned char*)this + 0x0E34);
-	}
-	
-};
-
 namespace dStage {
 	void* Field;
 	void* Field_Data;
 };
+
+namespace dGameCom {
+	void calcXY(float x, float y, short z_maybe);
+	void clearGameStop();
+	void CreateBlueNumber(const Vec3 &, int, int);
+	void CreateRedNumber(const Vec3 &, int);
+	void CreateSmallAll1up(const Vec3 &);
+	void CreateSmallScore(const Vec3 &, int, int, bool);
+	void EasyPairingResume();
+	void EasyPairingStop();
+	void GoalScoreExecute(const Vec3 &, int);
+	void initGame();
+	void initRandomSeed();
+	void MiniGameCannonStart();
+	void MiniGameCannonTitle();
+	void MiniGameMessageClose();
+	void MiniGameMessageDisp(int msgID); //Dont know what source to pull the ids from, but this exists
+	void MiniGameWireStart();
+	void MiniGameWireTitle();
+	void ModelPlayMenuStart();
+	void MovieMessageClose();
+	void MovieMessageDisp(int movieID); // Also unknown source
+	void offMultiCourseClear(); // What the hell does this even mean????
+	void setGameStop();
+	void setMultiCourseClear(int unk);
+	void setRandomArray(unsigned char* base, int length_probably);
+	void setRandomSeed(unsigned long seed);
+	void setWorldClearFlag();
+	void StaffCreditAddCoin(int playerID_probably);
+	void StaffCreditStart();
+	void TheEndStart();
+	//DispSizeScale__8dGameComFRQ34nw4r4math4VEC2 = 0x800B5140;
+	//MiniGameCannonTitleCloseRequest__8dGameComFv = 0x800B4A00;
+	//MiniGameWireOperateCloseRequest__8dGameComFv = 0x800B4BF0;
+	//MiniGameWireTitleCloseRequest__8dGameComFv = 0x800B4BC0;
+	//MiniGameWireTurnOverCloseRequest__8dGameComFv = 0x800B4C50;
+	//LayoutDispNumber__8dGameComFRCiRCiP12LytTextBox_cb = 0x800B3B60;
+	//LayoutDispNumberDigit__8dGameComFRCiP12LytTextBox_cb = 0x800B3BE0;
+	//Player1upColor__8dGameComFP12LytTextBox_ci = 0x800B4780;
+	//SelectCursorSetup__8dGameComFPQ34nw4r3lyt4Paneib = 0x800B44D0;
+	//SetSoftLight_Boss__8dGameComFRQ23m3d6bmdl_ci = 0x800B4050;
+	//SetSoftLight_Enemy__8dGameComFRQ23m3d6bmdl_ci = 0x800B4170;
+	//SetSoftLight_Item__8dGameComFRQ23m3d6bmdl_ci = 0x800B43D0;
+	//SetSoftLight_Map__8dGameComFRQ23m3d6bmdl_ci = 0x800B3F50;
+	//SetSoftLight_MapObj__8dGameComFRQ23m3d6bmdl_ci = 0x800B42B0;
+	//SetSoftLight_Player__8dGameComFRQ23m3d6bmdl_ci = 0x800B3E50;
+	//WindowPaneColorSet__8dGameComFPQ34nw4r3lyt6Windowi = 0x800B3C50;
+
+	void* GetAspectRatio();
+	void* getGlbPosToLyt(Vec3 &);
+	void* GetLanguage6();
+	void* GetLanguageHBM();
+	void* GetLanguageX();
+	void* getRandomDp();
+	void* MiniGameCannonResult();
+	void* MiniGameWireResult(const int *somePtr);
+	void* rnd();
+	void* StaffCreditKiMe();
+	//MiniGameCannonResultCloseRequest__8dGameComFv = 0x800B4A60;
+	//MiniGameWireResultCloseRequest__8dGameComFv = 0x800B4C20;
+	//AreaLanguageFolder__8dGameComFPCcPc = 0x800B4670;
+
+	bool chkCancelButton(int player_maybe);
+	bool chkContinue();
+	bool isGameStop(unsigned long unk); //Highly questionable, that a param is required
+	bool isNowCourseClear();
+	bool isWorldClear(int worldID_maybe, int saveFile_maybe);
+	bool MiniGameCannonEndCheck();
+	bool MiniGameWireEndCheck();
+	bool PlayerEnterCheck(int playerID_maybe);
+	bool StaffCreditHighScoreCheck();
+	//bool MiniGameCannonOperateCloseRequest(); unk return type, not sure wether it returns anything at all, and i dont need it, so lets just pretend it doesnt exists lol
+
+	u32 getCourseNum(int worldID, int levelID);
+	u32 getRandom(unsigned long seed_probably);
+	u32 rndInt(unsigned long max);
+	u32 StaffCreditHighScore();
+
+	unsigned long getRandomSeed();
+	
+	float getDispCenterX();
+	float getDispCenterY();
+	float getRandomF();
+	float rndF(float max);
+	float rndFX(float multiplier);
+}
 
 #endif

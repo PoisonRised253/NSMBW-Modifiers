@@ -1,31 +1,57 @@
-#This was made entirely by chatgpt, because tired me decided to not waste my time figuring out python. I hate python.
 import sys
 import re
+from collections import defaultdict
 
-pattern = re.compile(r":([0-9a-fA-F]{8})\s+[0-9a-fA-F]{8}\s+[0-9a-fA-F]{8}\s+\d+\s+(\S+)")
+# Reads piped input from Select-String
+lines = sys.stdin.readlines()
 
-matches = []
+# Match:
+# <stuff>:<line>:<address> <size> <address> 0 <symbol>
+pattern = re.compile(
+    r'^.*?:\d+:([0-9a-fA-F]{8})\s+[0-9a-fA-F]+\s+[0-9a-fA-F]{8}\s+0\s+(.+)$'
+)
 
-# Forbidden characters
-forbidden_chars = ['@', '<', '>']
+groups = defaultdict(list)
 
-# Collect all matches
-for line in sys.stdin:
-    match = pattern.search(line)
-    if match:
-        addr = match.group(1).upper()
-        symbol = match.group(2)
-        # Skip symbols containing any forbidden character
-        if any(c in symbol for c in forbidden_chars):
-            continue
-        matches.append((symbol, addr))
+for line in lines:
+    line = line.strip()
 
-# Sort alphabetically, ignoring case
-matches.sort(key=lambda x: x[0].lower())
+    match = pattern.match(line)
+    if not match:
+        continue
 
-print("\n\nStart!\n")
-# Print sorted
-for symbol, addr in matches:
-    print(f"{symbol} = 0x{addr};")
+    address = match.group(1)
+    symbol = match.group(2)
 
-print("\nAll Done!\n")
+    # Skip LOCAL/GUARD junk
+    if symbol.startswith('@LOCAL@') or symbol.startswith('@GUARD@'):
+        continue
+
+    # Determine class/group name
+    group = "GLOBAL"
+
+    if "__" in symbol:
+        split = symbol.split("__", 1)
+
+        if len(split) > 1:
+            right = split[1]
+
+            # Extract class name before first F or end
+            class_match = re.match(r'([^F]+)', right)
+
+            if class_match:
+                group = class_match.group(1)
+
+    groups[group].append((symbol, address))
+
+# Alphabetic group order
+for group_name in sorted(groups.keys()):
+    print("/* {} */".format(group_name))
+
+    # Alphabetic symbol order
+    sorted_symbols = sorted(groups[group_name], key=lambda x: x[0].lower())
+
+    for symbol, address in sorted_symbols:
+        print("{} = 0x{};".format(symbol, address.upper()))
+
+    print()
