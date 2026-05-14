@@ -1,4 +1,5 @@
 #include "main.h"
+#include "daEnemies_c.h"
 #include "ExecMng.h"
 
 //Check Note in main.h to see why this exists
@@ -25,8 +26,10 @@ ext void onGameLoop()
 
     HandleHotkeys();
 
-    //OSReport("BALLS!: %p\n", FindActorByType(LEMMY_BALL, NULL));
-
+    dEn_c* chomp = (dEn_c*)FindActorByType(EN_WANWAN_PILE, false);
+    if(chomp) {
+        OSReport("Chomp: %p\n", chomp); 
+    }
 
 #ifdef NO_MP
 #ifndef DEBUG

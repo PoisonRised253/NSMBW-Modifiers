@@ -443,6 +443,11 @@ ext void HandleHotkeys() {
         DumpPlayer(2);
         DumpPlayer(3);
     }
+
+    #ifdef DEBUG_BALLS
+        if(CallSpacer(15))
+            FondleBalls();
+    #endif
 #endif
     ret;
 }
@@ -460,6 +465,37 @@ ext dEn_c* GetNearestPlayer(Vec relativeTo) {
 
     ret Winner;
 }
+
+ext void WrapNumber(u32* value, u32 min, u32 max) {
+    if(*value >= max) *value = min;
+    if(*value <= min) *value = max;
+    ret;
+}
+
+#ifdef DEBUG_BALLS
+#include "daEnemies_c.h"
+
+ext void FondleBalls() {
+    static u32 inputCounter = 0;
+    static bool staticness = false;
+    const int maskUp = WPAD_UP | WPAD_A; 
+    const int maskDown = WPAD_DOWN | WPAD_A; 
+    u32 btn = GetActiveRemocon()->heldButtons;
+    daLemmyBall_c* ball = (daLemmyBall_c*)GetNextOfType(EN_BOUNCE_BALL, false);
+    if(!ball) daLemmyBall_c* ball = (daLemmyBall_c*)GetNextOfType(EN_BOUNCE_BALL, true);
+    if(!btn || !ball) {ret; }
+
+    if((btn & maskUp) == maskUp) inputCounter++;
+    else if ((btn & maskDown) == maskDown) inputCounter--;
+    else if (btn & WPAD_B) { ball->setStatic(!staticness); staticness = !staticness; }
+    else ret;
+    
+    inputCounter = clamp((int)inputCounter, 0, 7);
+    ball->setHitbox(inputCounter);
+    OSReport("BallSizer() State: %i\n", inputCounter);
+    ret;
+}
+#endif
 
 /* Did not work, but slighly insightful
 ext void PatchCastleIDs() {

@@ -2603,13 +2603,13 @@ public:
 
 	void doStateChange(dStateBase_c *state); // might return bool, dunno
 
-	static float WATER_FALLMAXSPD;
-	static float WATER_GRAIVTY;
-	static float WATER_ROLL_DEC_RATE;
-	static float WATER_YMAXSPD;
-	static float DEADFALL_SPINSPEED;
-	static float DEADFALL_YSPEED;
-	static float DEADFALL_YSPEED_MAX;
+	//static float WATER_FALLMAXSPD;
+	//static float WATER_GRAIVTY;
+	//static float WATER_ROLL_DEC_RATE;
+	//static float WATER_YMAXSPD;
+	//static float DEADFALL_SPINSPEED;
+	//static float DEADFALL_YSPEED;
+	//static float DEADFALL_YSPEED_MAX;
 
 	// Now here's where the fun starts.
 

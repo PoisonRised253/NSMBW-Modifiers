@@ -7,6 +7,7 @@
 
 //Build Flags
 #define DEBUG
+#define DEBUG_BALLS
 
 
 //#define NO_MP

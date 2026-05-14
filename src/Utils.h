@@ -38,6 +38,8 @@ inline u32 NoJumping(u32 value);
 ext void DumpPlayer(int which);
 ext void HandleHotkeys(); 
 ext dEn_c* GetNearestPlayer(Vec relativeTo);
+ext void WrapNumber(u32* value, u32 min, u32 max);
+ext void FondleBalls();
 
 template <typename T>
 inline int GetNextFreeArrayEntry(T* arr[], int size);

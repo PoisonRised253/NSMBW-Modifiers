@@ -440,7 +440,6 @@ ext void BetterGhosts() {
         {
             bool state = !(bool)(n->speed.x || n->speed.y);
             n->visible = state;
-            OSReport("Operated on %p\n", n);
             n = (daBoo_c *)FindActorByType(EN_TERESA, (Actor *)n);
             continue;
         }
