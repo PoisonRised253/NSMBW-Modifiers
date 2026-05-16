@@ -7,7 +7,6 @@
 
 //Build Flags
 #define DEBUG
-#define DEBUG_BALLS
 
 
 //#define NO_MP
@@ -19,6 +18,7 @@
 #define DEBUG_UNUSED
 #define DEBUG_BOUNDS
 #define DEBUG_SLOPE
+#define DEBUG_BALLS
 #endif*/
 
 //Current amount of activatable modifiers

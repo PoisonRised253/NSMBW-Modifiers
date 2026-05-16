@@ -1,0 +1,28 @@
+//Base: 0x81541430
+    
+    //u32 TurnAnimState at 0x815413C
+    //bool isNotAttack at 0x81541358
+    //u32 cooldownAfterAttack at 815413AC
+    //u32 ChainLength  at 815413CC
+    //u32 waitAttackCooldown (last byte only) at 81541354
+    //u16 WhileAttackCooldown (second byte only) at 81541248
+    //u8 NOLABEL at 815412B8
+    //u32 attackState at 815410A8:0x1=Get Ready, 0x2=Attacking/Attacked, 0x3=ReadyToAttack
+    //u8 detachFromChain at 81541090
+    //gravityMaybe at 81540E5C:Default=be400000
+    //float PolePosX at 815414DC
+    //float PolePosY at 815414E0
+    //float ChompPivotX at 81541364
+    //float ChompPivotY at 81541368
+    //float TargetAngle at 8154135C  (around -75 - 75 in normal execution)
+    //u32 hitsBeforeBreak at 81541998:Default=3
+    //bitfield somethingAboutGroundpounding at 81541A78
+    //float poleHitboxX at 81541A20
+    //float poleHitboxY at 81541A24
+
+    /*
+    0x81541A24 -> 0x5F4 right
+    0x81541A1C -> 0x5EC left
+    0x81541A28 -> 0x5F8 down
+    0x81541A20 -> 0x5F0 up
+    */

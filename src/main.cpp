@@ -26,11 +26,10 @@ ext void onGameLoop()
 
     HandleHotkeys();
 
-    dEn_c* chomp = (dEn_c*)FindActorByType(EN_WANWAN_PILE, false);
-    if(chomp) {
-        OSReport("Chomp: %p\n", chomp); 
-    }
+#ifdef DEBUG
+    //DEBUG SECTION
 
+#endif
 #ifdef NO_MP
 #ifndef DEBUG
     if ((Players[1] || Players[2] || Players[3] && dScStage_c::instance()))
@@ -60,6 +59,7 @@ ext void onStageCreated()
     daPlBase_c::WaterMaxFallSpeed = SWIM_MOD / 120;
     daPlBase_c::WaterJumpSpeed = SWIM_MOD / 30;
     daPlBase_c::WaterWalkSpeed = SWIM_MOD / 45;
+    *daBoo_c::getGlobalScaler() = 1.f;
 
     for (int i = 0; i < MOD_SIZE; i++)
         Modifiers[i] = false;

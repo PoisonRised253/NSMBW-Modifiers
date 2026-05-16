@@ -432,20 +432,8 @@ ext void Icey() {
 
 // 3 - G
 ext void BetterGhosts() {
-    daBoo_c *n = (daBoo_c *)GetNextOfType(EN_TERESA, false);
-
-    for (int i = 0; i < 12; i++)
-    {
-        if (n)
-        {
-            bool state = !(bool)(n->speed.x || n->speed.y);
-            n->visible = state;
-            n = (daBoo_c *)FindActorByType(EN_TERESA, (Actor *)n);
-            continue;
-        }
-        else ret;
-        
-    }
+    *daBoo_c::getGlobalScaler() += 0.00125f;
+    if(*daBoo_c::getGlobalScaler() >= 10.f) *daBoo_c::getGlobalScaler() = 0.125f;
     ret;
 }
 
