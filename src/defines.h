@@ -133,9 +133,10 @@
 #define LP_FUKIDELETER      (u32*)0x800b1910
 #define LP_EXITUNCLEARED_1  (u32*)0x800d0d40
 #define LP_EXITUNCLEARED_2  (u32*)0x800d0e88
-
-//Maybe
-#define LP_SINKING_SPEED    (u32*)0x8042BB2C
+#define LP_PSSLOTLIMIT_1    (u32*)0x80abb6a0 //cmpwi instr
+#define LP_PSSLOTLIMIT_2    (u32*)0x80abb740 //cmpwi instr
+#define LP_PIPESPAWNID_1    (u32*)0x80abb6ec //li instr
+#define LP_PIPESPAWNID_2    (u32*)0x80abb78c //li instr
 
 //Player related Stuff
 #define DEFAULT_SPEED_RIGHT       0x3f800000

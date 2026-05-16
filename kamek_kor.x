@@ -2763,6 +2763,8 @@ StaffCreditKiMe__8dGameComFv = 2148225840;
 StaffCreditStart__8dGameComFv = 2148225632;
 TheEndStart__8dGameComFv = 2148225888;
 WindowPaneColorSet__8dGameComFPQ34nw4r3lyt6Windowi = 2148220368;
+activeEnemies = 2151902216;
+activePipeSpawnedEnemies = 0x815e48f0;
 
 	.text : {
 		FILL (0)

@@ -2763,6 +2763,34 @@ StaffCreditKiMe__8dGameComFv = 0x800B5270;
 StaffCreditStart__8dGameComFv = 0x800B51A0;
 TheEndStart__8dGameComFv = 0x800B52A0;
 WindowPaneColorSet__8dGameComFPQ34nw4r3lyt6Windowi = 0x800B3C50;
+activeEnemies = 0x8042a248;
+activePipeSpawnedEnemies = 0x815e48f0;
+
+/* 7daBoo_c */
+calc__7daBoo_cFv = 0x80AAFE70;
+dunnoAnymore__7daBoo_cFv = 0x80AAFF60;
+execute__7daBoo_cFv = 0x80AAEB40;
+executeState_Dispatch__7daBoo_cFv = 0x80AB10F0;
+executeState_search__7daBoo_cFv = 0x80AB0810;
+findNextTarget__7daBoo_cFv = 0x80AB0040;
+heavyMath__7daBoo_cFv = 0x80AAF200;
+moveToTarget__7daBoo_cFv = 0x80AB0660;
+preDraw__7daBoo_cFv = 0x80AAED10;
+selectAngle__7daBoo_cFv = 0x80AAF550;
+somethingRandom__7daBoo_cFv = 0x80AB0900;
+unk2__7daBoo_cFv = 0x80AB03A0;
+unknownSetup__7daBoo_c = 0x809A6190;
+updateGraphics__7daBoo_cFv = 0x80AAFC90;
+validateTarget__7daBoo_cFv = 0x80AB0190;
+
+/* 18daBulletLauncher_c */
+checkActivate__18daBulletLauncher_cFv = 0x80A4FCD0;
+constructBullet__18daBulletLauncher_cFv = 0x80A4D020;
+execute__18daBulletLauncher_cFv = 0x80A4E9D0;
+executeState_unk2__18daBulletLauncher_cFv = 0x80A50430;
+executeState_unk__18daBulletLauncher_cFv = 0x80A51020;
+unk__18daBulletLauncher_cFv = 0x80A4FA10;
+updateChildTable__18daBulletLauncher_cFv = 0x80A4FC60;
 
 	.text : {
 		FILL (0)

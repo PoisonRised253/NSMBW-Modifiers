@@ -28,7 +28,10 @@ ext void onGameLoop()
 
 #ifdef DEBUG
     //DEBUG SECTION
-
+    void* bar = (void*)GetNextOfType(daFiresnake_c::actorID, false);
+    if(bar) OSReport("Firepenis: %p\n", bar);
+    void* bar2 = (void*)GetNextOfType(daSpikeball_c::actorID, false);
+    if(bar2) OSReport("Ouchie-Balls: %p\n", bar2);
 #endif
 #ifdef NO_MP
 #ifndef DEBUG
