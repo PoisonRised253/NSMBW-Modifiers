@@ -47,6 +47,8 @@ void dExecMng_c::Reset()
             parentings[i]->~dParenting_c();
         parentings[i] = NULL;
     }
+
+    ret;
 }
 
 void dExecMng_c::Register(void* obj, int typeID, bool force) {

@@ -9,12 +9,23 @@ ext void preGameLoop()
 {
     GlobalFrameTimer++;
     ApplyModifiers(true);
+    if(!Players[0]) ret;
+
+    #ifdef DEBUG_EXPERIMENTS
+    u32 lid, wid;
+    getLevelInfo(&lid, &wid, NULL, NULL, NULL);
+
+    if(!GetNextOfType(EN_ITEM, false) && lid == 1 && wid == 9) {
+        dStageActor_c* item = (dStageActor_c*)CreateActor(EN_ITEM, ITEM_UNKNOWN, MakeVec(734, -480, 3000), 0, 0);
+        OSReport("Hello :D | %p\n", item);
+    }
+    #endif
     ret;
 }
 
 ext void onGameLoop()
 {
-      if(CallSpacer(60))
+    if(CallSpacer(60))
         SetLives();
     if (!GetPlayers())
         ret;
@@ -26,12 +37,14 @@ ext void onGameLoop()
 
     HandleHotkeys();
 
-#ifdef DEBUG
+#ifdef DEBUG_EXPERIMENTS
     //DEBUG SECTION
     void* bar = (void*)GetNextOfType(daFiresnake_c::actorID, false);
     if(bar) OSReport("Firepenis: %p\n", bar);
     void* bar2 = (void*)GetNextOfType(daSpikeball_c::actorID, false);
     if(bar2) OSReport("Ouchie-Balls: %p\n", bar2);
+    void* bar3 = (void*)GetNextOfType(AC_FLOOR_GYRATION, false);
+    if(bar3) OSReport("Big Rotating Balls: %p\n", bar3);
 #endif
 #ifdef NO_MP
 #ifndef DEBUG
@@ -77,6 +90,13 @@ ext void onStageCreated()
     ret;
 }
 
+ext void onNextScene() {
+    dExecMng_c::Reset();
+    GlobalFrameTimer = 0;
+    ToggleMods();
+    ret;
+}
+
 // Use this to reinit the mod, when the game reloads... i dont know if this is how it works, but eh why not
 ext void onRecieveResetEvent()
 {
@@ -103,12 +123,36 @@ ext void onBoot()
 
     LivePatch(INSTR_BLR, LP_1UPEFFECT);
     LivePatch(INSTR_BRICKTIMER, LP_BRICKTIMER);
-    LivePatch(INSTR_BLR, LP_NODEATHPAUSE);
     LivePatch(INSTR_BLR, LP_NOSCORE);
     LivePatch(INSTR_BLR, LP_FUKIDELETER);
     LivePatch(INSTR_EXITUNLCEARED, LP_EXITUNCLEARED_1);
     LivePatch(INSTR_EXITUNLCEARED, LP_EXITUNCLEARED_2);
-    //LivePatch(0xFFFFFFFF, LP_FREEROY); //Trying to save Roy's castle
+
+    //Replacements/Less-Advanced versions of MKWCAT patches, incase they ask me not to use them...
+    #ifndef USE_MKWCAT_PATCHES
+    LivePatch(INSTR_BLR, LP_NODEATHPAUSE); //<- Replaced with Advanced Version by mkwcat (Check like 10 lines below this one)
+    #endif
+    //LivePatch(0xFFFFFFFF, LP_FREEROY); //Trying to save Roy's castle <- Doesnt Work
+
+    //The Next Patches are stolen from mkwcat, go support them please.
+    #ifdef USE_MKWCAT_PATCHES
+    OSReport("Using mkwcat's Patches\n");
+    //No Death Pause
+    LivePatch(INSTR_NOP, (u32*)0x801410C4);
+    LivePatch(INSTR_NOP, (u32*)0x801410D0);
+    LivePatch(INSTR_BLR, (u32*)0x80141020);
+    LivePatch(INSTR_BLR, (u32*)0x8013DA30);
+    LivePatch(INSTR_BLR, (u32*)0x8013DB30);
+    LivePatch(0x38600000, (u32*)0x80150E54); //li r3, 0
+    LivePatch(0x38600000, (u32*)0x80150E98); //li r3, 0
+
+    //Exit Anytime
+    LivePatch(0x38600001, (u32*)0x800B4EA8); //li r3, 1
+
+    //Infinite Projectiles
+    LivePatch(0x38600001, (u32*)0x8011B0A4);
+    LivePatch(0x38600001, (u32*)0x80124744);
+    #endif
 
 #ifdef DEBUG
     OSReport("Static LivePatch Successfully!\n");

@@ -7,18 +7,19 @@
 // dEn_c is 1714 bits (padded)
 // Please forgive the halfassed functions, im really sorry but i dont really know how to find out which return type it is, or what inputs it takes, so i halfassed it, just to give a hint to smarter people where roughly to look.
 // Again, i ask for your forgiveness.
+// Also, there might be some sentimental sounding notes to this, but i like to kindly remind you that im fine, and that this is my perception of optimal commedy.
+// Also Also note that i would not do this in a professional environment, just in case anyone looking to hire is here.
+
+//TODO: Test Possible compatability issues, due to MagicNum type access. Maybe i should just generally fix that somehow... hmmm
 
 class daBoo_c : public dEn_c
 {
 protected:
-    void executeState_Dispatch();
-    
-    
-private:
-    void calc();
-    void dunnoAnymore();
     int execute();
     int preDraw();
+    void executeState_Dispatch();
+    void calc();
+    void dunnoAnymore();
     void executeState_search__7daBoo_cFv();
     void findNextTarget();
     void heavyMath(); //Here be dragons
@@ -48,12 +49,12 @@ public:
 
 class daBulletLauncher_c : public dEn_c
 {
-private:
+protected:
     int execute();
     void activate();
     void updateChildTable();
     void constructBullet();
-    bool checkActivate();
+    bool checkActivate();    
 
 public:
     static const Actors actorID = EN_KILLER_HOUDAI;
@@ -65,6 +66,22 @@ public:
 
 class daLemmyBall_c : public dEn_c
 {
+protected:
+    int calcRender(); //might be true preDraw(), im assuming int.
+    int preDraw();
+    int execute();
+    int postExecute();
+    void* setup(); //???
+    void executeState_Dispatch();
+    void executeState_Normal();
+    bool grounded(); //Might be a var lol
+    void hashcall(); //No clue what this does *presses big red button*
+    float limitOscillate();
+    float oscillate();
+    void somewithballs(); //Wow i was not having it that morning huh
+    void spin(); //The trend continues
+    void unknownBull(); //Dude really, swearing in your own headers now... why am i like this...
+    
 public:
     static const Actors actorID = EN_BOUNCE_BALL;
 
@@ -214,6 +231,16 @@ public:
 
 class daThwomp_c : public dEn_c
 {
+protected:
+    int draw();
+    int execute();
+    void executeState_Dispatch();
+    void executeState_Fall();
+    void executeState_Fallen();
+    void executeState_Rise();
+    void executeState_Risen();
+    void executeState_Wiggle();
+
 public:
     static const Actors actorID = EN_DOSUN;
     u8*     getFaceID()             const { ret    (u8*)GetMemberFromOffset((void*)this, 0x5B8);}
@@ -242,6 +269,25 @@ class daSpikeball_c : public dEn_c {
 
 class daRotatingBurner_c : public dEn_c
 {
+protected:
+    int draw();
+    int execute();
+    int postExecute();
+
+    void initializeState_Dispatch();
+    void executeState_Dispatch();
+    void finalizeState_Dispatch();
+
+    void initializeState_Stationary();
+    void initializeState_FinishRotate();
+
+    void finalizeState_Stationary();
+    void finalizeState_Rotate();
+
+    void rotate();
+    void something();
+    bool checkReachedTargetRotation();
+
 public:
     static const Actors actorID = ROT_BARNAR;
     static const u32 StateID_Turning = 0x8099e838;
@@ -312,5 +358,34 @@ namespace Spawners
     };
 
 }
+
+class dRollingHill_c : public Actor {
+    protected:
+    void* build();
+    void buildModel();
+    void deconstructMembers();
+    int draw();
+    int execute();
+    int onDelete();
+    void initializeState_Dispatch(); 
+    void executeState_Dispatch(); //This Class does not have any states... what a blunder nintendo, just look at the compile-size rise unecessarily and cry!
+    void finalizeState_Dispatch();
+    void rotateTouchingObjects();
+    public:
+    u8* getWierdThing()  const { ret  (u8*)GetMemberFromOffset((void*)this, 0x4C4); }
+
+    u16* getRoll()       const { ret (u16*)GetMemberFromOffset((void*)this, 0x104); }
+    u16* getRollSpeed()  const { ret (u16*)GetMemberFromOffset((void*)this, 0x4D0); }
+    u16* getCollToggle() const { ret (u16*)GetMemberFromOffset((void*)this, 0x450); }
+
+    u32* getCollStuff()  const { ret       GetMemberFromOffset((void*)this, 0x420); }
+
+    float* getPhysRadius()  const { ret (float*)GetMemberFromOffset((void*)this, 0x4D4); }
+    float* getVisScale()    const { ret (float*)GetMemberFromOffset((void*)this, 0x4D8); }
+    float* getDriftCap()    const { ret (float*)GetMemberFromOffset((void*)this, 0x4DC); } //Often Empty. Maybe overwrite in preGameLoop()
+
+    //This is a static const somewhere around rtoc + 0x77??, No idea what it does :shrug:
+    const float* getSomething()   { ret (float*)0x8042BC48; }
+};
 
 #endif

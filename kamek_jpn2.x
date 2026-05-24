@@ -2766,6 +2766,110 @@ WindowPaneColorSet__8dGameComFPQ34nw4r3lyt6Windowi = 2148219984;
 activeEnemies = 2151849096;
 activePipeSpawnedEnemies = 0x815e48f0;
 
+/* 7daBoo_c */
+calc__7daBoo_cFv = 2158688144;
+dunnoAnymore__7daBoo_cFv = 2158688384;
+execute__7daBoo_cFv = 2158683232;
+executeState_Dispatch__7daBoo_cFv = 2158692880;
+executeState_search__7daBoo_cFv = 2158690608;
+findNextTarget__7daBoo_cFv = 2158688608;
+heavyMath__7daBoo_cFv = 2158684960;
+moveToTarget__7daBoo_cFv = 2158690176;
+preDraw__7daBoo_cFv = 2158683696;
+selectAngle__7daBoo_cFv = 2158685808;
+somethingRandom__7daBoo_cFv = 2158690848;
+unk2__7daBoo_cFv = 2158689472;
+unknownSetup__7daBoo_c = 2157599408;
+updateGraphics__7daBoo_cFv = 2158687664;
+validateTarget__7daBoo_cFv = 2158688944;
+
+/* 18daBulletLauncher_c */
+checkActivate__18daBulletLauncher_cFv = 2158294512;
+constructBullet__18daBulletLauncher_cFv = 2158283072;
+execute__18daBulletLauncher_cFv = 2158289648;
+executeState_unk2__18daBulletLauncher_cFv = 2158296400;
+executeState_unk__18daBulletLauncher_cFv = 2158299456;
+unk__18daBulletLauncher_cFv = 2158293808;
+updateChildTable__18daBulletLauncher_cFv = 2158294400;
+
+/* 13daLemmyBall_c */
+calcRender__13daLemmyBall_cFv = 2156014336;
+execute__13daLemmyBall_cFv = 2156014128;
+executeState_Dispatch__13daLemmyBall_cFv = 2156020144;
+executeState_normal__13daLemmyBall_cFv = 2157767136;
+grounded__13daLemmyBall_cFv = 0x81541CD8;
+hashcall__13daLemmyBall_cFv = 2156012288;
+limitOscillate__13daLemmyBall_cFv = 2157766656;
+oscillate__13daLemmyBall_cFv = 2156014608;
+postExecute__13daLemmyBall_cFv = 2156014240;
+preDraw__13daLemmyBall_cFv = 2156014864;
+setup__13daLemmyBall_cFv = 2157765632;
+somewithballs__13daLemmyBall_cFv = 2162150928;
+spin__13daLemmyBall_cFv = 2157766784;
+unkownBull__13daLemmyBall_cFv = 2162144840;
+
+/* 10daThwomp_c */
+draw__10daThwomp_cFv = 2157926304;
+execute__10daThwomp_cFv = 2157926224;
+executeState_Dispatch__10daThwomp_cFv = 2157933888;
+executeState_Fall__10daThwomp_cFv = 2157929552;
+executeState_Fallen__10daThwomp_cFv = 2157929968;
+executeState_Rise__10daThwomp_cFv = 2157930128;
+executeState_Risen__10daThwomp_cFv = 2157928880;
+executeState_Wiggle__10daThwomp_cFv = 2157929248;
+
+/* 18daRotatingBurner_c */
+checkReachedTargetRotation__18daRotatingBurner_cFv = 2156500832;
+draw__18daRotatingBurner_cFv = 2156498816;
+execute__18daRotatingBurner_cFv = 2156498496;
+executeState_Dispatch__18daRotatingBurner_cFv = 2156502400;
+finalizeState_Dispatch__18daRotatingBurner_cFv = 2156502448;
+finalizeState_Rotate__18daRotatingBurner_cFv = 2156500816;
+finalizeState_Stationary__18daRotatingBurner_cFv = 2156501008;
+initializeState_Dispatch__18daRotatingBurner_cFv = 2156502352;
+initializeState_FinishRotation__18daRotatingBurner_cFv = 2156500992;
+postExecute__18daRotatingBurner_cFv = 2156498688;
+rotate__18daRotatingBurner_cFv = 2156500016;
+something__18daRotatingBurner_cFv = 2156501024;
+
+/* 19dParaBombSpawner_c */
+checkTrigger__19dParaBombSpawner_cFv = 2156628896;
+execute__19dParaBombSpawner_cFv = 2156628576;
+executeState_Dispatch__19dParaBombSpawner_cFv = 2156631168;
+executeState_none__19dParaBombSpawner_cFv = 2156629728;
+executeState_triggered__19dParaBombSpawner_cFv = 2156629808;
+executeState_unk1__19dParaBombSpawner_cFv = 2156630096;
+finalizeState_Dispatch__19dParaBombSpawner_cFv = 2156631216;
+finalizeState_none__19dParaBombSpawner_cFv = 2156629712;
+finalizeState_triggered__19dParaBombSpawner_cFv = 2156629792;
+initializeState_Dispatch__19dParaBombSpawner_cFv = 2156631120;
+initializeState_none__19dParaBombSpawner_cFv = 2156630064;
+initializeState_triggered__19dParaBombSpawner_cFv = 2156629744;
+randomizeSpawning__19dParaBombSpawner_cFv = 2156629248;
+somethingWithFloat__19dParaBombSpawner_cFv = 2156629568;
+spawn__19dParaBombSpawner_cFv = 2156629168;
+
+/* 14dPipeSpawner_c */
+checkPlayerBlocking__14dPipeSpawner_cFv = 2158736032;
+execute__14dPipeSpawner_cFv = 2158735888;
+handleTimer__14dPipeSpawner_cFv = 2158735584;
+something3__14dPipeSpawner_cFv = 2158736336;
+something4__14dPipeSpawner_cFv = 2158736640;
+spawnBomb__14dPipeSpawner_cFv = 2158735424;
+spawnGoomba__14dPipeSpawner_cFv = 2158735264;
+
+/* 14dRollingHill_c */
+build__14dRollingHill_cFv = 2155801248;
+buildModel__14dRollingHill_cFv = 2155802560;
+deconstructMembers__14dRollingHill_cFv = 2155803184;
+draw__14dRollingHill_cFv = 2155802128;
+execute__14dRollingHill_cFv = 2155801808;
+executeState_Dispatch__14dRollingHill_cFv = 2155803888;
+finalizeState_Dispatch__14dRollingHill_cFv = 2155803936;
+initializeState_Dispatch__14dRollingHill_cFv = 2155803840;
+onDelete__14dRollingHill_cFv = 2155802480;
+rotateTouchingObjects__14dRollingHill_cFv = 2155802752;
+
 	.text : {
 		FILL (0)
 

@@ -431,9 +431,9 @@ ext void Icey() {
 }
 
 // 3 - G
+//Yes, this is a test, not a joke
 ext void BetterGhosts() {
-    *daBoo_c::getGlobalScaler() += 0.00125f;
-    if(*daBoo_c::getGlobalScaler() >= 10.f) *daBoo_c::getGlobalScaler() = 0.125f;
+    *daBoo_c::getGlobalScaler() = clamp<float>(*daBoo_c::getGlobalScaler() + 0.00125f, 0, 15);
     ret;
 }
 

@@ -28,6 +28,12 @@ hooks:
     src_addr_pal: 0x800bbbb4
     target_func: onStageCreated
 
+  - name: onNextScene
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x800e2030
+    target_func: onNextScene
+
   - name: OnResetEvent
     type: branch_insn
     branch_type: b

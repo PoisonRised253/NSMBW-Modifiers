@@ -8,6 +8,7 @@
 
 extern bool Modifiers[MOD_SIZE];
 extern dAc_Py_c *Players[4];
+extern bool drawHitboxes;
 extern int GlobalFrameTimer;
 extern int currentMoveMod;
 

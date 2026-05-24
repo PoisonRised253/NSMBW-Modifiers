@@ -3,6 +3,7 @@
 
 bool Modifiers[MOD_SIZE] = {false};
 dAc_Py_c *Players[4] = {NULL, NULL, NULL, NULL};
+bool drawHitboxes = false;
 int GlobalFrameTimer = 0;
 int currentMoveMod = 0;
 
@@ -249,8 +250,8 @@ volatile void LivePatch(u32 newInstr, u32 *addr)
         OSReport("LPIns Success at: %p\n", addr);
 #endif
 
-    DCFlushRange(addr, 32);
-    ICInvalidateRange(addr, 32);
+    DCFlushRange(addr, 8);
+    ICInvalidateRange(addr, 8);
     ret;
 }
 
@@ -321,7 +322,7 @@ ext void NahFuckThat(bool delP1)
             Players[0]->Delete(1);
             OSReport("NahFuckThat() ran. Which means a softlock, this is intentional, and Pretty Funny.\n");
 #ifdef NO_MP
-            OSReport("When this message appears, it likely means that you tried Playing with Multiple People.\n This is not yet supported.");
+            OSReport("When this message appears, it likely means that you tried Playing with Multiple People.\n This is not supported in the current Build.");
 #endif
         }
     }
@@ -429,6 +430,7 @@ ext void DumpPlayer(int which) {
 #endif
 
 ext void HandleHotkeys() {
+
     u32 btns = GetActiveRemocon()->heldButtons;
 
     const int dumpLevelData = WPAD_A | WPAD_B;
@@ -443,6 +445,7 @@ ext void HandleHotkeys() {
         DumpPlayer(2);
         DumpPlayer(3);
     }
+    const int drawHitbox = WPAD_MINUS;
 
     #ifdef DEBUG_BALLS
         if(CallSpacer(15))

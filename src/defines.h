@@ -7,6 +7,7 @@
 
 //Build Flags
 #define DEBUG
+#define DEBUG_EXPERIMENTS
 
 
 //#define NO_MP
@@ -19,7 +20,10 @@
 #define DEBUG_BOUNDS
 #define DEBUG_SLOPE
 #define DEBUG_BALLS
+#define DEBUG_EXPERIMENTS
 #endif*/
+//Patch defines:
+#define USE_MKWCAT_PATCHES
 
 //Current amount of activatable modifiers
 #define MOD_SIZE 21
@@ -67,6 +71,7 @@
 
 //This is just free data storage, since its entirely compiletime, but ofcourse entirely constant.
 //This is to set the current Powerup State.
+//It might also help by using 'li rX, data' instead of loading from a static location, which would require multiple operations in some cases
 #define POWER_SMALL     0x00
 #define POWER_BIG       0x01
 #define POWER_FIRE      0x02

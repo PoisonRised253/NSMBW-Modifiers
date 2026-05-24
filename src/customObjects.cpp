@@ -31,12 +31,13 @@ int dEnElevator_c::onCreate(float rotfix)
 {
     float yOffset = this->aoeY / 2;
     yOffset -= 8;
-    
-    if(rotfix > 00001.f)
-        SpawnEffect("Wm_ob_stream", 0, &VecSub(this->pos, MakeVec(0, yOffset, 0)), &MakeVec16(0,0,0), &MakeVec(this->aoeX / 32, this->aoeY / 64, 6500.0));
-    if(rotfix < -00001.f) {
+
+    if (rotfix > 00001.f)
+        SpawnEffect("Wm_ob_stream", 0, &VecSub(this->pos, MakeVec(0, yOffset, 0)), &MakeVec16(0, 0, 0), &MakeVec(this->aoeX / 32, this->aoeY / 64, 6500.0));
+    if (rotfix < -00001.f)
+    {
         yOffset -= aoeY;
-        SpawnEffect("Wm_ob_stream", 0, &VecSub(this->pos, MakeVec(4, yOffset, 0)), &MakeVec16(0,0,180), &MakeVec(this->aoeX / 32, -(this->aoeY / 64), 6500.0));
+        SpawnEffect("Wm_ob_stream", 0, &VecSub(this->pos, MakeVec(4, yOffset, 0)), &MakeVec16(0, 0, 180), &MakeVec(this->aoeX / 32, -(this->aoeY / 64), 6500.0));
     }
     ret 1;
 }
@@ -109,13 +110,16 @@ int dEnElevator_c::onDelete()
     ret 1;
 }
 
-void dParenting_c::update() {
-    if(!active || !isPopulated()) ret;
+void dParenting_c::update()
+{
+    if (!active || !isPopulated())
+        ret;
     child->pos = VecAdd(parent->pos, offset);
     ret;
 }
 
-dParenting_c::dParenting_c(dActor_c* Parent, dActor_c* Child, bool active) {
+dParenting_c::dParenting_c(dActor_c *Parent, dActor_c *Child, bool active)
+{
     this->active = active;
     this->parent = Parent;
     this->child = Child;
@@ -124,7 +128,8 @@ dParenting_c::dParenting_c(dActor_c* Parent, dActor_c* Child, bool active) {
     ret;
 }
 
-dParenting_c::~dParenting_c() {
+dParenting_c::~dParenting_c()
+{
     this->active = NULL;
     this->child = NULL;
     this->parent = NULL;
@@ -135,4 +140,4 @@ dParenting_c::~dParenting_c() {
     ret;
 }
 
-bool dParenting_c::isPopulated() { ret child && parent && child->pos.x && parent->pos.x && offset.x != 0x0; }
+bool dParenting_c::isPopulated() { ret child && parent && child->pos.x && parent->pos.x &&offset.x != 0x0; }
