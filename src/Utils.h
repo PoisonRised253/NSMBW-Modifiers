@@ -2,13 +2,13 @@
 #define __H_UTILS
 #include "common.h"
 #include "game.h"
+#include "math.h"
+#include "CollisionHax.h"
 #include "scStage.h"
 #include "defines.h"
-#include "math.h"
 
 extern bool Modifiers[MOD_SIZE];
 extern dAc_Py_c *Players[4];
-extern bool drawHitboxes;
 extern int GlobalFrameTimer;
 extern int currentMoveMod;
 
@@ -44,5 +44,7 @@ ext void FondleBalls();
 
 template <typename T>
 inline int GetNextFreeArrayEntry(T* arr[], int size);
+template <typename T>
+inline int FindPointerInArray(T* arr[], int size, void* ptr);
 
 #endif

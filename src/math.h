@@ -3,6 +3,7 @@
 
 #include "game.h"
 
+//Not Vanilla - PADV
 typedef struct Vec4 {
     float x;
     float y;
@@ -57,5 +58,6 @@ inline Vec VecSubFloat(Vec v, float m);
 inline Vec VecMulFloat(Vec v, float m);
 inline Vec VecDivFloat(Vec v, float m);
 inline bool VecCmp(Vec a, Vec b);
+inline bool VecCmp2(Vec2 a, Vec2 b);
 
 #endif

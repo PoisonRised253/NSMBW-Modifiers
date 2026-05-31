@@ -64,3 +64,7 @@ inline Vec VecDivFloat(Vec v, float m) {
 inline bool VecCmp(Vec a, Vec b) {
     ret (a.x == b.x && a.y == b.y && a.z == b.z);
 }
+
+inline bool VecCmp2(Vec2 a, Vec2 b) {
+    ret (a.x == b.x && a.y == b.y);
+}

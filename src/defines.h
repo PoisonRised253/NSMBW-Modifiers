@@ -8,7 +8,8 @@
 //Build Flags
 #define DEBUG
 #define DEBUG_EXPERIMENTS
-
+//#define DEBUG_COLLEXT
+#define DEBUG_PHYSEXT
 
 //#define NO_MP
 
@@ -21,6 +22,7 @@
 #define DEBUG_SLOPE
 #define DEBUG_BALLS
 #define DEBUG_EXPERIMENTS
+
 #endif*/
 //Patch defines:
 #define USE_MKWCAT_PATCHES
@@ -90,6 +92,32 @@
 #define ITEM_STAR       0x01
 #define ITEM_1UP        0x07
 #define ITEM_UNKNOWN    0xF9
+#ifdef PROPER
+enum Powers {
+    SMALL = 0,
+    BIG = 1,
+    FIRE = 2,
+    MINI = 3,
+    PROPELLER = 4,
+    PENGUIN = 5,
+    ICE = 6
+};
+
+// DEATHMUSH is not actually in this game, but im going to change that. 
+// If you spawn DEATHMUSH in the vanilla game, you get a normal-mush-scaled Minimush, which acts like a minimush.
+// Time for me to find what function occours when you get a powerup.
+enum ItemVariants {
+    BIG = 0x00,
+    STAR = 0x01,
+    ONEUP = 0x07,
+    FIRE = 0x09,
+    ICE = 0x0E,
+    PENGUIN = 0x11,
+    PROPELLER = 0x15,
+    MINI = 0x19,
+    DEATHMUSH = 0xF9
+}; 
+#endif
 
 //dScStage_c::m_exitMode
 #define EXIT_SUCCESS 0
@@ -136,12 +164,19 @@
 #define LP_GROWICE          (u32*)0x80ad0f44
 #define LP_AUTOHOLDDOWN     (u32*)0x8005e500
 #define LP_FUKIDELETER      (u32*)0x800b1910
+
 #define LP_EXITUNCLEARED_1  (u32*)0x800d0d40
 #define LP_EXITUNCLEARED_2  (u32*)0x800d0e88
+
 #define LP_PSSLOTLIMIT_1    (u32*)0x80abb6a0 //cmpwi instr
 #define LP_PSSLOTLIMIT_2    (u32*)0x80abb740 //cmpwi instr
+
 #define LP_PIPESPAWNID_1    (u32*)0x80abb6ec //li instr
 #define LP_PIPESPAWNID_2    (u32*)0x80abb78c //li instr
+
+#define LP_DEATHMUSHSETUP_1 (u32*)0x80145c04 //mflr r29
+#define LP_DEATHMUSHSETUP_2 (u32*)0x80145c80 //mtlr r29
+
 
 //Player related Stuff
 #define DEFAULT_SPEED_RIGHT       0x3f800000

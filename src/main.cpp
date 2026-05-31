@@ -1,15 +1,23 @@
 #include "main.h"
 #include "daEnemies_c.h"
 #include "ExecMng.h"
-
 //Check Note in main.h to see why this exists
 ext void NullSub() {asm("blr");}
+
+dEn_c* smitePlayer = NULL;
 
 ext void preGameLoop()
 {
     GlobalFrameTimer++;
     ApplyModifiers(true);
     if(!Players[0]) ret;
+
+    if(smitePlayer) {
+        smitePlayer->pos.y -= 160;
+
+        OSReport("Red is Sus!\n");
+        smitePlayer = NULL;
+    }
 
     #ifdef DEBUG_EXPERIMENTS
     u32 lid, wid;
@@ -30,8 +38,10 @@ ext void onGameLoop()
     if (!GetPlayers())
         ret;
 
-    for(int i = 0; i < 4; i++)
+
+    for(int i = 0; i < 4; i++) {
         if(Players[i] && *GetPlayerState(Players[i]) != STATEID_BALLOON) Players[i]->scale = MakeVec(1,1,1);
+        }
 
     ApplyModifiers(false);
 
@@ -125,14 +135,18 @@ ext void onBoot()
     LivePatch(INSTR_BRICKTIMER, LP_BRICKTIMER);
     LivePatch(INSTR_BLR, LP_NOSCORE);
     LivePatch(INSTR_BLR, LP_FUKIDELETER);
+
     LivePatch(INSTR_EXITUNLCEARED, LP_EXITUNCLEARED_1);
     LivePatch(INSTR_EXITUNLCEARED, LP_EXITUNCLEARED_2);
+
+    LivePatch(INSTR_NOP, (u32*)0x80a28610); //Makes Items be collected reguardless of wether Player originally has item (part 1)
+    LivePatch(INSTR_NOP, (u32*)0x80a28614); //Part 2
+    LivePatch(0x48000010,(u32*)0x80a285f4); //Part 3
 
     //Replacements/Less-Advanced versions of MKWCAT patches, incase they ask me not to use them...
     #ifndef USE_MKWCAT_PATCHES
     LivePatch(INSTR_BLR, LP_NODEATHPAUSE); //<- Replaced with Advanced Version by mkwcat (Check like 10 lines below this one)
     #endif
-    //LivePatch(0xFFFFFFFF, LP_FREEROY); //Trying to save Roy's castle <- Doesnt Work
 
     //The Next Patches are stolen from mkwcat, go support them please.
     #ifdef USE_MKWCAT_PATCHES
@@ -260,3 +274,40 @@ ext void AntiBubble() {
     }
     ret;
 }
+
+ext void DeathMushHandler(dAc_Py_c* toucher) {
+    asm("lwz r25, +0x04(r31)\nandi. r25, r25, 0xFF\ncmpwi r25, 0xF9\n bne+ skip");
+    smitePlayer = (dEn_c*)toucher;
+    asm("skip:");
+    ret;
+}
+
+//Attempt to hook the end of dAcPy_c::setBcData() to manually fuck with collision each frame
+//Time to build a struct to keep track of what to set it to :(
+//r31=Player
+ext void onPlayerCollisionUpdated(void* playerptr) {
+    //Setup, includes PhysExt, CollMgr and soon ActivePhysics
+    dAcPy_c* player = (dAcPy_c*)playerptr;
+    CollExtents extents = getExtents(player);
+
+
+    #ifdef DEBUG_COLLEXT
+    //Test - collMgr
+    extents.ManualOffset[0] = MakeVec(0, 0, 0);
+    extents.ManualOffset[1] = MakeVec(0, 0, 0);
+    extents.ManualOffset[2] = MakeVec(24, 0, 24);
+
+    setExtents(player, extents);
+    player->scale = MakeVec(2.f, 2.f, 2.f);
+    extents.~CollExtents();
+    //Test - collMgr end    
+    #endif
+
+    ret;
+}
+
+ext void onPlayerPhysicsUpdated(void* playerptr) {
+   
+    ret;
+}
+

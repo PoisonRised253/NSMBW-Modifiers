@@ -3,7 +3,6 @@
 
 bool Modifiers[MOD_SIZE] = {false};
 dAc_Py_c *Players[4] = {NULL, NULL, NULL, NULL};
-bool drawHitboxes = false;
 int GlobalFrameTimer = 0;
 int currentMoveMod = 0;
 
@@ -359,6 +358,14 @@ inline int GetNextFreeArrayEntry(T* arr[], int size) {
     ret 0xFFFF;
 }
 
+template <typename T>
+inline int FindPointerInArray(T* arr[], int size, void* ptr) {
+    for(int i = 0; i < size; i++)
+        if(arr[i] == ptr) ret i;
+
+    ret 0xFFFF;
+}
+
 inline u32* GetMemberFromOffset(void* object, u32 offset) {
     ret (u32*)((unsigned char*)object + offset);
 }
@@ -474,6 +481,8 @@ ext void WrapNumber(u32* value, u32 min, u32 max) {
     if(*value <= min) *value = max;
     ret;
 }
+
+
 
 #ifdef DEBUG_BALLS
 #include "daEnemies_c.h"

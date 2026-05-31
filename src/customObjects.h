@@ -2,6 +2,7 @@
 #define __H_CO
 
 #include "main.h"
+#include "daEnemies_c.h"
 #include "Utils.h"
 
 class dEnElevator_c : public dStageActor_c

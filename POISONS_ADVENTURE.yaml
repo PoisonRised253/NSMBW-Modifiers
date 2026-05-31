@@ -1,4 +1,4 @@
-source_files: [../src/main.cpp, ../src/Utils.cpp, ../src/Modifiers.cpp, ../src/math.cpp, ../src/customObjects.cpp, ../src/ExecMng.cpp]
+source_files: [../src/main.cpp, ../src/Utils.cpp, ../src/Modifiers.cpp, ../src/math.cpp, ../src/customObjects.cpp, ../src/ExecMng.cpp, ../src/CollisionHax.cpp]
 
 hooks:
 
@@ -78,6 +78,29 @@ hooks:
     branch_type: b
     src_addr_pal: 0x800e4878
     target_func: 'dExecMng_c::DRYExecute(int)'
+
+  - name: DeathMushCheck
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80147600
+    target_func: DeathMushHandler
+
+  - name: CollChangeFix
+    type: patch
+    addr_pal: 0x80143058
+    data: '7fe3fb78'
+
+  - name: ChangeCollisionHook
+    type: branch_insn
+    branch_type: b 
+    src_addr_pal: 0x8014305C
+    target_func: onPlayerCollisionUpdated
+
+  - name: ChangePhysicsHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80142560
+    target_func: onPlayerPhysicsUpdated
 
   #- name: FuckCastleIDs
   #  type: branch_insn

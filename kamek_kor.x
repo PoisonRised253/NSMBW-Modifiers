@@ -593,7 +593,8 @@ SECTIONS {
 
 	/* collisionMgr_c */
 	__ct__14collisionMgr_c = 2147930240;
-	__dt__14collisionMgr_c = 2147930240;
+	__dt__14collisionMgr_cFv = 2147930336;
+	__vt__14collisionMgr_c = 2150743056;
 	clear1__14collisionMgr_cFv = 2147930400;
 	clear2__14collisionMgr_cFv = 2147930432;
 	init__14collisionMgr_cFP13dStageActor_cPC12sensorBase_sPC12sensorBase_sPC12sensorBase_s = 2147930576;
@@ -2683,6 +2684,7 @@ setNextScene__10dScStage_cFv = 2148541552;
 exitStage__Fv = 2148340328;
 
 changeNextScene__10daPlBase_cFi = 2147803104;
+setBgDamage__10daPlBase_cFv = 2147833600;
 
 /* 8dGameCom */
 AreaLanguageFolder__8dGameComFPCcPc = 2148222896;

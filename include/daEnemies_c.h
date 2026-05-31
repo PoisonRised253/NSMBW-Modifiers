@@ -10,7 +10,7 @@
 // Also, there might be some sentimental sounding notes to this, but i like to kindly remind you that im fine, and that this is my perception of optimal commedy.
 // Also Also note that i would not do this in a professional environment, just in case anyone looking to hire is here.
 
-//TODO: Test Possible compatability issues, due to MagicNum type access. Maybe i should just generally fix that somehow... hmmm
+// TODO: Test Possible compatability issues, due to MagicNum type access. Maybe i should just generally fix that somehow... hmmm
 
 class daBoo_c : public dEn_c
 {
@@ -22,7 +22,7 @@ protected:
     void dunnoAnymore();
     void executeState_search__7daBoo_cFv();
     void findNextTarget();
-    void heavyMath(); //Here be dragons
+    void heavyMath(); // Here be dragons
     void moveToTarget();
     void selectAngle();
     void somethingRandom();
@@ -54,7 +54,7 @@ protected:
     void activate();
     void updateChildTable();
     void constructBullet();
-    bool checkActivate();    
+    bool checkActivate();
 
 public:
     static const Actors actorID = EN_KILLER_HOUDAI;
@@ -67,21 +67,21 @@ public:
 class daLemmyBall_c : public dEn_c
 {
 protected:
-    int calcRender(); //might be true preDraw(), im assuming int.
+    int calcRender(); // might be true preDraw(), im assuming int.
     int preDraw();
     int execute();
     int postExecute();
-    void* setup(); //???
+    void *setup(); //???
     void executeState_Dispatch();
     void executeState_Normal();
-    bool grounded(); //Might be a var lol
-    void hashcall(); //No clue what this does *presses big red button*
+    bool grounded(); // Might be a var lol
+    void hashcall(); // No clue what this does *presses big red button*
     float limitOscillate();
     float oscillate();
-    void somewithballs(); //Wow i was not having it that morning huh
-    void spin(); //The trend continues
-    void unknownBull(); //Dude really, swearing in your own headers now... why am i like this...
-    
+    void somewithballs(); // Wow i was not having it that morning huh
+    void spin();          // The trend continues
+    void unknownBull();   // Dude really, swearing in your own headers now... why am i like this...
+
 public:
     static const Actors actorID = EN_BOUNCE_BALL;
 
@@ -207,8 +207,7 @@ public:
             *(float *)GetMemberFromOffset((void *)this, 0x5EC),
             *(float *)GetMemberFromOffset((void *)this, 0x5F4),
             *(float *)GetMemberFromOffset((void *)this, 0x5F8),
-            *(float *)GetMemberFromOffset((void *)this, 0x5F0)
-        );
+            *(float *)GetMemberFromOffset((void *)this, 0x5F0));
     }
 
     void setPoleHitboxExtents(Vec4 extents)
@@ -243,28 +242,27 @@ protected:
 
 public:
     static const Actors actorID = EN_DOSUN;
-    u8*     getFaceID()             const { ret    (u8*)GetMemberFromOffset((void*)this, 0x5B8);}
-    void*   getRiseWaitTime()       const { ret         GetMemberFromOffset((void*)this, 0x5DC);}
-    float*  getDropYSpeed()         const { ret (float*)GetMemberFromOffset((void*)this, 0x114);}
-    u32*    getextraEffectToggle()  const { ret         GetMemberFromOffset((void*)this, 0x5D0);}
+    u8 *getFaceID() const { ret(u8 *) GetMemberFromOffset((void *)this, 0x5B8); }
+    void *getRiseWaitTime() const { ret GetMemberFromOffset((void *)this, 0x5DC); }
+    float *getDropYSpeed() const { ret(float *) GetMemberFromOffset((void *)this, 0x114); }
+    u32 *getextraEffectToggle() const { ret GetMemberFromOffset((void *)this, 0x5D0); }
 };
 
-class daFiresnake_c : public dEn_c {
-    public:
+class daFiresnake_c : public dEn_c
+{
+public:
     static const Actors actorID = EN_FIRESNAKE;
 
-    //Base: 0x8153ffc0
-    //someCooldown at 815404c0 <- Shrinking_Timer
-    
-
+    // Base: 0x8153ffc0
+    // someCooldown at 815404c0 <- Shrinking_Timer
 };
 
-class daSpikeball_c : public dEn_c {
-    public:
+class daSpikeball_c : public dEn_c
+{
+public:
     static const Actors actorID = EN_TOGETEKKYU;
-    //Base: 0x8153f918
-    //TurnSpeed at 8153FA34 <- frame-controlled, good luck
-    
+    // Base: 0x8153f918
+    // TurnSpeed at 8153FA34 <- frame-controlled, good luck
 };
 
 class daRotatingBurner_c : public dEn_c
@@ -293,13 +291,12 @@ public:
     static const u32 StateID_Turning = 0x8099e838;
     static const u32 StateID_Stationary = 0x8099e878;
 
-    u8*    getRotDirection()        const {ret    (u8*)GetMemberFromOffset((void*)this, 0x348);}
+    u8 *getRotDirection() const { ret(u8 *) GetMemberFromOffset((void *)this, 0x348); }
 
-    u32*   getTurnTimer()           const {ret         GetMemberFromOffset((void*)this, 0x4A4);}
-    u32*   BlackMagicLiesHere()     const {ret         GetMemberFromOffset((void*)this, 0xC);  }
+    u32 *getTurnTimer() const { ret GetMemberFromOffset((void *)this, 0x4A4); }
+    u32 *BlackMagicLiesHere() const { ret GetMemberFromOffset((void *)this, 0xC); }
 
-    float* getCurrentAngle()        const {ret (float*)GetMemberFromOffset((void*)this, 0x4A0);}
-   
+    float *getCurrentAngle() const { ret(float *) GetMemberFromOffset((void *)this, 0x4A0); }
 };
 
 namespace Spawners
@@ -310,9 +307,9 @@ namespace Spawners
     public:
         static const Actors actorID = WAKI_PARABOM;
 
-        u32* getAllowDrop()     const {ret GetMemberFromOffset((void*)this, 0xF68);}
-        u32* getSpawnTimer()    const {ret GetMemberFromOffset((void*)this, 0xF70);} //Decreases only while not Grounded
-        
+        u32 *getAllowDrop() const { ret GetMemberFromOffset((void *)this, 0xF68); }
+        u32 *getSpawnTimer() const { ret GetMemberFromOffset((void *)this, 0xF70); } // Decreases only while not Grounded
+
         /*
         0=Normal
         1=Unk
@@ -325,7 +322,7 @@ namespace Spawners
         4=Unk
         5=Spawn upon Jump, either 1 or 2 spawns
         */
-        u32* getSpawnTimerMod() const {ret GetMemberFromOffset((void*)this, 0xF78);}
+        u32 *getSpawnTimerMod() const { ret GetMemberFromOffset((void *)this, 0xF78); }
     };
 
     class dPipeSpawner_c : public Actor
@@ -333,11 +330,10 @@ namespace Spawners
     public:
         static const Actors actorID = DOKAN_WAKIDASHI;
 
+        u32 *getSpawnTimer() const { ret GetMemberFromOffset((void *)this, 0x390); }
+        u32 *getTotalCycles() const { ret GetMemberFromOffset((void *)this, 0x3A8); }
 
-        u32* getSpawnTimer()                const {ret       GetMemberFromOffset((void*)this, 0x390);}
-        u32* getTotalCycles()               const {ret       GetMemberFromOffset((void*)this, 0x3A8);}
-
-        u16* getCurrentSpawnsCompleted()    const {ret (u16*)GetMemberFromOffset((void*)this, 0x394);}
+        u16 *getCurrentSpawnsCompleted() const { ret(u16 *) GetMemberFromOffset((void *)this, 0x394); }
     };
 
     class dRollingSpawner_c : public Actor
@@ -347,45 +343,47 @@ namespace Spawners
         // Base: 0x81541100
         // void* LatestSpawnPtr at 8154160c
         // u32 MaxSpawnedAtOnce at 81541498
-        // u32 spawnTimer at 81541494, 
-        u16* getRollingSpeed()      const {ret (u16*)GetMemberFromOffset((void*)this, 0x004);} // i know its the dEn_c::settings var, but thats just how speed works on this object
+        // u32 spawnTimer at 81541494,
+        u16 *getRollingSpeed() const { ret(u16 *) GetMemberFromOffset((void *)this, 0x004); } // i know its the dEn_c::settings var, but thats just how speed works on this object
 
-        u32* getMaxAliveChildren()  const {ret       GetMemberFromOffset((void*)this, 0x398);} // Unlimited, unlike the dEn_c::settings ones
-        u32* getSpawnTimer()        const {ret       GetMemberFromOffset((void*)this, 0x394);} // Default=0x000000b4
-        u32* getSpawningType()      const {ret       GetMemberFromOffset((void*)this, 0x39C);} // Ball=0 or Barrel=1
+        u32 *getMaxAliveChildren() const { ret GetMemberFromOffset((void *)this, 0x398); } // Unlimited, unlike the dEn_c::settings ones
+        u32 *getSpawnTimer() const { ret GetMemberFromOffset((void *)this, 0x394); }       // Default=0x000000b4
+        u32 *getSpawningType() const { ret GetMemberFromOffset((void *)this, 0x39C); }     // Ball=0 or Barrel=1
 
-        dEn_c* getLastSpawnedObject() const {ret (dEn_c*)GetMemberFromOffset((void*)this, 0x50C);}
+        dEn_c *getLastSpawnedObject() const { ret(dEn_c *) GetMemberFromOffset((void *)this, 0x50C); }
     };
 
 }
 
-class dRollingHill_c : public Actor {
-    protected:
-    void* build();
+class dRollingHill_c : public Actor
+{
+protected:
+    void *build();
     void buildModel();
     void deconstructMembers();
     int draw();
     int execute();
     int onDelete();
-    void initializeState_Dispatch(); 
-    void executeState_Dispatch(); //This Class does not have any states... what a blunder nintendo, just look at the compile-size rise unecessarily and cry!
+    void initializeState_Dispatch();
+    void executeState_Dispatch(); // This Class does not have any states... what a blunder nintendo, just look at the compile-size rise unecessarily and cry!
     void finalizeState_Dispatch();
     void rotateTouchingObjects();
-    public:
-    u8* getWierdThing()  const { ret  (u8*)GetMemberFromOffset((void*)this, 0x4C4); }
 
-    u16* getRoll()       const { ret (u16*)GetMemberFromOffset((void*)this, 0x104); }
-    u16* getRollSpeed()  const { ret (u16*)GetMemberFromOffset((void*)this, 0x4D0); }
-    u16* getCollToggle() const { ret (u16*)GetMemberFromOffset((void*)this, 0x450); }
+public:
+    u8 *getWierdThing() const { ret(u8 *) GetMemberFromOffset((void *)this, 0x4C4); }
 
-    u32* getCollStuff()  const { ret       GetMemberFromOffset((void*)this, 0x420); }
+    u16 *getRoll() const { ret(u16 *) GetMemberFromOffset((void *)this, 0x104); }
+    u16 *getRollSpeed() const { ret(u16 *) GetMemberFromOffset((void *)this, 0x4D0); }
+    u16 *getCollToggle() const { ret(u16 *) GetMemberFromOffset((void *)this, 0x450); }
 
-    float* getPhysRadius()  const { ret (float*)GetMemberFromOffset((void*)this, 0x4D4); }
-    float* getVisScale()    const { ret (float*)GetMemberFromOffset((void*)this, 0x4D8); }
-    float* getDriftCap()    const { ret (float*)GetMemberFromOffset((void*)this, 0x4DC); } //Often Empty. Maybe overwrite in preGameLoop()
+    u32 *getCollStuff() const { ret GetMemberFromOffset((void *)this, 0x420); }
 
-    //This is a static const somewhere around rtoc + 0x77??, No idea what it does :shrug:
-    const float* getSomething()   { ret (float*)0x8042BC48; }
+    float *getPhysRadius() const { ret(float *) GetMemberFromOffset((void *)this, 0x4D4); }
+    float *getVisScale() const { ret(float *) GetMemberFromOffset((void *)this, 0x4D8); }
+    float *getDriftCap() const { ret(float *) GetMemberFromOffset((void *)this, 0x4DC); } // Often Empty. Maybe overwrite in preGameLoop()
+
+    // This is a static const somewhere around rtoc + 0x77??, No idea what it does :shrug:
+    const float *getSomething() { ret(float *) 0x8042BC48; }
 };
 
 #endif
