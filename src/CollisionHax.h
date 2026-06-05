@@ -268,7 +268,8 @@ struct PhysRect {
 struct APhysRect {
     float xOffset, yOffset;
     Vec2 TopLeft, TopRight, BottomLeft, BottomRight;
-
+    u8 collTrapType;
+    float trpValues[6];
 };
 
 class BasicCollExt : public BasicCollider
@@ -290,6 +291,7 @@ class PhysExt : public Physics
 
 class ActivePhysExt : public ActivePhysics
 {
+    public:
     static APhysRect getRect(ActivePhysics* p);
     void setRect();
     static void Log(ActivePhysics* p);

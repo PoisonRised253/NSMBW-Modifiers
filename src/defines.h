@@ -10,6 +10,7 @@
 #define DEBUG_EXPERIMENTS
 //#define DEBUG_COLLEXT
 #define DEBUG_PHYSEXT
+#define PROPER
 
 //#define NO_MP
 
@@ -74,6 +75,7 @@
 //This is just free data storage, since its entirely compiletime, but ofcourse entirely constant.
 //This is to set the current Powerup State.
 //It might also help by using 'li rX, data' instead of loading from a static location, which would require multiple operations in some cases
+#ifndef PROPER
 #define POWER_SMALL     0x00
 #define POWER_BIG       0x01
 #define POWER_FIRE      0x02
@@ -92,32 +94,6 @@
 #define ITEM_STAR       0x01
 #define ITEM_1UP        0x07
 #define ITEM_UNKNOWN    0xF9
-#ifdef PROPER
-enum Powers {
-    SMALL = 0,
-    BIG = 1,
-    FIRE = 2,
-    MINI = 3,
-    PROPELLER = 4,
-    PENGUIN = 5,
-    ICE = 6
-};
-
-// DEATHMUSH is not actually in this game, but im going to change that. 
-// If you spawn DEATHMUSH in the vanilla game, you get a normal-mush-scaled Minimush, which acts like a minimush.
-// Time for me to find what function occours when you get a powerup.
-enum ItemVariants {
-    BIG = 0x00,
-    STAR = 0x01,
-    ONEUP = 0x07,
-    FIRE = 0x09,
-    ICE = 0x0E,
-    PENGUIN = 0x11,
-    PROPELLER = 0x15,
-    MINI = 0x19,
-    DEATHMUSH = 0xF9
-}; 
-#endif
 
 //dScStage_c::m_exitMode
 #define EXIT_SUCCESS 0
@@ -137,6 +113,72 @@ enum ItemVariants {
 #define MINIGAME_STAR_HOUSE 1
 #define MINIGAME_TOAD_HOUSE 2
 //TODO: Add the others
+#endif
+
+#ifdef PROPER
+enum Powers {
+    POWER_SMALL = 0,
+    POWER_BIG = 1,
+    POWER_FIRE = 2,
+    POWER_MINI = 3,
+    POWER_PROPELLER = 4,
+    POWER_PENGUIN = 5,
+    POWER_ICE = 6
+};
+
+// DEATHMUSH is not actually in this game, but im going to change that. 
+// If you spawn DEATHMUSH in the vanilla game, you get a normal-mush-scaled Minimush, which acts like a minimush.
+// Time for me to find what function occours when you get a powerup.
+enum ItemVariants {
+    ITEM_MUSHROOM = 0x00,
+    ITEM_STAR = 0x01,
+    ITEM_ONEUP = 0x07,
+    ITEM_FIRE = 0x09,
+    ITEM_ICE = 0x0E,
+    ITEM_PENGUIN = 0x11,
+    ITEM_PROPELLER = 0x15,
+    ITEM_MINI = 0x19,
+    ITEM_DEATHMUSH = 0xF9
+}; 
+
+enum ExitMode {
+    EXIT_SUCCESS = 0,
+    EXIT_FAIL = 1,
+    EXIT_PLAYER_CHOICE = 2,
+    EXIT_DEFAULT = 3
+};
+
+enum GameMode {
+    GAME_NORMAL = 0,
+    GAME_LUIGI_GUIDE = 1,
+    GAME_TITLE = 2,
+    GAME_RETURN_ON_INPUT = 3,
+    GAME_MOVIE = 4 //1-41's Hint Movies
+};
+
+enum Minigame {
+    MINIGAME_NONE = 0,
+    MINIGAME_STAR_HOUSE = 1,
+    MINIGAME_TOAD_HOUSE = 2
+};
+
+//If i ever need to overwrite a class, here's the ones that do nothing
+//dDummyDoorParent_c and dDummyDoorChild_c are not included, as they execute... just ... unknown things.. They dont even need eachother btw
+enum Dummy {
+    SLOW_QUICK_TAG_C = 20,
+    KAWANAGARE_C = 41,
+    HANA_MOUNTAIN_C = 50,
+    TAG_THUNDER_C = 122,
+    BRANCH_C = 210,
+    
+    AC_LIFT_ICE_SPRING_C = 536,
+    EN_BLUR_C = 603
+};
+
+enum Broken {
+    AC_LIFT_OBJBG_HMOVE_BIG_C = 435
+};
+#endif
 
 //Live Patch Helper Stuff
 

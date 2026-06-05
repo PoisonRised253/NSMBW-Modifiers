@@ -4,7 +4,7 @@
 
 // Collection of Enemies ive looked at, and explored
 // I dont know how to make headers actually align to ingame Memory, so im using methods instead, please forgive my sins (sizeof() appears to be wrong lol)
-// dEn_c is 1714 bits (padded)
+// dEn_c is 1714 bits (padded), which is appearently 0x24 too much
 // Please forgive the halfassed functions, im really sorry but i dont really know how to find out which return type it is, or what inputs it takes, so i halfassed it, just to give a hint to smarter people where roughly to look.
 // Again, i ask for your forgiveness.
 // Also, there might be some sentimental sounding notes to this, but i like to kindly remind you that im fine, and that this is my perception of optimal commedy.
@@ -174,7 +174,7 @@ public:
     static const Actors actorIDPole = EN_WANWAN_PILE;
     static const Actors actorIDChomp = EN_WANWAN;
 
-    u32 *getChainLength() const { ret GetMemberFromOffset((void *)this, -0x64); } //(0x0-0xF else exception)
+    u32 *getChainLength() const { ret GetMemberFromOffset((void *)this, -0x64); }           //(0x0-0xF else exception)
     u32 *getTurnDirection() const { ret GetMemberFromOffset((void *)this, -0x70); }
     u32 *getCooldownAfterLunge() const { ret GetMemberFromOffset((void *)this, -0x84); }    //(second byte only)
     u32 *getWaitForAttackCooldown() const { ret GetMemberFromOffset((void *)this, -0xDC); } //(last byte only)
@@ -188,7 +188,7 @@ public:
     bool IsAttack() const { ret !(bool)*GetMemberFromOffset((void *)this, -0xD8); }
     bool *getIgnoreAnchorX() const { ret(bool *) GetMemberFromOffset((void *)this, -0x3A0); }
 
-    float *getGravity() const { ret(float *) GetMemberFromOffset((void *)this, -0x5D4); } // Default=be400000
+    float *getGravity() const { ret(float *) GetMemberFromOffset((void *)this, -0x5D4); }   // Default=be400000
     float *getPoleX() const { ret(float *) GetMemberFromOffset((void *)this, 0xAC); }
     float *getPoleY() const { ret(float *) GetMemberFromOffset((void *)this, 0xB0); }
     float *getChompPivotX() const { ret(float *) GetMemberFromOffset((void *)this, -0xCC); }
@@ -379,11 +379,16 @@ public:
     u32 *getCollStuff() const { ret GetMemberFromOffset((void *)this, 0x420); }
 
     float *getPhysRadius() const { ret(float *) GetMemberFromOffset((void *)this, 0x4D4); }
-    float *getVisScale() const { ret(float *) GetMemberFromOffset((void *)this, 0x4D8); }
-    float *getDriftCap() const { ret(float *) GetMemberFromOffset((void *)this, 0x4DC); } // Often Empty. Maybe overwrite in preGameLoop()
+    float *getVisScale() const   { ret(float *) GetMemberFromOffset((void *)this, 0x4D8); }
+    float *getDriftCap() const   { ret(float *) GetMemberFromOffset((void *)this, 0x4DC); } // Often Empty. Maybe overwrite in preGameLoop()
 
     // This is a static const somewhere around rtoc + 0x77??, No idea what it does :shrug:
     const float *getSomething() { ret(float *) 0x8042BC48; }
+};
+
+class dFallPlatform_c : public dActorState_c {
+    public:
+    float* FallSpeed() const { ret (float*)GetMemberFromOffset((void*)this, 0x114); };
 };
 
 #endif

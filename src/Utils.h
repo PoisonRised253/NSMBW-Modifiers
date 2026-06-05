@@ -32,7 +32,7 @@ volatile inline int *checkGrounded(dAc_Py_c *player);
 volatile inline int *checkAllowedMoves(dAc_Py_c *player);
 volatile inline bool isPause();
 volatile inline int *GetPlayerState(dAc_Py_c *player);
-ext void DisablePropeller(u32 replaceWithItemID);
+ext void DisableItem(u32 ItemID, u32 replaceWith);
 ext void SetUpper(u32* variable, u16 value);
 ext void SetLower(u32* variable, u16 value);
 inline u32 NoJumping(u32 value);

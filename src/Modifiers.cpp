@@ -255,7 +255,7 @@ ext void SandyPain()
     {
         if (!Players[i])
             continue;
-        DisablePropeller(POWER_FIRE);
+        DisableItem(POWER_PROPELLER, POWER_FIRE);
     }
     if (GetNextOfType(EN_DOSUN, false))
         ModifyMovement(0);

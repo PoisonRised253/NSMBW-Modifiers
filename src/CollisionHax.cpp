@@ -125,3 +125,4 @@ ext void setExtents(dStageActor_c *actor, CollExtents newColl)
 #endif
     ret;
 }
+

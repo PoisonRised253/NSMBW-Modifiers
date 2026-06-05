@@ -404,12 +404,12 @@ inline u32 NoJumping(u32 value) {
     ret ((value & 0x00FFFFFF) | (x << 24));
 }
 
-ext void DisablePropeller(u32 replaceWithItemID) {
+ext void DisableItem(u32 ItemID, u32 replaceWith) {
     volatile int* itm = NULL;
     for(int i = 0; i < 4; i++) {
         if(!Players[i]) continue;
         itm = GetPlayerPowerState(Players[i]);
-        if(*itm == POWER_PROPELLER) *itm = replaceWithItemID;
+        if(*itm == ItemID) *itm = replaceWith;
     }
     ret;
 }
@@ -437,8 +437,9 @@ ext void DumpPlayer(int which) {
 #endif
 
 ext void HandleHotkeys() {
-
+    if(!Players[0]) ret;
     u32 btns = GetActiveRemocon()->heldButtons;
+    
 
     const int dumpLevelData = WPAD_A | WPAD_B;
 
@@ -452,11 +453,30 @@ ext void HandleHotkeys() {
         DumpPlayer(2);
         DumpPlayer(3);
     }
-    const int drawHitbox = WPAD_MINUS;
 
     #ifdef DEBUG_BALLS
         if(CallSpacer(15))
             FondleBalls();
+    #endif
+
+    #ifdef DEBUG_EXPERIMENTS
+        if(!CallSpacer(6)) ret;
+        static const Vec pos = MakeVec(1486, -475, 3000);
+        static int selected = 0;
+        const int spawnActor = WPAD_A | WPAD_ONE;
+        if((btns & spawnActor) == spawnActor) {
+            OSReport("Spawning: %i\n", selected);
+            dStageActor_c* spawned = CreateActor(selected, 0, pos, 0, 0);
+            if(spawned)
+                OSReport("Spawned %i at %p", selected, spawned);
+        }
+
+        const int changeActorUP = WPAD_A | WPAD_UP;
+        const int changeActorDOWN = WPAD_A | WPAD_DOWN;
+        if((btns & changeActorUP) == changeActorUP) {selected++; OSReport("Selected is now: %i\n", selected);}
+        if((btns & changeActorDOWN) == changeActorDOWN) {selected--; OSReport("Selected is now: %i\n", selected);}
+
+
     #endif
 #endif
     ret;

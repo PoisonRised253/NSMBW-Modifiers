@@ -19,15 +19,7 @@ ext void preGameLoop()
         smitePlayer = NULL;
     }
 
-    #ifdef DEBUG_EXPERIMENTS
-    u32 lid, wid;
-    getLevelInfo(&lid, &wid, NULL, NULL, NULL);
-
-    if(!GetNextOfType(EN_ITEM, false) && lid == 1 && wid == 9) {
-        dStageActor_c* item = (dStageActor_c*)CreateActor(EN_ITEM, ITEM_UNKNOWN, MakeVec(734, -480, 3000), 0, 0);
-        OSReport("Hello :D | %p\n", item);
-    }
-    #endif
+    HandleHotkeys();
     ret;
 }
 
@@ -45,16 +37,52 @@ ext void onGameLoop()
 
     ApplyModifiers(false);
 
-    HandleHotkeys();
+    //HandleHotkeys();
 
-#ifdef DEBUG_EXPERIMENTS
+    #ifdef DEBUG_EXPERIMENTS
     //DEBUG SECTION
-    void* bar = (void*)GetNextOfType(daFiresnake_c::actorID, false);
-    if(bar) OSReport("Firepenis: %p\n", bar);
-    void* bar2 = (void*)GetNextOfType(daSpikeball_c::actorID, false);
-    if(bar2) OSReport("Ouchie-Balls: %p\n", bar2);
-    void* bar3 = (void*)GetNextOfType(AC_FLOOR_GYRATION, false);
-    if(bar3) OSReport("Big Rotating Balls: %p\n", bar3);
+
+    //Verifying which classes are truely empty, or wether theyre just unfinished.
+    void* Key = NULL;
+
+    Key = (void*)GetNextOfType((Actors)459, false);
+    if(Key) OSReport("Platform: %p\n", Key);
+
+    #endif
+    #ifdef DEBUG_EXPERIMENTS_  //Temp Disable, remove _ from end
+
+    Key = (void*)GetNextOfType((Actors)196, false);
+    if(Key) OSReport("En_Slip_Penguin: %p\n", Key);
+
+    Key = (void*)GetNextOfType((Actors)508, false);
+    if(Key) OSReport("En_TarzanRope: %p\n", Key);
+
+    Key = (void*)GetNextOfType((Actors)384, false);
+    if(Key) OSReport("Ac_Block_Group: %p\n", Key);
+
+    Key = (void*)GetNextOfType((Actors)370, false);
+    if(Key) OSReport("Ship_Window: %p\n", Key);
+
+    Key = (void*)GetNextOfType((Actors)137, false);
+    if(Key) OSReport("En_Ghost_Jugem: %p\n", Key);
+
+    Key = (void*)GetNextOfType((Actors)544, false);
+    if(Key) OSReport("En_Gake_Noko: %p\n", Key);
+
+    Key = (void*)GetNextOfType((Actors)343, false);
+    if(Key) OSReport("En_Iwao: %p\n", Key);
+
+    Key = (void*)GetNextOfType((Actors)120, false);
+    if(Key) OSReport("En_Remocon_Tori: %p\n", Key);
+
+    Key = (void*)GetNextOfType((Actors)119, false); //Some things strangely depend on this object, as in spawn it... but like... why? what is this...
+    if(Key) OSReport("En_Boyon: %p\n", Key);
+
+    Key = (void*)GetNextOfType((Actors)321, false);
+    if(Key) OSReport("Mist_Intermittent: %p\n", Key);
+
+    Key = (void*)GetNextOfType((Actors)568, false);
+    if(Key) OSReport("Tarzan_Rope: %p\n", Key);
 #endif
 #ifdef NO_MP
 #ifndef DEBUG
@@ -197,10 +225,10 @@ ext void ApplyModifiers(bool pre)
             TrustYourSenses();
         if(Modifiers[9]) {
             ModifyMovement(1);
-            DisablePropeller(POWER_FIRE);
+            DisableItem(POWER_PROPELLER, POWER_FIRE);
         }
         if(Modifiers[10]) {
-            DisablePropeller(POWER_ICE);
+            DisableItem(POWER_PROPELLER, POWER_FIRE);
             ModifyMovement(4);
             for(int i = 0; i < 4; i++) {
                 if(!Players[i]) continue;
