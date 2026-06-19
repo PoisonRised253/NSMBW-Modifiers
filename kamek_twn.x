@@ -387,6 +387,8 @@ SECTIONS {
 	getRectByID__9dCourse_cFUcP5mRect = 2148067792;
 	getNextGotoByID__9dCourse_cFUc = 2148066576;
 
+	detectGroundPound__14dPlayerInput_cFv = 2147869696;
+
 	modifyPlayerPropertiesWithRollingObject = 2147842304;
 	EN_LandbarrelPlayerCollision = 2158352368;
 
@@ -2871,6 +2873,69 @@ finalizeState_Dispatch__14dRollingHill_cFv = 2155821056;
 initializeState_Dispatch__14dRollingHill_cFv = 2155820960;
 onDelete__14dRollingHill_cFv = 2155819600;
 rotateTouchingObjects__14dRollingHill_cFv = 2155819872;
+
+
+/* ct__daLakituBase_c */
+__ct__daLakituBase_cFv = 2158214384;
+
+/* ct__daLakituCoin_c */
+__ct__daLakituCoin_cFv = 2157887616;
+
+/* ct__daLakitu_c */
+__ct__daLakitu_cFv = 2158204960;
+
+/* daLakituBase */
+setupFinishThrow__daLakituBase = 2158218416;
+
+/* daLakituBase_c */
+constructCoin__daLakituBase_cFv = 2157888736;
+delegateSomething__daLakituBase_cFv = 2158220048;
+execute__daLakituBase_cFv = 2158214912;
+executeState_Disptach__daLakituBase_cFv = 2158223072;
+executeState_HoldItem__daLakituBase_cFv = 2158220464;
+executeState_WaitForThrow__daLakituBase_cFv = 2158220080;
+finalizeState_Dispatch__daLakituBase_cFv = 2158223120;
+initializeState_Dispatch__daLakituBase_cFv = 2158223024;
+initializeState_WaitForThrow__daLakituBase_cFv = 2158220384;
+onCreate__daLakituBase_cFv = 2158214624;
+unk__daLakituBase_cFv = 2158218704;
+updateAnimation__daLakituBase_cFv = 2158219408;
+updateConnections__daLakituBase_cFv = 2158217680;
+
+/* daLakituCoin_c */
+draw__daLakituCoin_cFv = 2157888160;
+execute__daLakituCoin_cFv = 2157888080;
+executeState_BeACoin__daLakituCoin_cFv = 2157888528;
+executeState_Dispatch__daLakituCoin_cFv = 2157889808;
+executeState_Held__daLakituCoin_cFv = 2157888448;
+finalizeState_BeACoin__daLakituCoin_cFv = 2157888432;
+finalizeState_Dispatch__daLakituCoin_cFv = 2157889856;
+initializeState_Dispatch__daLakituCoin_cFv = 2157889760;
+initializeState_NoMoreDad__daLakituCoin_cFv = 2157888496;
+onCreate__daLakituCoin_cFv = 2157887936;
+subdraw__daLakituCoin_cFv = 2157888288;
+
+/* daLakitu_c */
+buildModel__daLakitu_cFv = 2158207664;
+checkIsNearScreenCenter__daLakitu_cFv = 2158207952;
+computeAngle__daLakitu_cFv = 2158208400;
+createEffects__daLakitu_cFv = 2158206704;
+draw__daLakitu_cFv = 2158206192;
+execute__daLakitu_cFv = 2158206048;
+executeState_Dispatch__daLakitu_cFv = 2158214288;
+executeState_Moving__daLakitu_cFv = 2158210096;
+executeState_Search__daLakitu_cFv = 2158209504;
+finalizeState_Dispatch__daLakitu_cFv = 2158214336;
+findNearestTarget__daLakitu_cFv = 2158208256;
+getTravelSpeedMaybe__daLakitu_cFv = 2158206800;
+handleSounds__daLakitu_cFv = 2158209264;
+initializeState_Dispatch__daLakitu_cFv = 2158214240;
+initializeState_Search__daLakitu_cFv = 2158209936;
+onCreate__daLakitu_cFv = 2158205376;
+predraw__daLakitu_cFv = 2158206352;
+preExecute__daLakitu_cFv = 2158205920;
+updateThrownVel__daLakitu_cFv = 2158207264;
+
 
 	.text : {
 		FILL (0)

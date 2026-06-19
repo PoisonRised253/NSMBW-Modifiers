@@ -26,6 +26,7 @@ volatile void LivePatch(u32 newInstr, u32 *addr);
 ext void ModifyMovement(int mode);
 ext void NahFuckThat(bool); // Stops dAc_Py_c from existing
 inline bool ObjectBoundCheck(Vec boundsMin, Vec boundsMax, Vec pos);
+inline bool ObjectBoundCheck(Vec4 boundsA, Vec4 boundsB);
 inline u32* GetMemberFromOffset(void* object, u32 offset);
 volatile inline int *GetPlayerPowerState(dAc_Py_c *player);
 volatile inline int *checkGrounded(dAc_Py_c *player);

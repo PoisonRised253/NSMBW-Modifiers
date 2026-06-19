@@ -267,7 +267,7 @@ ext void PokeyParty()
 {
     dSys_c::setFrameRate(2);
     ModifyMovement(5);
-    ret;
+    ret; 
 }
 
 // I hate 2 - 6 lol
@@ -424,6 +424,7 @@ ext void RealisticBullet() {
     }
 }
 
+
 ext void Icey() {
     LivePatch(0x2c090001, LP_AUTOICE);
     LivePatch(0x3E800000, LP_GROWICE);
@@ -434,6 +435,51 @@ ext void Icey() {
 //Yes, this is a test, not a joke
 ext void BetterGhosts() {
     *daBoo_c::getGlobalScaler() = clamp<float>(*daBoo_c::getGlobalScaler() + 0.00125f, 0, 15);
+    ret;
+}
+
+ext void FloatyTower() {
+    for(int i = 0; i < 4; i++) {
+        daPlBase_c* p = (daPlBase_c*)Players[i];
+        if(!Players[i] || !p || p->input.detectGroundPound()) continue;
+        Players[i]->speed.y = clamp<float>(Players[i]->speed.y + 0.125f, 0.0125f, 8);
+    }
+    ret;
+}
+
+//NO
+ext void SlideyBlocks() {
+    ret;
+}
+
+ext void WierdLineBlock() {
+    static int state = 0;
+    static bool flip = false;
+    const float mod = 0.0000125f;
+    dRollingLinePlatform_c* platform = (dRollingLinePlatform_c*)GetNextOfType(dRollingLinePlatform_c::actorID, false);
+    if(!platform) ret;
+    
+    *platform->getMoveSpeed() += mod;
+    if(!CallSpacer(30)) ret;
+    if(state > 30) {
+        flip = true;
+        state--;
+        ret;
+    }
+    if(state < -30) {
+        flip = false;
+        state++;
+        ret;
+    }
+    if(!flip) {
+        *platform->getRotateSpeed() -= 15;
+        state++;
+    }
+    else { 
+        *platform->getRotateSpeed() += 15;
+        state--;
+    }
+    OSReport("The Thing Ran\n");
     ret;
 }
 

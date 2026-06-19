@@ -37,7 +37,14 @@ typedef struct Vec4 {
     Vec4 operator/=(const float other) {
         ret (Vec4){this->x / other, this->y / other, this->z / other, this->w / other};
     }
-};
+
+    void Nullify() {
+        this->x = NULL;
+        this->y = NULL;
+        this->z = NULL;
+        this->w = NULL;
+    }
+} Rect2D;
 
 inline float clampf(float val, float min, float max);
 inline int Round(float x);
@@ -59,5 +66,7 @@ inline Vec VecMulFloat(Vec v, float m);
 inline Vec VecDivFloat(Vec v, float m);
 inline bool VecCmp(Vec a, Vec b);
 inline bool VecCmp2(Vec2 a, Vec2 b);
+
+extern "C" float Oscillate(float& phase, float speed, float amplitude);
 
 #endif

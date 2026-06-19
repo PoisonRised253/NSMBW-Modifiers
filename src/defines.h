@@ -8,9 +8,14 @@
 //Build Flags
 #define DEBUG
 #define DEBUG_EXPERIMENTS
-//#define DEBUG_COLLEXT
-#define DEBUG_PHYSEXT
+#define DEBUG_IDENTIFY
 #define PROPER
+
+//Patch defines:
+#define USE_MKWCAT_PATCHES
+
+//#define DEBUG_COLLEXT
+//#define DEBUG_PHYSEXT
 
 //#define NO_MP
 
@@ -25,11 +30,9 @@
 #define DEBUG_EXPERIMENTS
 
 #endif*/
-//Patch defines:
-#define USE_MKWCAT_PATCHES
 
 //Current amount of activatable modifiers
-#define MOD_SIZE 21
+#define MOD_SIZE 24
 
 //Infinite-Lives "True" Amount
 #define LIVES_AMOUNT 0x64
@@ -218,6 +221,8 @@ enum Broken {
 
 #define LP_DEATHMUSHSETUP_1 (u32*)0x80145c04 //mflr r29
 #define LP_DEATHMUSHSETUP_2 (u32*)0x80145c80 //mtlr r29
+
+#define LP_FALLPLATPATCH    (u32*)0x80837a90
 
 
 //Player related Stuff

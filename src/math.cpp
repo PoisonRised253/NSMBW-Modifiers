@@ -68,3 +68,9 @@ inline bool VecCmp(Vec a, Vec b) {
 inline bool VecCmp2(Vec2 a, Vec2 b) {
     ret (a.x == b.x && a.y == b.y);
 }
+
+extern "C" float Oscillate(float& phase, float speed, float amplitude)
+{
+    phase += speed;
+    ret sin(phase) * amplitude;
+}

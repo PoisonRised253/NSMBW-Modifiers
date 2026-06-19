@@ -24,6 +24,7 @@ ext void AntiBubble();
 ext void DeathMushHandler(dAc_Py_c* toucher);
 ext void onPlayerCollisionUpdated(void* playerptr);
 ext void onPlayerPhysicsUpdated(void* playerptr);
+ext volatile void FallPlatformPatch();
 extern dEn_c* smitePlayer;
 
 #endif

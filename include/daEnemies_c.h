@@ -302,7 +302,7 @@ public:
 namespace Spawners
 {
 
-    class dParaBombSpawner_c : public Actor
+    class dParaBombSpawner_c : public dStageActor_c
     {
     public:
         static const Actors actorID = WAKI_PARABOM;
@@ -325,7 +325,7 @@ namespace Spawners
         u32 *getSpawnTimerMod() const { ret GetMemberFromOffset((void *)this, 0xF78); }
     };
 
-    class dPipeSpawner_c : public Actor
+    class dPipeSpawner_c : public dStageActor_c
     {
     public:
         static const Actors actorID = DOKAN_WAKIDASHI;
@@ -336,7 +336,7 @@ namespace Spawners
         u16 *getCurrentSpawnsCompleted() const { ret(u16 *) GetMemberFromOffset((void *)this, 0x394); }
     };
 
-    class dRollingSpawner_c : public Actor
+    class dRollingSpawner_c : public dStageActor_c
     {
     public:
         static const Actors actorID = WAKI_TOGETEKKYU;
@@ -353,9 +353,26 @@ namespace Spawners
         dEn_c *getLastSpawnedObject() const { ret(dEn_c *) GetMemberFromOffset((void *)this, 0x50C); }
     };
 
+
+    class daLakitu : public dEn_c {
+        //The cloud appears to be constructed using ID 56 and the settings 102, unless 0x00X00000 is set to 1, in which case its 100
+        public:
+        u16* getIsPissingOff() const { ret (u16*)GetMemberFromOffset((void*)this, 0x438); }
+
+        void setPissOff() {
+            u32 value = this->settings;
+            value &= ~0xF0;                 // clear X
+            value |= (1 & 0xF) << 4;        // set X
+            this->settings = value;
+            *getIsPissingOff() = (u16)1;
+            ret;
+        }
+
+    };
+
 }
 
-class dRollingHill_c : public Actor
+class dRollingHill_c : public dStageActor_c
 {
 protected:
     void *build();
@@ -386,9 +403,23 @@ public:
     const float *getSomething() { ret(float *) 0x8042BC48; }
 };
 
+//This Class has been patched, to allow Upwards movement. 0x000000X0 sets fall type, 2 + 3 we're added
 class dFallPlatform_c : public dActorState_c {
     public:
-    float* FallSpeed() const { ret (float*)GetMemberFromOffset((void*)this, 0x114); };
+    static const Actors actorID = AC_LIFT_FALL;
+    float* getFallSpeed() const { ret (float*)GetMemberFromOffset((void*)this, 0x114); };};
+
+//This was a complete waste of my time :(
+class dBouncyCloud : public dStageActor_c {
+    public:
+    static const Actors actorID = EN_LIFT_REMOCON_TRPLN; //Strange way to say bouncy cloud, Nintendo (its likely because Newer shifts actors (This is grabbed from the Newer Patch for Reggie!-Next))  
+};
+
+class dRollingLinePlatform_c : public dStageActor_c {
+    public:
+    static const Actors actorID = LINE_KINOKO_BLOCK;
+    float* getMoveSpeed() const {ret (float*)GetMemberFromOffset((void*)this, 0x5CC); }
+    u16* getRotateSpeed() const {ret   (u16*)GetMemberFromOffset((void*)this, 0x5D0); }
 };
 
 #endif

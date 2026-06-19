@@ -42,10 +42,10 @@ inline void SetLives()
     Player_Lives[2] = LIVES_AMOUNT;
     Player_Lives[3] = LIVES_AMOUNT;
 
-    #ifdef DEBUG_GIMMEPLAYER
-    if(CallSpacer(60))
-    OSReport("Player1 at %p\n", GetSpecificPlayerActor(0));
-    #endif
+#ifdef DEBUG_GIMMEPLAYER
+    if (CallSpacer(60))
+        OSReport("Player1 at %p\n", GetSpecificPlayerActor(0));
+#endif
 
     if (!dInfo_c::m_instance)
         ret;
@@ -130,8 +130,14 @@ ext void ToggleMods()
     Modifiers[18] = (LevelID == 2 && WorldID == 3);
     // 3 - 3
     Modifiers[19] = (LevelID == 3 && WorldID == 3);
-    // 3- G
+    // 3 - G
     Modifiers[20] = (LevelID == 21 && WorldID == 3);
+    // 3 - T
+    Modifiers[21] = (LevelID == 22 && WorldID == 3);
+    // 3 - 4
+    Modifiers[22] = (LevelID == 4 && WorldID == 3);
+    // 3 - 5
+    Modifiers[23] = (LevelID == 5 && WorldID == 3);
 
 #ifdef DEBUG
     OSReport("L: %d, W: %d, A: %d, E: %d, G: %d\n", LevelID, WorldID, AreaID, exit, game);
@@ -262,8 +268,9 @@ volatile void LivePatch(u32 newInstr, u32 *addr)
 // 4 = Inverse
 ext void ModifyMovement(int mode)
 {
-    if(mode == currentMoveMod) ret;
-    
+    if (mode == currentMoveMod)
+        ret;
+
     currentMoveMod = mode;
     if (mode == 0)
     {
@@ -299,7 +306,7 @@ ext void ModifyMovement(int mode)
         ret;
     }
 
-    if (mode == 5) 
+    if (mode == 5)
     {
         LivePatch(0xbfffffff, LP_LEFTSPEED);
         LivePatch(0x3fffffff, LP_RIGHTSPEED);
@@ -344,84 +351,114 @@ inline bool ObjectBoundCheck(Vec boundsMin, Vec boundsMax, Vec pos)
         xWithin = true;
     if (pos.y > boundsMin.y && pos.y < boundsMax.y)
         yWithin = true;
+
 #ifdef DEBUG_BOUNDS
     OSReport("IsWithin: %i\n", xWithin && yWithin);
 #endif
     ret(xWithin && yWithin);
 }
 
+inline bool ObjectBoundCheck(Vec4 boundsA, Vec4 boundsB)
+{
+    ret !(
+        boundsA.x + boundsA.z < boundsB.x - boundsB.z ||
+        boundsA.x - boundsA.z > boundsB.x + boundsB.z ||
+        boundsA.y + boundsA.w < boundsB.y - boundsB.w ||
+        boundsA.y - boundsA.w > boundsB.y + boundsB.w
+    );
+}
+
 template <typename T>
-inline int GetNextFreeArrayEntry(T* arr[], int size) {
-    for(int i = 0; i < size; i++)
-        if(arr[i] == NULL) ret i;
+inline int GetNextFreeArrayEntry(T *arr[], int size)
+{
+    for (int i = 0; i < size; i++)
+        if (arr[i] == NULL)
+            ret i;
 
     ret 0xFFFF;
 }
 
 template <typename T>
-inline int FindPointerInArray(T* arr[], int size, void* ptr) {
-    for(int i = 0; i < size; i++)
-        if(arr[i] == ptr) ret i;
+inline int FindPointerInArray(T *arr[], int size, void *ptr)
+{
+    for (int i = 0; i < size; i++)
+        if (arr[i] == ptr)
+            ret i;
 
     ret 0xFFFF;
 }
 
-inline u32* GetMemberFromOffset(void* object, u32 offset) {
-    ret (u32*)((unsigned char*)object + offset);
+inline u32 *GetMemberFromOffset(void *object, u32 offset)
+{
+    ret(u32 *)((unsigned char *)object + offset);
 }
 
-volatile inline bool* isDemo(dAc_Py_c* player) {
-    ret (volatile bool*)GetMemberFromOffset(player, 0x1460);
+volatile inline bool *isDemo(dAc_Py_c *player)
+{
+    ret(volatile bool *) GetMemberFromOffset(player, 0x1460);
 }
 
-volatile inline int *GetPlayerPowerState(dAc_Py_c *player) {
-    ret (volatile int*) GetMemberFromOffset(player, 0x14E0);
+volatile inline int *GetPlayerPowerState(dAc_Py_c *player)
+{
+    ret(volatile int *) GetMemberFromOffset(player, 0x14E0);
 }
 
-volatile inline int *checkGrounded(dAc_Py_c *player) {
-    ret (volatile int*) GetMemberFromOffset(player, 0x10D4);
+volatile inline int *checkGrounded(dAc_Py_c *player)
+{
+    ret(volatile int *) GetMemberFromOffset(player, 0x10D4);
 }
 
-volatile inline int *checkAllowedMoves(dAc_Py_c *player) {
-    ret (volatile int*) GetMemberFromOffset(player, 0x10D8);
+volatile inline int *checkAllowedMoves(dAc_Py_c *player)
+{
+    ret(volatile int *) GetMemberFromOffset(player, 0x10D8);
 }
 
-volatile inline int *GetPlayerState(dAc_Py_c *player) {
-    ret (volatile int*)GetMemberFromOffset(player, 0x1478);
+volatile inline int *GetPlayerState(dAc_Py_c *player)
+{
+    ret(volatile int *) GetMemberFromOffset(player, 0x1478);
 }
 
-volatile inline bool isPause() {
-    PauseManager_c* instance = PauseManager_c::m_instance;
-    if(!instance) ret false;
-    ret (bool)*GetMemberFromOffset(instance, 0x4);
+volatile inline bool isPause()
+{
+    PauseManager_c *instance = PauseManager_c::m_instance;
+    if (!instance)
+        ret false;
+    ret(bool) * GetMemberFromOffset(instance, 0x4);
 }
 
-//Entirely made by ChatGPT, still dont know how to bitshift, someone please teach me
-inline u32 NoJumping(u32 value) {
+// Entirely made by ChatGPT, still dont know how to bitshift, someone please teach me
+inline u32 NoJumping(u32 value)
+{
     u32 x = (value >> 24) & 0xFF;
     if (x == 1 || x == 3)
         x = 0;
-    ret ((value & 0x00FFFFFF) | (x << 24));
+    ret((value & 0x00FFFFFF) | (x << 24));
 }
 
-ext void DisableItem(u32 ItemID, u32 replaceWith) {
-    volatile int* itm = NULL;
-    for(int i = 0; i < 4; i++) {
-        if(!Players[i]) continue;
+ext void DisableItem(u32 ItemID, u32 replaceWith)
+{
+    volatile int *itm = NULL;
+    for (int i = 0; i < 4; i++)
+    {
+        if (!Players[i])
+            continue;
         itm = GetPlayerPowerState(Players[i]);
-        if(*itm == ItemID) *itm = replaceWith;
+        if (*itm == ItemID)
+            *itm = replaceWith;
     }
     ret;
 }
 
-ext void SetUpper(u32* variable, u16 value) {
+ext void SetUpper(u32 *variable, u16 value)
+{
     u32 val = *variable;
     val &= 0x0000FFFF;
     val |= (value << 16);
     *variable = val;
 }
 
-ext void SetLower(u32* variable, u16 value) {
+ext void SetLower(u32 *variable, u16 value)
+{
     u32 val = *variable;
     val &= 0xFFFF0000;
     val |= value;
@@ -429,17 +466,23 @@ ext void SetLower(u32* variable, u16 value) {
 }
 
 #ifdef DEBUG
-ext void DumpPlayer(int which) {
-    if(!Players[which]) { OSReport("DumpPlayer: Player %i does not Exist\n", which); ret; }
+ext void DumpPlayer(int which)
+{
+    if (!Players[which])
+    {
+        OSReport("DumpPlayer: Player %i does not Exist\n", which);
+        ret;
+    }
     OSReport("\n--------------------------------------\n---Player %i Dump:---\n---Power: %p---\n---IsDemo: %i---\n---IsPause: %i---\n---IsGrounded: %i---\n---State: %p---\n--------------------------------------\n\n", which, *GetPlayerPowerState(Players[which]), *isDemo(Players[which]), isPause(), (bool)*checkGrounded(Players[which]), *checkAllowedMoves(Players[which]));
     ret;
-} 
+}
 #endif
 
-ext void HandleHotkeys() {
-    if(!Players[0]) ret;
+ext void HandleHotkeys()
+{
+    if (!Players[0])
+        ret;
     u32 btns = GetActiveRemocon()->heldButtons;
-    
 
     const int dumpLevelData = WPAD_A | WPAD_B;
 
@@ -447,81 +490,111 @@ ext void HandleHotkeys() {
         ToggleMods();
 #ifdef DEBUG
     const int dumpPlayer = WPAD_B | WPAD_ONE;
-    if ((btns & dumpPlayer) == dumpPlayer) {
+    if ((btns & dumpPlayer) == dumpPlayer)
+    {
         DumpPlayer(0);
         DumpPlayer(1);
         DumpPlayer(2);
         DumpPlayer(3);
     }
 
-    #ifdef DEBUG_BALLS
-        if(CallSpacer(15))
-            FondleBalls();
-    #endif
+#ifdef DEBUG_BALLS
+    if (CallSpacer(15))
+        FondleBalls();
+#endif
 
-    #ifdef DEBUG_EXPERIMENTS
-        if(!CallSpacer(6)) ret;
-        static const Vec pos = MakeVec(1486, -475, 3000);
-        static int selected = 0;
-        const int spawnActor = WPAD_A | WPAD_ONE;
-        if((btns & spawnActor) == spawnActor) {
-            OSReport("Spawning: %i\n", selected);
-            dStageActor_c* spawned = CreateActor(selected, 0, pos, 0, 0);
-            if(spawned)
-                OSReport("Spawned %i at %p", selected, spawned);
-        }
+#ifdef DEBUG_EXPERIMENTS_
+    if (!CallSpacer(6))
+        ret;
+    static const Vec pos = MakeVec(1486, -475, 3000);
+    static int selected = 0;
+    const int spawnActor = WPAD_A | WPAD_ONE;
+    if ((btns & spawnActor) == spawnActor)
+    {
+        OSReport("Spawning: %i\n", selected);
+        dStageActor_c *spawned = CreateActor(selected, 0, pos, 0, 0);
+        if (spawned)
+            OSReport("Spawned %i at %p", selected, spawned);
+    }
 
-        const int changeActorUP = WPAD_A | WPAD_UP;
-        const int changeActorDOWN = WPAD_A | WPAD_DOWN;
-        if((btns & changeActorUP) == changeActorUP) {selected++; OSReport("Selected is now: %i\n", selected);}
-        if((btns & changeActorDOWN) == changeActorDOWN) {selected--; OSReport("Selected is now: %i\n", selected);}
+    const int changeActorUP = WPAD_A | WPAD_UP;
+    const int changeActorDOWN = WPAD_A | WPAD_DOWN;
+    if ((btns & changeActorUP) == changeActorUP)
+    {
+        selected++;
+        OSReport("Selected is now: %i\n", selected);
+    }
+    if ((btns & changeActorDOWN) == changeActorDOWN)
+    {
+        selected--;
+        OSReport("Selected is now: %i\n", selected);
+    }
 
-
-    #endif
+#endif
 #endif
     ret;
 }
 
-ext dEn_c* GetNearestPlayer(Vec relativeTo) {
-    dEn_c* Winner = NULL;
+ext dEn_c *GetNearestPlayer(Vec relativeTo)
+{
+    dEn_c *Winner = NULL;
     float bestDist = 1000.f;
 
-    for(int i = 0; i < 4; i++) {
-        if(!Players[i]) continue;
+    for (int i = 0; i < 4; i++)
+    {
+        if (!Players[i])
+            continue;
         Vec2 res = DistSq(relativeTo, Players[i]->pos);
         float current = res.x + res.y;
-        if(current < bestDist && current > 0.0125f) {bestDist = current; Winner = (dEn_c*)Players[i];}
+        if (current < bestDist && current > 0.0125f)
+        {
+            bestDist = current;
+            Winner = (dEn_c *)Players[i];
+        }
     }
 
     ret Winner;
 }
 
-ext void WrapNumber(u32* value, u32 min, u32 max) {
-    if(*value >= max) *value = min;
-    if(*value <= min) *value = max;
+ext void WrapNumber(u32 *value, u32 min, u32 max)
+{
+    if (*value >= max)
+        *value = min;
+    if (*value <= min)
+        *value = max;
     ret;
 }
-
-
 
 #ifdef DEBUG_BALLS
 #include "daEnemies_c.h"
 
-ext void FondleBalls() {
+ext void FondleBalls()
+{
     static u32 inputCounter = 0;
     static bool staticness = false;
-    const int maskUp = WPAD_UP | WPAD_A; 
-    const int maskDown = WPAD_DOWN | WPAD_A; 
+    const int maskUp = WPAD_UP | WPAD_A;
+    const int maskDown = WPAD_DOWN | WPAD_A;
     u32 btn = GetActiveRemocon()->heldButtons;
-    daLemmyBall_c* ball = (daLemmyBall_c*)GetNextOfType(EN_BOUNCE_BALL, false);
-    if(!ball) daLemmyBall_c* ball = (daLemmyBall_c*)GetNextOfType(EN_BOUNCE_BALL, true);
-    if(!btn || !ball) {ret; }
+    daLemmyBall_c *ball = (daLemmyBall_c *)GetNextOfType(EN_BOUNCE_BALL, false);
+    if (!ball)
+        daLemmyBall_c *ball = (daLemmyBall_c *)GetNextOfType(EN_BOUNCE_BALL, true);
+    if (!btn || !ball)
+    {
+        ret;
+    }
 
-    if((btn & maskUp) == maskUp) inputCounter++;
-    else if ((btn & maskDown) == maskDown) inputCounter--;
-    else if (btn & WPAD_B) { ball->setStatic(!staticness); staticness = !staticness; }
-    else ret;
-    
+    if ((btn & maskUp) == maskUp)
+        inputCounter++;
+    else if ((btn & maskDown) == maskDown)
+        inputCounter--;
+    else if (btn & WPAD_B)
+    {
+        ball->setStatic(!staticness);
+        staticness = !staticness;
+    }
+    else
+        ret;
+
     inputCounter = clamp((int)inputCounter, 0, 7);
     ball->setHitbox(inputCounter);
     OSReport("BallSizer() State: %i\n", inputCounter);

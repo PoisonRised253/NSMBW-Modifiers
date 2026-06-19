@@ -1,7 +1,6 @@
 #include "ExecMng.h"
 
-dEnElevator_c *elevators[CO_ARRAY_SIZE];
-dParenting_c *parentings[CO_ARRAY_SIZE];
+dEnElevator_c   *elevators[CO_ARRAY_SIZE];
 
 // 0 = pre
 // 1 = exec
@@ -43,9 +42,6 @@ void dExecMng_c::Reset()
         if (elevators[i])
             elevators[i]->Delete(1);
         elevators[i] = NULL;
-        if (parentings[i])
-            parentings[i]->~dParenting_c();
-        parentings[i] = NULL;
     }
 
     ret;
@@ -78,21 +74,6 @@ void dExecMng_c::Register(void* obj, int typeID, bool force) {
             #endif
             ret;
         }
-        case 1: {
-            freeSlot = GetNextFreeArrayEntry(parentings, CO_ARRAY_SIZE);
-            if(freeSlot == 0xFFFF && force) freeSlot = 0;
-            else if (freeSlot == 0xFFFF && !force) {
-                #ifdef DEBUG
-                    OSReport("Register() failed, Full Array without Force\n");
-                #endif
-                ret;
-            }
-            parentings[freeSlot] = (dParenting_c*)obj;
-            #ifdef DEBUG
-                OSReport("Registered a Parent/Child relationship at Arr + %i\n", freeSlot);
-            #endif
-            ret;
-        }
     }
 }
 
@@ -104,8 +85,9 @@ void dExecMng_c::RunCustom(int action) {
         if (action == 0) {
             if(elevators[i])
                 elevators[i]->beforeExecute(); 
-            if(parentings[i])
-                parentings[i]->update(); 
+
+            //if(detectors[i])
+            //    detectors[i]->beforeExecute();
 
             continue;
         }
@@ -113,6 +95,8 @@ void dExecMng_c::RunCustom(int action) {
         if (action == 1) {
             if(elevators[i])
                 elevators[i]->execute(); 
+            //if(detectors[i])
+            //    detectors[i]->onExecute();
                 
             continue;
         }

@@ -1,5 +1,5 @@
 source_files: [../src/main.cpp, ../src/Utils.cpp, ../src/Modifiers.cpp, ../src/math.cpp, ../src/customObjects.cpp, ../src/ExecMng.cpp, ../src/CollisionHax.cpp]
-
+  # use 'className::funcName(void)' if the func belongs to a Class, yet doesnt take Params.
 hooks:
 
   #- name: OnGameLoop
@@ -85,22 +85,30 @@ hooks:
     src_addr_pal: 0x80147600
     target_func: DeathMushHandler
 
-  - name: CollChangeFix
-    type: patch
-    addr_pal: 0x80143058
-    data: '7fe3fb78'
+  # Dont Delete the following two, theyre unused but functional
 
-  - name: ChangeCollisionHook
-    type: branch_insn
-    branch_type: b 
-    src_addr_pal: 0x8014305C
-    target_func: onPlayerCollisionUpdated
+  #- name: CollChangeFix
+  #  type: patch
+  #  addr_pal: 0x80143058
+  #  data: '7fe3fb78'
 
-  - name: ChangePhysicsHook
+  #- name: ChangeCollisionHook
+  #  type: branch_insn
+  #  branch_type: b 
+  #  src_addr_pal: 0x8014305C
+  #  target_func: onPlayerCollisionUpdated
+
+  #- name: ChangePhysicsHook
+  #  type: branch_insn
+  #  branch_type: b
+  #  src_addr_pal: 0x80142560
+  #  target_func: onPlayerPhysicsUpdated
+    
+  - name: FallPlatformDirectionsPatch
     type: branch_insn
     branch_type: b
-    src_addr_pal: 0x80142560
-    target_func: onPlayerPhysicsUpdated
+    src_addr_pal: 0x80837a80
+    target_func: FallPlatformPatch
 
   #- name: FuckCastleIDs
   #  type: branch_insn

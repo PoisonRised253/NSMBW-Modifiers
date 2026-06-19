@@ -5,13 +5,13 @@
 #include "customObjects.h"
 
 #define CO_ARRAY_SIZE 32
-extern dEnElevator_c* elevators[CO_ARRAY_SIZE];
-extern dParenting_c* parentings[CO_ARRAY_SIZE];
+extern dEnElevator_c*   elevators[CO_ARRAY_SIZE];
 
 class dExecMng_c {
     private:
     static void DRYExecute(int stage);
     static void RunCustom(int action);
+    static void onSpawningActors();
 
     public:
     static void Reset();

@@ -2,12 +2,16 @@
 #include "daEnemies_c.h"
 #include "ExecMng.h"
 //Check Note in main.h to see why this exists
-ext void NullSub() {asm("blr");}
+//This was changed to be more recognizable in Dolphin Memory View, for convenience reasons
+ext void NullSub() {asm("nop\n addi r0, r0, 0\n nop\n blr");} //16 bytes + recognizable
 
 dEn_c* smitePlayer = NULL;
 
 ext void preGameLoop()
 {
+    #ifdef DEBUG_IDENTIFY
+    asm("nop");
+    #endif
     GlobalFrameTimer++;
     ApplyModifiers(true);
     if(!Players[0]) ret;
@@ -18,13 +22,17 @@ ext void preGameLoop()
         OSReport("Red is Sus!\n");
         smitePlayer = NULL;
     }
-
+    
     HandleHotkeys();
     ret;
 }
 
 ext void onGameLoop()
 {
+    #ifdef DEBUG_IDENTIFY
+    asm("nop");
+    asm("nop");
+    #endif
     if(CallSpacer(60))
         SetLives();
     if (!GetPlayers())
@@ -33,57 +41,12 @@ ext void onGameLoop()
 
     for(int i = 0; i < 4; i++) {
         if(Players[i] && *GetPlayerState(Players[i]) != STATEID_BALLOON) Players[i]->scale = MakeVec(1,1,1);
-        }
+    }
 
     ApplyModifiers(false);
 
     //HandleHotkeys();
 
-    #ifdef DEBUG_EXPERIMENTS
-    //DEBUG SECTION
-
-    //Verifying which classes are truely empty, or wether theyre just unfinished.
-    void* Key = NULL;
-
-    Key = (void*)GetNextOfType((Actors)459, false);
-    if(Key) OSReport("Platform: %p\n", Key);
-
-    #endif
-    #ifdef DEBUG_EXPERIMENTS_  //Temp Disable, remove _ from end
-
-    Key = (void*)GetNextOfType((Actors)196, false);
-    if(Key) OSReport("En_Slip_Penguin: %p\n", Key);
-
-    Key = (void*)GetNextOfType((Actors)508, false);
-    if(Key) OSReport("En_TarzanRope: %p\n", Key);
-
-    Key = (void*)GetNextOfType((Actors)384, false);
-    if(Key) OSReport("Ac_Block_Group: %p\n", Key);
-
-    Key = (void*)GetNextOfType((Actors)370, false);
-    if(Key) OSReport("Ship_Window: %p\n", Key);
-
-    Key = (void*)GetNextOfType((Actors)137, false);
-    if(Key) OSReport("En_Ghost_Jugem: %p\n", Key);
-
-    Key = (void*)GetNextOfType((Actors)544, false);
-    if(Key) OSReport("En_Gake_Noko: %p\n", Key);
-
-    Key = (void*)GetNextOfType((Actors)343, false);
-    if(Key) OSReport("En_Iwao: %p\n", Key);
-
-    Key = (void*)GetNextOfType((Actors)120, false);
-    if(Key) OSReport("En_Remocon_Tori: %p\n", Key);
-
-    Key = (void*)GetNextOfType((Actors)119, false); //Some things strangely depend on this object, as in spawn it... but like... why? what is this...
-    if(Key) OSReport("En_Boyon: %p\n", Key);
-
-    Key = (void*)GetNextOfType((Actors)321, false);
-    if(Key) OSReport("Mist_Intermittent: %p\n", Key);
-
-    Key = (void*)GetNextOfType((Actors)568, false);
-    if(Key) OSReport("Tarzan_Rope: %p\n", Key);
-#endif
 #ifdef NO_MP
 #ifndef DEBUG
     if ((Players[1] || Players[2] || Players[3] && dScStage_c::instance()))
@@ -104,6 +67,11 @@ ext void onGameLoop()
 
 ext void onStageCreated()
 {
+    #ifdef DEBUG_IDENTIFY
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    #endif
     dExecMng_c::Reset();
     dSys_c::setFrameRate(1);
     ModifyMovement(0);
@@ -133,6 +101,7 @@ ext void onNextScene() {
     GlobalFrameTimer = 0;
     ToggleMods();
     ret;
+    
 }
 
 // Use this to reinit the mod, when the game reloads... i dont know if this is how it works, but eh why not
@@ -154,6 +123,12 @@ ext void onRecieveResetEvent()
 
 ext void onBoot()
 {
+    #ifdef DEBUG_IDENTIFY
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    #endif
 #ifdef DEBUG
     OSReport("Static LivePatch Start!\n");
     LivePatch(INSTR_BLR, LP_ALLOWDEBUG);
@@ -170,6 +145,8 @@ ext void onBoot()
     LivePatch(INSTR_NOP, (u32*)0x80a28610); //Makes Items be collected reguardless of wether Player originally has item (part 1)
     LivePatch(INSTR_NOP, (u32*)0x80a28614); //Part 2
     LivePatch(0x48000010,(u32*)0x80a285f4); //Part 3
+
+    //LivePatch(0x5400e73e, LP_FALLPLATPATCH); // rlwinm r0, r0, 28, 28, 31
 
     //Replacements/Less-Advanced versions of MKWCAT patches, incase they ask me not to use them...
     #ifndef USE_MKWCAT_PATCHES
@@ -274,6 +251,13 @@ ext void ApplyModifiers(bool pre)
             Icey();
         if (Modifiers[20])
             BetterGhosts();
+        if (Modifiers[21])
+            FloatyTower();
+        if (Modifiers[22])
+            SlideyBlocks();
+        if (Modifiers[23])
+            WierdLineBlock();
+        
 
         #ifdef DEBUG_SLOPE
         if(Players[0])
@@ -313,13 +297,14 @@ ext void DeathMushHandler(dAc_Py_c* toucher) {
 //Attempt to hook the end of dAcPy_c::setBcData() to manually fuck with collision each frame
 //Time to build a struct to keep track of what to set it to :(
 //r31=Player
+#ifdef DEBUG_COLLEXT
 ext void onPlayerCollisionUpdated(void* playerptr) {
     //Setup, includes PhysExt, CollMgr and soon ActivePhysics
     dAcPy_c* player = (dAcPy_c*)playerptr;
     CollExtents extents = getExtents(player);
 
 
-    #ifdef DEBUG_COLLEXT
+    
     //Test - collMgr
     extents.ManualOffset[0] = MakeVec(0, 0, 0);
     extents.ManualOffset[1] = MakeVec(0, 0, 0);
@@ -329,13 +314,28 @@ ext void onPlayerCollisionUpdated(void* playerptr) {
     player->scale = MakeVec(2.f, 2.f, 2.f);
     extents.~CollExtents();
     //Test - collMgr end    
-    #endif
+
 
     ret;
 }
 
 ext void onPlayerPhysicsUpdated(void* playerptr) {
-   
     ret;
+}
+
+#endif
+
+ext volatile void FallPlatformPatch() {
+    asm("srwi r0, r0, 4\n andi. r0, r0, 0xF");
+    asm("cmpwi r0, 0\n beq+ zero");
+    asm("cmpwi r0, 1\n beq+ one");
+    asm("cmpwi r0, 2\n beq- two");
+    asm("cmpwi r0, 3\n beq- three");
+    asm("b zero");
+
+    asm("zero:\n lfs f1, 0x0028(r4)\n lfs f0, 0x002C(r4)\n stfs f2, 0xF4(r3)\n stfs f1, 0xF8(r3)\n stfs f2, 0xFC(r3)\nstfs	f0, 0x114(r3)\n blr");
+    asm("one:\n lis	r4, 0x8096\naddi r4, r4, 28668\nlfs	f0, 0x0010(r4)\nstfs f0, 0x00F8(r3)\nstfs f2, 0x00F4(r3)\nstfs f2, 0x00FC(r3)\nlfs f0, 0x000C(r4)\nstfs	f0, 0x0114(r3)\n blr");
+    asm("two:\n lfs f1, 0x0028(r4)\n fneg f1, f1\nlfs f0, 0x002C(r4)\n stfs f2, 0xF4(r3)\n stfs f1, 0xF8(r3)\n stfs f2, 0xFC(r3)\nstfs f0, 0x114(r3)\n blr");
+    asm("three:\n lis r4, 0x8096\naddi r4, r4, 28668\nlfs f0, 0x0010(r4)\nfneg f0, f0\nstfs f0, 0x00F8(r3)\nstfs f2, 0x00F4(r3)\nstfs f2, 0x00FC(r3)\nlfs f0, 0x000C(r4)\nstfs f0, 0x0114(r3)\n blr");
 }
 
