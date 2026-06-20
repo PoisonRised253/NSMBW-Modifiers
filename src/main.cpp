@@ -257,6 +257,8 @@ ext void ApplyModifiers(bool pre)
             SlideyBlocks();
         if (Modifiers[23])
             WierdLineBlock();
+        if (Modifiers[24])
+            SnakeBlockFuckery();
         
 
         #ifdef DEBUG_SLOPE

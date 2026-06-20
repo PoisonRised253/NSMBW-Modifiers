@@ -30,6 +30,7 @@ ext void BetterGhosts();
 ext void FloatyTower();
 ext void SlideyBlocks();
 ext void WierdLineBlock();
+ext void SnakeBlockFuckery();
 
 #ifdef DEBUG_UNUSED
 ext void Worldmapify(bool); //Makes the Level kinda like WM

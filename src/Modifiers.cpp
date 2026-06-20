@@ -438,6 +438,8 @@ ext void BetterGhosts() {
     ret;
 }
 
+// 3 - T
+// Makes the player floaty, kind of a rush job, but so be it.
 ext void FloatyTower() {
     for(int i = 0; i < 4; i++) {
         daPlBase_c* p = (daPlBase_c*)Players[i];
@@ -447,20 +449,56 @@ ext void FloatyTower() {
     ret;
 }
 
+// 3 - 4
 //NO
 ext void SlideyBlocks() {
+    u16 x, y;
+    dBgGm_c* gm = dBgGm_c::instance;
+    if(!gm) ret;
+    for(int i = 0; i < 4; i++) {
+        if(!Players[i]) continue;
+        if(!Players[i]->pos.x) ret;
+        x = ((u16)Players[i]->pos.x) & 0xFFF0;
+        y = ((u16)(-Players[i]->pos.y)) & 0xFFF0;
+        y -= 16;
+
+        static const int spawnThisTileForFuckSake = 0;
+        static const u16 PipeUpper = 0x006c;
+        static const u16 PipeLower = 0x007c;
+
+        u16* NearestTiles[4] = {
+            gm->getPointerToTile(x - 16, y, 0),
+            gm->getPointerToTile(x + 16, y, 0),
+            gm->getPointerToTile(x, y - 16, 0),
+            gm->getPointerToTile(x, y + 16, 0)
+        };
+
+        if(*NearestTiles[0] != 0x0 && *NearestTiles[0] != PipeUpper && *NearestTiles[0] != PipeLower) {
+            gm->placeTile(x - 16, y, 0, spawnThisTileForFuckSake);
+            CreateActor(SLIDE_BLOCK, 0, MakeVec(Round(Players[i]->pos.x - 16), Round(Players[i]->pos.y), 0), 0, 0);
+        }
+
+        if(*NearestTiles[1] != 0x0 && *NearestTiles[1] != PipeUpper && *NearestTiles[1] != PipeLower) {
+            gm->placeTile(x + 16, y, 0, spawnThisTileForFuckSake);
+            CreateActor(SLIDE_BLOCK, 0, MakeVec(Round(Players[i]->pos.x + 16), Round(Players[i]->pos.y), 0), 0, 0);
+        }
+
+        if(*NearestTiles[3] != 0x0) {
+            gm->placeTile(x, y + 16, 0, spawnThisTileForFuckSake);
+            CreateActor(SLIDE_BLOCK, 0, MakeVec(Round(Players[i]->pos.x), Round(Players[i]->pos.y - 16), 0), 0, 0);
+        }
+    }
     ret;
 }
 
+// 3- 5
+// This makes the Mushroom platform oscillate its rotation speed
 ext void WierdLineBlock() {
     static int state = 0;
     static bool flip = false;
-    const float mod = 0.0000125f;
     dRollingLinePlatform_c* platform = (dRollingLinePlatform_c*)GetNextOfType(dRollingLinePlatform_c::actorID, false);
-    if(!platform) ret;
-    
-    *platform->getMoveSpeed() += mod;
-    if(!CallSpacer(30)) ret;
+    if(!platform || !CallSpacer(15)) ret;
+
     if(state > 30) {
         flip = true;
         state--;
@@ -479,8 +517,16 @@ ext void WierdLineBlock() {
         *platform->getRotateSpeed() += 15;
         state--;
     }
-    OSReport("The Thing Ran\n");
     ret;
+}
+
+// 3 - C
+// This Generates holes within the snake block each second
+ext void SnakeBlockFuckery() {
+    if(!CallSpacer(30)) ret; 
+    daSnakeBlock_c* s = (daSnakeBlock_c*)GetNextOfType(daSnakeBlock_c::actorID, false);
+    if(!s) ret;
+    s->GenerateHoleNow();
 }
 
 // Unused stuff:

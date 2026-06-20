@@ -422,4 +422,15 @@ class dRollingLinePlatform_c : public dStageActor_c {
     u16* getRotateSpeed() const {ret   (u16*)GetMemberFromOffset((void*)this, 0x5D0); }
 };
 
+class daSnakeBlock_c : public dEn_c {
+    public:
+    static const Actors actorID = EN_SNAKEBLOCK;
+    void GenerateHoleNow() {
+        float* b = (float*)GetMemberFromOffset(this, 0x95C); //get most forward block's position
+        if(b == (float*)0x0000095C || b == NULL) ret;
+        *b = 0;
+        ret;
+    }
+};
+
 #endif
