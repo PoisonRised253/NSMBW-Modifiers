@@ -1,0 +1,2 @@
+C:\\Users\\PoisonDev\\Desktop\\PADV-NEXT\\PropelParts\\_build\\hardcodes\\cutscene.o: C:\\Users\\PoisonDev\\Desktop\\PADV-NEXT\\PropelParts\\src\\hardcodes\\cutscene.cpp \
+	F:\\WiiToolchain\\KamekBuild\\k_stdlib\\kamek.h

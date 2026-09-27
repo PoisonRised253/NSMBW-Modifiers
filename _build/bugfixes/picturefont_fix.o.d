@@ -1,0 +1,2 @@
+C:\\Users\\PoisonDev\\Desktop\\PADV-NEXT\\PropelParts\\_build\\bugfixes\\picturefont_fix.o: C:\\Users\\PoisonDev\\Desktop\\PADV-NEXT\\PropelParts\\src\\bugfixes\\picturefont_fix.cpp \
+	F:\\WiiToolchain\\KamekBuild\\k_stdlib\\kamek.h

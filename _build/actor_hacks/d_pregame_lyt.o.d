@@ -1,0 +1,2 @@
+C:\\Users\\PoisonDev\\Desktop\\PADV-NEXT\\PropelParts\\_build\\actor_hacks\\d_pregame_lyt.o: C:\\Users\\PoisonDev\\Desktop\\PADV-NEXT\\PropelParts\\src\\actor_hacks\\d_pregame_lyt.cpp \
+	C:\\Users\\PoisonDev\\Desktop\\PADV-NEXT\\PropelParts\\include\\propelparts\\game_config.h

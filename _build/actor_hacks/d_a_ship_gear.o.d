@@ -1,0 +1,2 @@
+C:\\Users\\PoisonDev\\Desktop\\PADV-NEXT\\PropelParts\\_build\\actor_hacks\\d_a_ship_gear.o: C:\\Users\\PoisonDev\\Desktop\\PADV-NEXT\\PropelParts\\src\\actor_hacks\\d_a_ship_gear.cpp \
+	F:\\WiiToolchain\\KamekBuild\\k_stdlib\\kamek.h

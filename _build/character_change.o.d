@@ -1,0 +1,2 @@
+C:\\Users\\PoisonDev\\Desktop\\PADV-NEXT\\PropelParts\\_build\\character_change.o: C:\\Users\\PoisonDev\\Desktop\\PADV-NEXT\\PropelParts\\src\\character_change.cpp \
+	C:\\Users\\PoisonDev\\Desktop\\PADV-NEXT\\PropelParts\\include\\propelparts\\game_config.h
